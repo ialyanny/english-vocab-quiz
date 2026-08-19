@@ -37,6 +37,7 @@ let questions = [];       // 題目序列（索引）
 let qIndex = 0;
 let score = 0;
 let wrong = [];
+let hintLevel = 0;   // 0=未用 1=首字母 2=完整答案
 
 const $ = id => document.getElementById(id);
 
@@ -131,6 +132,13 @@ function renderQuestion() {
   clearTimeout(autoTimer);
   const nbEl = $("next-btn");
   nbEl.classList.remove("pulse");
+
+  // 重置提醒狀態
+  hintLevel = 0;
+  const hintBtn = $("hint-btn");
+  hintBtn.classList.remove("used");
+  hintBtn.textContent = "💡 不會";
+  $("hint-box").textContent = "";
 
   $("progress-text").textContent = `第 ${qIndex + 1} / ${questions.length} 題`;
   $("score-text").textContent = `✓ ${score}`;
@@ -283,6 +291,62 @@ $("speak-btn").addEventListener("click", () => {
     speak(s.s.replace("{blank}", "blank"));
   } else {
     speak(WORDS[q.idx][0]);
+  }
+});
+
+// ===== 提醒（分階：先首字母，再完整答案；不影響計分） =====
+function getHintText(q, level) {
+  const entry = q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
+  const en = q.type === "sentence" ? entry.blank : entry[0];
+  const zh = q.type === "sentence" ? entry.zh : entry[1];
+  if (q.type === "listen") {
+    // 聽音選字：顯示英文首字母或完整英文
+    return level === 1 ? `英文開頭是「${en[0].toUpperCase()}」` : `答案是「${en}」`;
+  }
+  if (q.type === "en2zh") {
+    // 英→中：顯示中文提示或完整中文
+    return level === 1 ? `中文意思開頭是「${zh[0]}」` : `答案是「${zh}」`;
+  }
+  if (q.type === "zh2en") {
+    return level === 1 ? `英文開頭是「${en[0].toUpperCase()}」` : `答案是「${en}」`;
+  }
+  // sentence
+  return level === 1 ? `答案開頭是「${en[0].toUpperCase()}」` : `答案是「${en}」`;
+}
+
+$("hint-btn").addEventListener("click", () => {
+  const q = questions[qIndex];
+  if (qIndex >= questions.length) return;
+  hintLevel = (hintLevel + 1) % 3; // 0→1→2→0
+  const btn = $("hint-btn");
+  const box = $("hint-box");
+  if (hintLevel === 0) {
+    btn.classList.remove("used");
+    btn.textContent = "💡 不會";
+    box.textContent = "";
+    // 填空題：清掉提醒填入的文字
+    const input = $("type-input");
+    if (input && !input.disabled) { input.value = ""; input.placeholder = "輸入英文單字…"; }
+    return;
+  }
+  btn.classList.add("used");
+  box.textContent = getHintText(q, hintLevel);
+  btn.textContent = hintLevel === 1 ? "💡 再看完整答案" : "✨ 收回提示";
+
+  // 填空題：直接把提示字填入輸入框，方便手寫/打字
+  if (q.type === "zh2en" || q.type === "sentence") {
+    const entry = q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
+    const en = q.type === "sentence" ? entry.blank : entry[0];
+    const input = $("type-input");
+    if (input && !input.disabled) {
+      if (hintLevel === 1) {
+        input.value = en[0];
+        input.placeholder = "繼續輸入剩下的字母…";
+      } else {
+        input.value = en;
+        input.placeholder = "按「送出」檢查";
+      }
+    }
   }
 });
 

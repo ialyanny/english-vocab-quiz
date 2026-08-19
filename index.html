@@ -79,6 +79,19 @@
   .speak-btn:active { transform: scale(.9); }
   .speak-hint { font-size: .82rem; color: #64748b; margin-top: 8px; }
 
+  .hint-btn {
+    margin-top: 14px; padding: 12px 26px; border: none; border-radius: 99px;
+    background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff;
+    font-size: 1.05rem; font-weight: 800; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(249,115,22,.3);
+  }
+  .hint-btn:active { transform: scale(.95); }
+  .hint-btn.used { background: linear-gradient(135deg, #94a3b8, #64748b); box-shadow: none; }
+  .hint-box {
+    margin-top: 10px; min-height: 22px; font-size: 1.05rem; font-weight: 800;
+    color: #f97316; text-align: center;
+  }
+
   .options { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .opt {
     width: 100%; padding: 20px; border: 2px solid #e2e8f0; border-radius: 16px;
@@ -256,6 +269,8 @@
       <div class="zh-hint" id="zh-hint"></div>
       <button class="speak-btn" id="speak-btn" title="播放發音">🔊</button>
       <div class="speak-hint" id="speak-hint">點一下聽發音</div>
+      <button class="hint-btn" id="hint-btn" title="不會時點這裡拿提示">💡 不會</button>
+      <div class="hint-box" id="hint-box"></div>
     </div>
 
     <div class="options" id="options"></div>
