@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>英文單字小考 — Level 4 Unit 07</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: linear-gradient(160deg, #e0f2fe 0%, #eef2ff 60%, #fdf4ff 100%);
+    color: #1e293b;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 16px;
+  }
+  .app {
+    width: 100%; max-width: 680px;
+    background: #ffffff; border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(51,65,85,.18);
+    padding: 28px 24px 32px;
+  }
+  h1 { font-size: 1.6rem; text-align: center; margin-bottom: 4px; color: #0f172a; }
+  .subtitle { text-align: center; color: #64748b; font-size: .95rem; margin-bottom: 20px; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* 首頁 */
+  .mode-group { margin-bottom: 22px; }
+  .mode-label { font-weight: 700; color: #475569; margin-bottom: 10px; font-size: 1rem; }
+  .mode-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .mode-btn {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; padding: 16px 20px;
+    border: 2px solid #e2e8f0; border-radius: 16px; background: #f8fafc;
+    font-size: 1.05rem; font-weight: 700; color: #1e293b; cursor: pointer;
+    transition: all .15s;
+  }
+  .mode-btn:active { transform: scale(.97); }
+  .mode-btn.selected { border-color: #3b82f6; background: #eff6ff; }
+  .mode-btn .icon { font-size: 1.6rem; }
+  .mode-btn .txt { text-align: left; }
+  .mode-btn .desc { font-size: .82rem; color: #64748b; font-weight: 500; margin-top: 2px; }
+  .count-group { margin-bottom: 24px; }
+  .count-options { display: flex; gap: 10px; }
+  .count-btn {
+    flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px;
+    background: #f8fafc; font-size: 1rem; font-weight: 700; cursor: pointer; color: #1e293b;
+  }
+  .count-btn.selected { border-color: #3b82f6; background: #eff6ff; }
+  .start-btn {
+    width: 100%; padding: 18px; border: none; border-radius: 16px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1); color: #fff;
+    font-size: 1.2rem; font-weight: 800; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(59,130,246,.35);
+  }
+  .start-btn:active { transform: scale(.97); }
+
+  /* 測驗 */
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .progress-text { font-weight: 700; color: #475569; font-size: .95rem; }
+  .score-text { font-weight: 700; color: #059669; font-size: .95rem; }
+  .bar { height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+  .bar > div { height: 100%; background: linear-gradient(90deg, #3b82f6, #818cf8); width: 0%; transition: width .3s; }
+  .qbox {
+    text-align: center; background: #f8fafc; border: 2px solid #e2e8f0;
+    border-radius: 20px; padding: 26px 20px; margin-bottom: 18px; min-height: 140px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+  }
+  .qtype-tag { font-size: .8rem; color: #3b82f6; font-weight: 700; background: #dbeafe; padding: 4px 12px; border-radius: 99px; margin-bottom: 12px; }
+  .qword { font-size: 2rem; font-weight: 800; color: #0f172a; word-break: break-word; line-height: 1.4; }
+  .qword .blank { color: #3b82f6; text-decoration: underline; text-underline-offset: 6px; }
+  .zh-hint { font-size: 1rem; color: #64748b; margin-top: 10px; font-weight: 600; }
+  .speak-btn {
+    margin-top: 16px; width: 82px; height: 82px; border: none; border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #10b981); color: #fff;
+    font-size: 2.2rem; cursor: pointer; box-shadow: 0 10px 24px rgba(16,185,129,.35);
+  }
+  .speak-btn:active { transform: scale(.9); }
+  .speak-hint { font-size: .82rem; color: #64748b; margin-top: 8px; }
+
+  .options { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .opt {
+    width: 100%; padding: 20px; border: 2px solid #e2e8f0; border-radius: 16px;
+    background: #ffffff; font-size: 1.25rem; font-weight: 700; color: #1e293b;
+    cursor: pointer; text-align: center; word-break: break-word;
+    transition: all .15s;
+  }
+  .opt:active { transform: scale(.97); }
+  .opt.correct { background: #dcfce7; border-color: #16a34a; color: #166534; }
+  .opt.wrong { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+  .opt.disabled { pointer-events: none; opacity: .6; }
+
+  /* 打字輸入 */
+  .type-wrap { display: none; margin-bottom: 14px; }
+  .type-input {
+    width: 100%; padding: 18px; border: 2px solid #e2e8f0; border-radius: 16px;
+    font-size: 1.4rem; font-weight: 700; text-align: center; color: #0f172a;
+    outline: none; background: #ffffff;
+  }
+  .type-input:focus { border-color: #3b82f6; }
+  .type-input.ok { border-color: #16a34a; background: #f0fdf4; }
+  .type-input.no { border-color: #dc2626; background: #fef2f2; }
+  .check-btn {
+    width: 100%; margin-top: 10px; padding: 16px; border: none; border-radius: 14px;
+    background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff;
+    font-size: 1.1rem; font-weight: 800; cursor: pointer;
+  }
+  .check-btn:active { transform: scale(.97); }
+
+  .feedback { text-align: center; font-weight: 800; font-size: 1.05rem; margin-top: 14px; min-height: 26px; word-break: break-word; }
+  .feedback.ok { color: #16a34a; }
+  .feedback.no { color: #dc2626; }
+  .next-btn {
+    width: 100%; margin-top: 12px; padding: 16px; border: none; border-radius: 14px;
+    background: #0f172a; color: #fff; font-size: 1.05rem; font-weight: 700; cursor: pointer;
+    display: none;
+  }
+
+  /* 結果 */
+  .result-score { text-align: center; padding: 20px 0 8px; }
+  .big-score { font-size: 3rem; font-weight: 900; color: #0f172a; }
+  .big-score em { font-size: 1.4rem; font-style: normal; color: #64748b; }
+  .result-message { text-align: center; font-size: 1.1rem; color: #475569; margin: 6px 0 20px; }
+  .review-title { font-weight: 800; margin-bottom: 10px; color: #334155; }
+  .review-list { list-style: none; }
+  .review-item {
+    display: flex; align-items: center; gap: 12px;
+    background: #fef2f2; border: 1.5px solid #fecaca; border-radius: 12px;
+    padding: 10px 14px; margin-bottom: 8px;
+  }
+  .review-item .w { font-weight: 800; flex: 1.2; }
+  .review-item .c { color: #475569; flex: 1.6; font-size: .92rem; }
+  .review-item .spk {
+    border: none; background: #16a34a; color: #fff; border-radius: 50%;
+    width: 36px; height: 36px; font-size: 1.1rem; cursor: pointer; flex: none;
+  }
+  .empty-review { color: #16a34a; font-weight: 700; text-align: center; padding: 14px; }
+  .result-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+  .rbtn {
+    padding: 16px; border-radius: 14px; border: 2px solid #e2e8f0;
+    background: #f8fafc; font-size: 1rem; font-weight: 700; cursor: pointer; color: #1e293b;
+  }
+  .rbtn.primary { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+  .rbtn:active { transform: scale(.97); }
+  .footer { text-align: center; color: #94a3b8; font-size: .78rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 首頁 -->
+  <div class="screen active" id="screen-home">
+    <h1>🔤 英文單字小考</h1>
+    <div class="subtitle">Level 4 Unit 07（含衍生字）</div>
+
+    <div class="mode-group">
+      <div class="mode-label">選擇題型</div>
+      <div class="mode-grid">
+        <button class="mode-btn" data-mode="listen">
+          <span class="icon">👂</span>
+          <span class="txt">聽音選字<span class="desc">聽發音＋看中文，選出英文單字</span></span>
+        </button>
+        <button class="mode-btn" data-mode="en2zh">
+          <span class="icon">🇬🇧</span>
+          <span class="txt">英 → 中<span class="desc">看英文，選出正確中文意思</span></span>
+        </button>
+        <button class="mode-btn" data-mode="zh2en">
+          <span class="icon">⌨️</span>
+          <span class="txt">中 → 英（填空）<span class="desc">看中文，打字輸入英文單字</span></span>
+        </button>
+        <button class="mode-btn" data-mode="sentence">
+          <span class="icon">📝</span>
+          <span class="txt">句子填空<span class="desc">看例句＋翻譯，填入缺的單字</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="count-group">
+      <div class="mode-label">題數</div>
+      <div class="count-options">
+        <button class="count-btn" data-count="10">10 題</button>
+        <button class="count-btn" data-count="20">20 題</button>
+        <button class="count-btn selected" data-count="0">全部</button>
+      </div>
+    </div>
+
+    <button class="start-btn" id="start-btn">開始測驗 ▶</button>
+    <div class="footer">單字題 73 題・句子題 34 題・點喇叭可發音</div>
+  </div>
+
+  <!-- 測驗 -->
+  <div class="screen" id="screen-quiz">
+    <div class="topbar">
+      <span class="progress-text" id="progress-text"></span>
+      <span class="score-text" id="score-text"></span>
+    </div>
+    <div class="bar"><div id="bar-fill"></div></div>
+
+    <div class="qbox">
+      <span class="qtype-tag" id="qtype-tag"></span>
+      <div class="qword" id="qword"></div>
+      <div class="zh-hint" id="zh-hint"></div>
+      <button class="speak-btn" id="speak-btn" title="播放發音">🔊</button>
+      <div class="speak-hint" id="speak-hint">點一下聽發音</div>
+    </div>
+
+    <div class="options" id="options"></div>
+
+    <div class="type-wrap" id="type-wrap">
+      <input class="type-input" id="type-input" placeholder="輸入英文單字…"
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <button class="check-btn" id="check-btn">送出 ✓</button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn">下一題 ▶</button>
+  </div>
+
+  <!-- 結果 -->
+  <div class="screen" id="screen-result">
+    <div class="result-score">
+      <div class="big-score"><span id="rs-correct">0</span><em> / <span id="rs-total">0</span></em></div>
+    </div>
+    <div class="result-message" id="rs-message"></div>
+    <div class="review-title">📖 答錯的題目（可點喇叭複習）</div>
+    <ul class="review-list" id="review-list"></ul>
+    <div class="result-btns">
+      <button class="rbtn" id="retry-btn">🔁 再考一次</button>
+      <button class="rbtn primary" id="home-btn">🏠 回首頁</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
