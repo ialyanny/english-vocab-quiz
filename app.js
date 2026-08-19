@@ -72,14 +72,38 @@ function poolSize() {
   return mode === "sentence" ? SENTENCES.length : WORDS.length;
 }
 
+const MIX_TYPES = ["listen", "en2zh", "zh2en", "sentence"];
+
 function startQuiz() {
-  const total = poolSize();
-  const idx = shuffle(Array.from({ length: total }, (_, i) => i));
-  const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-  questions = idx.slice(0, n);
   qIndex = 0; score = 0; wrong = [];
+
+  if (mode === "mixed") {
+    // 混合模式：四種題型平均分配後再打亂
+    const per = questionCount === 0 ? Infinity : Math.ceil(questionCount / MIX_TYPES.length);
+    let all = [];
+    MIX_TYPES.forEach(t => {
+      const total = t === "sentence" ? SENTENCES.length : WORDS.length;
+      const idx = shuffle(Array.from({ length: total }, (_, i) => i));
+      const take = Math.min(per, idx.length);
+      idx.slice(0, take).forEach(i => all.push({ type: t, idx: i }));
+    });
+    const n = questionCount === 0 ? all.length : Math.min(questionCount, all.length);
+    questions = shuffle(all).slice(0, n);
+  } else {
+    const total = poolSize();
+    const idx = shuffle(Array.from({ length: total }, (_, i) => i));
+    const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
+    questions = idx.slice(0, n).map(i => ({ type: mode, idx: i }));
+  }
+
   show("screen-quiz");
   renderQuestion();
+}
+
+// 目前題目的單字資料
+function curEntry() {
+  const q = questions[qIndex];
+  return q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
 }
 
 function show(id) {
@@ -88,20 +112,21 @@ function show(id) {
 }
 
 // ===== 題目 =====
-function buildChoices(correctIdx, isZh) {
+function buildChoices(wordIdx, isZh) {
   const pool = WORDS;
   const others = pool
     .map((_, i) => i)
-    .filter(i => i !== correctIdx && pool[i][1] !== pool[correctIdx][1]);
+    .filter(i => i !== wordIdx && pool[i][1] !== pool[wordIdx][1]);
   const dist = shuffle(others).slice(0, 3);
-  const choices = shuffle([correctIdx, ...dist]);
+  const choices = shuffle([wordIdx, ...dist]);
   return choices.map(i => isZh ? pool[i][1] : pool[i][0]);
 }
 
 function renderQuestion() {
-  const cur = questions[qIndex];
-  const en = (mode === "sentence") ? SENTENCES[cur].base : WORDS[cur][0];
-  const zh = (mode === "sentence") ? SENTENCES[cur].zh : WORDS[cur][1];
+  const q = questions[qIndex];
+  const entry = q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
+  const en = q.type === "sentence" ? entry.base : entry[0];
+  const zh = q.type === "sentence" ? entry.zh : entry[1];
 
   $("progress-text").textContent = `第 ${qIndex + 1} / ${questions.length} 題`;
   $("score-text").textContent = `✓ ${score}`;
@@ -117,10 +142,10 @@ function renderQuestion() {
   $("speak-btn").style.display = "";
   $("speak-hint").textContent = "點一下聽發音";
 
-  if (mode === "listen") {
+  if (q.type === "listen") {
     $("qtype-tag").textContent = "👂 聽音選字";
     $("qword").textContent = zh;   // 加上中文提示
-    const choices = buildChoices(cur, false);
+    const choices = buildChoices(q.idx, false);
     choices.forEach(c => {
       const b = document.createElement("button");
       b.className = "opt";
@@ -129,10 +154,10 @@ function renderQuestion() {
       box.appendChild(b);
     });
     setTimeout(() => speak(en), 200);
-  } else if (mode === "en2zh") {
+  } else if (q.type === "en2zh") {
     $("qtype-tag").textContent = "🇬🇧 英 → 中";
     $("qword").textContent = en;
-    const choices = buildChoices(cur, true);
+    const choices = buildChoices(q.idx, true);
     choices.forEach(c => {
       const b = document.createElement("button");
       b.className = "opt";
@@ -140,7 +165,7 @@ function renderQuestion() {
       b.addEventListener("click", () => answer(b, c, zh));
       box.appendChild(b);
     });
-  } else if (mode === "zh2en") {
+  } else if (q.type === "zh2en") {
     $("qtype-tag").textContent = "⌨️ 中 → 英（填空）";
     $("qword").textContent = zh;
     $("speak-btn").style.display = "none";
@@ -148,7 +173,7 @@ function renderQuestion() {
     setupTyping(en, en);
   } else { // sentence
     $("qtype-tag").textContent = "📝 句子填空";
-    const s = SENTENCES[cur];
+    const s = SENTENCES[q.idx];
     const display = s.s.replace("{blank}", '<span class="blank">＿＿＿＿</span>');
     $("qword").innerHTML = display;
     $("zh-hint").textContent = "💡 " + s.zh;
@@ -199,27 +224,20 @@ function answer(btn, chosen, correctLabel) {
     if (b.textContent === correctLabel) b.classList.add("correct");
   });
   if (!isRight) btn.classList.add("wrong");
-  const cur = questions[qIndex];
-  const en = (mode === "sentence") ? SENTENCES[cur].base : WORDS[cur][0];
-  const zh = (mode === "sentence") ? SENTENCES[cur].zh : WORDS[cur][1];
+  const entry = curEntry();
+  const en = entry.base !== undefined ? entry.base : entry[0];
   if (isRight) {
     finalize(true, "✓ 答對了！", "");
   } else {
     finalize(false, `✗ 正確答案是「${correctLabel}」`, "");
-    if (mode === "listen") setTimeout(() => speak(en), 400);
+    if (questions[qIndex].type === "listen") setTimeout(() => speak(en), 400);
   }
 }
 
 function finalize(isRight, fbText, rawAnswer) {
-  const cur = questions[qIndex];
-  let en, zh;
-  if (mode === "sentence") {
-    en = SENTENCES[cur].base;
-    zh = SENTENCES[cur].zh;
-  } else {
-    en = WORDS[cur][0];
-    zh = WORDS[cur][1];
-  }
+  const entry = curEntry();
+  const en = entry.base !== undefined ? entry.base : entry[0];
+  const zh = entry.base !== undefined ? entry.zh : entry[1];
   if (isRight) {
     score++;
   } else {
@@ -238,13 +256,13 @@ function finalize(isRight, fbText, rawAnswer) {
 }
 
 $("speak-btn").addEventListener("click", () => {
-  if (mode === "zh2en") return;
-  const cur = questions[qIndex];
-  if (mode === "sentence") {
-    const s = SENTENCES[cur];
+  const q = questions[qIndex];
+  if (q.type === "zh2en") return;
+  if (q.type === "sentence") {
+    const s = SENTENCES[q.idx];
     speak(s.s.replace("{blank}", "blank"));
   } else {
-    speak(WORDS[cur][0]);
+    speak(WORDS[q.idx][0]);
   }
 });
 
@@ -293,7 +311,7 @@ function showResult() {
 
 // ===== 成績紀錄（存本機 localStorage） =====
 const REC_KEY = "vocab_quiz_records";
-const MODE_NAMES = { listen: "聽音選字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空" };
+const MODE_NAMES = { listen: "聽音選字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空", mixed: "混合題型" };
 
 function loadRecords() {
   try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; }
