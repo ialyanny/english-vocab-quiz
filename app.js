@@ -128,6 +128,10 @@ function renderQuestion() {
   const en = q.type === "sentence" ? entry.base : entry[0];
   const zh = q.type === "sentence" ? entry.zh : entry[1];
 
+  clearTimeout(autoTimer);
+  const nbEl = $("next-btn");
+  nbEl.classList.remove("pulse");
+
   $("progress-text").textContent = `第 ${qIndex + 1} / ${questions.length} 題`;
   $("score-text").textContent = `✓ ${score}`;
   $("bar-fill").style.width = ((qIndex) / questions.length * 100) + "%";
@@ -212,7 +216,7 @@ function checkTyping(input, blankWord, baseWord) {
     input.className = "type-input no";
     finalize(false, `✗ 正確答案：${correctLabel}`, input.value);
   }
-  setTimeout(() => { try { input.blur(); } catch (e) {} }, 50);
+  try { input.blur(); } catch (e) {}
 }
 
 // 選擇題作答（b:被點按鈕, chosen:選的文字, correct:正確文字）
@@ -253,6 +257,22 @@ function finalize(isRight, fbText, rawAnswer) {
   const nb = $("next-btn");
   nb.textContent = last ? "看結果 🎉" : "下一題 ▶";
   nb.style.display = "";
+  nb.classList.add("pulse");
+
+  // 自動跳下一題（讓小朋友看得到對錯後自動繼續）
+  clearTimeout(autoTimer);
+  autoTimer = setTimeout(() => {
+    nb.classList.remove("pulse");
+    goNext();
+  }, 1200);
+}
+
+let autoTimer = null;
+function goNext() {
+  clearTimeout(autoTimer);
+  qIndex++;
+  if (qIndex >= questions.length) { showResult(); return; }
+  renderQuestion();
 }
 
 $("speak-btn").addEventListener("click", () => {
@@ -266,11 +286,7 @@ $("speak-btn").addEventListener("click", () => {
   }
 });
 
-$("next-btn").addEventListener("click", () => {
-  qIndex++;
-  if (qIndex >= questions.length) { showResult(); return; }
-  renderQuestion();
-});
+$("next-btn").addEventListener("click", () => goNext());
 
 // ===== 結果 =====
 function showResult() {
