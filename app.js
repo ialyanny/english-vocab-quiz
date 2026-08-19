@@ -41,6 +41,10 @@ let hintLevel = 0;   // 0=未用 1=首字母 2=完整答案
 
 const $ = id => document.getElementById(id);
 
+function fmtScore(n) {
+  return Number.isInteger(n) ? n.toString() : n.toFixed(1);
+}
+
 // ===== 首頁 UI =====
 const modeBtns = document.querySelectorAll(".mode-btn");
 modeBtns.forEach(b => b.addEventListener("click", () => {
@@ -138,10 +142,23 @@ function renderQuestion() {
   const hintBtn = $("hint-btn");
   hintBtn.classList.remove("used");
   hintBtn.textContent = "💡 不會";
+  hintBtn.style.display = "";
   $("hint-box").textContent = "";
 
+  // 顯示單字圖片（有圖就顯示，無圖則隱藏）
+  const imgWrap = document.querySelector(".word-img-wrap");
+  const imgEl = $("word-img");
+  const imgUrl = WORD_IMAGES ? WORD_IMAGES[en] : null;
+  if (imgUrl) {
+    imgEl.src = imgUrl;
+    imgEl.onerror = () => imgWrap.classList.remove("show");
+    imgWrap.classList.add("show");
+  } else {
+    imgWrap.classList.remove("show");
+  }
+
   $("progress-text").textContent = `第 ${qIndex + 1} / ${questions.length} 題`;
-  $("score-text").textContent = `✓ ${score}`;
+  $("score-text").textContent = `✓ ${fmtScore(score)}`;
   $("bar-fill").style.width = ((qIndex) / questions.length * 100) + "%";
   $("feedback").textContent = "";
   $("feedback").className = "feedback";
@@ -169,6 +186,7 @@ function renderQuestion() {
   } else if (q.type === "en2zh") {
     $("qtype-tag").textContent = "🇬🇧 英 → 中";
     $("qword").textContent = en;
+    $("hint-btn").style.display = "none";   // 答案為中文，不提供提醒
     const choices = buildChoices(q.idx, true);
     choices.forEach(c => {
       const b = document.createElement("button");
@@ -251,14 +269,14 @@ function finalize(isRight, fbText, rawAnswer) {
   const en = entry.base !== undefined ? entry.base : entry[0];
   const zh = entry.base !== undefined ? entry.zh : entry[1];
   if (isRight) {
-    score++;
+    score += hintLevel > 0 ? 0.5 : 1;   // 用過提醒只算半分
   } else {
     wrong.push({ en, zh });
   }
   const fb = $("feedback");
   fb.className = isRight ? "feedback ok" : "feedback no";
   fb.textContent = fbText;
-  $("score-text").textContent = `✓ ${score}`;
+  $("score-text").textContent = `✓ ${fmtScore(score)}`;
   $("bar-fill").style.width = ((qIndex + 1) / questions.length * 100) + "%";
 
   const last = qIndex === questions.length - 1;
@@ -354,7 +372,7 @@ $("next-btn").addEventListener("click", () => goNext());
 
 // ===== 結果 =====
 function showResult() {
-  $("rs-correct").textContent = score;
+  $("rs-correct").textContent = fmtScore(score);
   $("rs-total").textContent = questions.length;
   const pct = Math.round(score / questions.length * 100);
   let msg;
@@ -423,7 +441,7 @@ function renderRecords() {
     li.innerHTML =
       `<span class="rn">${r.name || "（未署名）"}</span>` +
       `<span class="rm">${r.mode || ""}・${r.total} 題</span>` +
-      `<span class="rs">${r.score} 分</span>` +
+      `<span class="rs">${fmtScore(r.score)} 分</span>` +
       `<span class="rd">${fmtTime(r.ts)}</span>`;
     list.appendChild(li);
   });
