@@ -196,7 +196,28 @@
   .records-item .rm { color: #475569; font-size: .85rem; flex: 1.6; }
   .records-item .rs { font-weight: 800; color: #059669; flex: none; }
   .records-item .rd { color: #94a3b8; font-size: .78rem; flex: none; }
+  .records-item .ro { color: #3b82f6; font-weight: 800; flex: none; }
+  .records-item:active { background: #eff6ff; }
   .empty-records { color: #64748b; text-align: center; padding: 16px; }
+
+  /* 單筆成績詳情（錯題複習） */
+  .rd-card {
+    text-align: center; background: #f8fafc; border: 2px solid #e2e8f0;
+    border-radius: 16px; padding: 16px; margin-bottom: 14px;
+  }
+  .rd-card .rt2 { font-weight: 800; font-size: 1.1rem; color: #0f172a; }
+  .rd-card .rs2 { font-weight: 800; color: #059669; }
+  .rd-card .sub { color: #64748b; font-size: .85rem; margin-top: 4px; }
+  .rd-replay {
+    width: 100%; margin-bottom: 14px; padding: 16px; border: none; border-radius: 14px;
+    background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff;
+    font-size: 1.1rem; font-weight: 800; cursor: pointer;
+  }
+  .rd-replay:active { transform: scale(.97); }
+  .review-item .rt {
+    background: #dbeafe; color: #1d4ed8; font-weight: 800; font-size: .72rem;
+    padding: 3px 8px; border-radius: 99px; flex: none;
+  }
 
   /* QR 分享 */
   .qr-box { text-align: center; padding: 12px 0 4px; }
@@ -316,6 +337,24 @@
     <div class="result-btns">
       <button class="rbtn" id="clear-records-btn">🗑️ 清空紀錄</button>
       <button class="rbtn primary" id="records-home-btn">🏠 回首頁</button>
+    </div>
+  </div>
+
+  <!-- 單筆成績詳情（錯題複習） -->
+  <div class="screen" id="screen-record-detail">
+    <div class="records-header">
+      <h1>📖 錯題複習</h1>
+      <div class="subtitle">點進去看上次答錯的題目，可以再考一次</div>
+    </div>
+    <div class="rd-card">
+      <div class="rt2" id="rd-title"></div>
+      <div class="sub" id="rd-sub"></div>
+    </div>
+    <button class="rd-replay" id="rd-replay">🔁 再考一次這份錯題</button>
+    <div class="review-title">❌ 上次答錯的題目</div>
+    <ul class="review-list" id="rd-list"></ul>
+    <div class="result-btns">
+      <button class="rbtn primary" id="rd-home-btn">🏠 回成績紀錄</button>
     </div>
   </div>
 

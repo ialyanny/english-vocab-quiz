@@ -31,13 +31,14 @@ if ("speechSynthesis" in window) {
 }
 
 // ===== 狀態 =====
-let mode = "listen";      // listen | en2zh | zh2en | sentence
-let questionCount = 0;    // 0 = 全部
-let questions = [];       // 題目序列（索引）
+let mode = "listen";    // listen | en2zh | zh2en | sentence
+let questionCount = 0;  // 0 = 全部
+let questions = [];     // 題目序列（索引）
 let qIndex = 0;
 let score = 0;
 let wrong = [];
 let hintLevel = 0;   // 0=未用 1=首字母 2=完整答案
+let reviewMode = false;   // 是否為錯題複習模式（結果頁不另存成績）
 
 const $ = id => document.getElementById(id);
 
@@ -81,6 +82,7 @@ const MIX_TYPES = ["listen", "en2zh", "zh2en", "sentence"];
 
 function startQuiz() {
   qIndex = 0; score = 0; wrong = [];
+  reviewMode = false;
 
   if (mode === "mixed") {
     // 混合模式：四種題型平均分配後再打亂
@@ -105,9 +107,10 @@ function startQuiz() {
   renderQuestion();
 }
 
-// 目前題目的單字資料
+// 目前題目的單字資料（支援錯題快照：questions 元素可能是 {type, idx} 或 {type, snap}）
 function curEntry() {
   const q = questions[qIndex];
+  if (q.snap) return q.snap;   // {base, zh, s?, blank?}
   return q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
 }
 
@@ -117,21 +120,19 @@ function show(id) {
 }
 
 // ===== 題目 =====
-function buildChoices(wordIdx, isZh) {
-  const pool = WORDS;
-  const others = pool
-    .map((_, i) => i)
-    .filter(i => i !== wordIdx && pool[i][1] !== pool[wordIdx][1]);
+// 選項：正確答案 en（listen/聽音）或 zh（en2zh/英中），干擾項取中文不同者
+function buildChoices(en, zh, isZh) {
+  const others = WORDS.filter(w => w[1] !== zh);
   const dist = shuffle(others).slice(0, 3);
-  const choices = shuffle([wordIdx, ...dist]);
-  return choices.map(i => isZh ? pool[i][1] : pool[i][0]);
+  const choices = shuffle([en, ...dist.map(w => isZh ? w[1] : w[0])]);
+  return choices;
 }
 
 function renderQuestion() {
   const q = questions[qIndex];
-  const entry = q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
-  const en = q.type === "sentence" ? entry.base : entry[0];
-  const zh = q.type === "sentence" ? entry.zh : entry[1];
+  const entry = curEntry();
+  const en = entry.base !== undefined ? entry.base : entry[0];
+  const zh = entry.zh !== undefined ? entry.zh : entry[1];
 
   clearTimeout(autoTimer);
   const nbEl = $("next-btn");
@@ -174,7 +175,7 @@ function renderQuestion() {
   if (q.type === "listen") {
     $("qtype-tag").textContent = "👂 聽音選字";
     $("qword").textContent = zh;   // 加上中文提示
-    const choices = buildChoices(q.idx, false);
+    const choices = buildChoices(en, zh, false);
     choices.forEach(c => {
       const b = document.createElement("button");
       b.className = "opt";
@@ -187,7 +188,7 @@ function renderQuestion() {
     $("qtype-tag").textContent = "🇬🇧 英 → 中";
     $("qword").textContent = en;
     $("hint-btn").style.display = "none";   // 答案為中文，不提供提醒
-    const choices = buildChoices(q.idx, true);
+    const choices = buildChoices(en, zh, true);
     choices.forEach(c => {
       const b = document.createElement("button");
       b.className = "opt";
@@ -203,7 +204,7 @@ function renderQuestion() {
     setupTyping(en, en);
   } else { // sentence
     $("qtype-tag").textContent = "📝 句子填空";
-    const s = SENTENCES[q.idx];
+    const s = q.snap ? q.snap : SENTENCES[q.idx];
     const display = s.s.replace("{blank}", '<span class="blank">＿＿＿＿</span>');
     $("qword").innerHTML = display;
     $("zh-hint").textContent = "💡 " + s.zh;
@@ -265,13 +266,17 @@ function answer(btn, chosen, correctLabel) {
 }
 
 function finalize(isRight, fbText, rawAnswer) {
+  const q = questions[qIndex];
   const entry = curEntry();
   const en = entry.base !== undefined ? entry.base : entry[0];
   const zh = entry.base !== undefined ? entry.zh : entry[1];
   if (isRight) {
     score += hintLevel > 0 ? 0.5 : 1;   // 用過提醒只算半分
   } else {
-    wrong.push({ en, zh });
+    // 記下錯題快照（含題型，供複習）
+    wrong.push(q.type === "sentence"
+      ? { type: q.type, base: entry.base, zh: entry.zh, s: entry.s, blank: entry.blank }
+      : { type: q.type, base: en, zh });
   }
   const fb = $("feedback");
   fb.className = isRight ? "feedback ok" : "feedback no";
@@ -294,6 +299,7 @@ function finalize(isRight, fbText, rawAnswer) {
 }
 
 let autoTimer = null;
+let lastReviewIdx = -1;   // 錯題複習來源紀錄索引（供「再考一次」）
 function goNext() {
   clearTimeout(autoTimer);
   qIndex++;
@@ -304,19 +310,20 @@ function goNext() {
 $("speak-btn").addEventListener("click", () => {
   const q = questions[qIndex];
   if (q.type === "zh2en") return;
+  const entry = curEntry();
   if (q.type === "sentence") {
-    const s = SENTENCES[q.idx];
-    speak(s.s.replace("{blank}", "blank"));
+    const s = entry.s !== undefined ? entry.s : SENTENCES[q.idx].s;
+    speak(s.replace("{blank}", "blank"));
   } else {
-    speak(WORDS[q.idx][0]);
+    speak(entry.base !== undefined ? entry.base : entry[0]);
   }
 });
 
 // ===== 提醒（分階：先首字母，再完整答案；不影響計分） =====
 function getHintText(q, level) {
-  const entry = q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
-  const en = q.type === "sentence" ? entry.blank : entry[0];
-  const zh = q.type === "sentence" ? entry.zh : entry[1];
+  const entry = q.snap ? q.snap : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]);
+  const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
+  const zh = entry.zh !== undefined ? entry.zh : entry[1];
   if (q.type === "listen") {
     // 聽音選字：顯示英文首字母或完整英文
     return level === 1 ? `英文開頭是「${en[0].toUpperCase()}」` : `答案是「${en}」`;
@@ -353,8 +360,8 @@ $("hint-btn").addEventListener("click", () => {
 
   // 填空題：直接把提示字填入輸入框，方便手寫/打字
   if (q.type === "zh2en" || q.type === "sentence") {
-    const entry = q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
-    const en = q.type === "sentence" ? entry.blank : entry[0];
+    const entry = q.snap ? q.snap : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]);
+    const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
     const input = $("type-input");
     if (input && !input.disabled) {
       if (hintLevel === 1) {
@@ -382,10 +389,13 @@ function showResult() {
   else if (pct >= 50) msg = "💪 有進步空間，再試一次！";
   else msg = "📚 再多練習幾次吧！";
   $("rs-message").textContent = msg;
+  $("review-title").textContent = reviewMode ? "📖 錯題複習結果（不會另存成績）" : "📖 答錯的題目（可點喇叭複習）";
 
-  // 記錄成績
-  const name = $("name-input").value.trim();
-  saveRecord({ name, mode: MODE_NAMES[mode], score, total: questions.length, ts: Date.now() });
+  // 記錄成績（複習模式不再另存成績）
+  if (!reviewMode) {
+    const name = $("name-input").value.trim();
+    saveRecord({ name, mode: MODE_NAMES[mode], score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
+  }
 
   const list = $("review-list");
   list.innerHTML = "";
@@ -395,11 +405,11 @@ function showResult() {
     wrong.forEach(w => {
       const li = document.createElement("li");
       li.className = "review-item";
-      li.innerHTML = `<span class="w">${w.en}</span><span class="c">${w.zh}</span>`;
+      li.innerHTML = `<span class="w">${w.base}</span><span class="c">${w.zh}</span>`;
       const spk = document.createElement("button");
       spk.className = "spk";
       spk.textContent = "🔊";
-      spk.addEventListener("click", () => speak(w.en));
+      spk.addEventListener("click", () => speak(w.base));
       li.appendChild(spk);
       list.appendChild(li);
     });
@@ -435,16 +445,66 @@ function renderRecords() {
     list.innerHTML = '<li class="empty-records">還沒有任何成績紀錄。</li>';
     return;
   }
-  recs.forEach(r => {
+  recs.forEach((r, i) => {
     const li = document.createElement("li");
     li.className = "records-item";
     li.innerHTML =
       `<span class="rn">${r.name || "（未署名）"}</span>` +
       `<span class="rm">${r.mode || ""}・${r.total} 題</span>` +
       `<span class="rs">${fmtScore(r.score)} 分</span>` +
-      `<span class="rd">${fmtTime(r.ts)}</span>`;
+      `<span class="rd">${fmtTime(r.ts)}</span>` +
+      `<span class="ro">▶</span>`;
+    li.addEventListener("click", () => openRecordDetail(i));
     list.appendChild(li);
   });
+}
+
+function openRecordDetail(i) {
+  const recs = loadRecords();
+  const r = recs[i];
+  if (!r) return;
+  $("rd-title").textContent = `${r.name || "（未署名）"}・${r.mode || ""}・${fmtScore(r.score)} 分`;
+  $("rd-sub").textContent = `${r.total} 題・${fmtTime(r.ts)}`;
+  const w = r.wrong || [];
+  const list = $("rd-list");
+  list.innerHTML = "";
+  if (w.length === 0) {
+    list.innerHTML = '<li class="empty-records">這份紀錄沒有答錯的題目。</li>';
+  } else {
+    w.forEach(x => {
+      const li = document.createElement("li");
+      li.className = "review-item";
+      const tag = { listen: "聽音", en2zh: "英中", zh2en: "中英", sentence: "句子" }[x.type] || "單字";
+      li.innerHTML = `<span class="rt">${tag}</span><span class="w">${x.base}</span><span class="c">${x.zh}</span>`;
+      const spk = document.createElement("button");
+      spk.className = "spk";
+      spk.textContent = "🔊";
+      spk.addEventListener("click", () => speak(x.base));
+      li.appendChild(spk);
+      list.appendChild(li);
+    });
+  }
+  const rep = $("rd-replay");
+  rep.style.display = w.length > 0 ? "" : "none";
+  rep.dataset.idx = i;
+  show("screen-record-detail");
+}
+
+function startReviewFromRecord(i) {
+  const recs = loadRecords();
+  const r = recs[i];
+  if (!r || !r.wrong || r.wrong.length === 0) return;
+  lastReviewIdx = i;
+  qIndex = 0; score = 0; wrong = [];
+  reviewMode = true;
+  questions = r.wrong.map(x => ({
+    type: x.type,
+    snap: x.type === "sentence"
+      ? { base: x.base, zh: x.zh, s: x.s, blank: x.blank }
+      : { base: x.base, zh: x.zh }
+  }));
+  show("screen-quiz");
+  renderQuestion();
 }
 
 $("records-btn").addEventListener("click", () => {
@@ -452,6 +512,11 @@ $("records-btn").addEventListener("click", () => {
   show("screen-records");
 });
 $("records-home-btn").addEventListener("click", () => show("screen-home"));
+$("rd-home-btn").addEventListener("click", () => show("screen-records"));
+$("rd-replay").addEventListener("click", () => {
+  const i = parseInt($("rd-replay").dataset.idx, 10);
+  if (!isNaN(i)) { primeSpeech(); startReviewFromRecord(i); }
+});
 $("clear-records-btn").addEventListener("click", () => {
   if (confirm("確定要清空所有成績紀錄嗎？")) {
     localStorage.removeItem(REC_KEY);
@@ -468,6 +533,10 @@ $("qr-home-btn").addEventListener("click", () => show("screen-home"));
 
 $("retry-btn").addEventListener("click", () => {
   primeSpeech();
-  startQuiz();
+  if (reviewMode && lastReviewIdx >= 0) {
+    startReviewFromRecord(lastReviewIdx);
+  } else {
+    startQuiz();
+  }
 });
 $("home-btn").addEventListener("click", () => show("screen-home"));
