@@ -267,6 +267,10 @@ function showResult() {
   else msg = "📚 再多練習幾次吧！";
   $("rs-message").textContent = msg;
 
+  // 記錄成績
+  const name = $("name-input").value.trim();
+  saveRecord({ name, mode: MODE_NAMES[mode], score, total: questions.length, ts: Date.now() });
+
   const list = $("review-list");
   list.innerHTML = "";
   if (wrong.length === 0) {
@@ -286,6 +290,58 @@ function showResult() {
   }
   show("screen-result");
 }
+
+// ===== 成績紀錄（存本機 localStorage） =====
+const REC_KEY = "vocab_quiz_records";
+const MODE_NAMES = { listen: "聽音選字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空" };
+
+function loadRecords() {
+  try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; }
+  catch (e) { return []; }
+}
+function saveRecord(entry) {
+  const recs = loadRecords();
+  recs.unshift(entry);
+  if (recs.length > 200) recs.length = 200;
+  localStorage.setItem(REC_KEY, JSON.stringify(recs));
+}
+function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+function fmtTime(ts) {
+  const d = new Date(ts);
+  return `${pad2(d.getMonth() + 1)}/${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
+
+function renderRecords() {
+  const recs = loadRecords();
+  const list = $("records-list");
+  list.innerHTML = "";
+  if (recs.length === 0) {
+    list.innerHTML = '<li class="empty-records">還沒有任何成績紀錄。</li>';
+    return;
+  }
+  recs.forEach(r => {
+    const li = document.createElement("li");
+    li.className = "records-item";
+    li.innerHTML =
+      `<span class="rn">${r.name || "（未署名）"}</span>` +
+      `<span class="rm">${r.mode || ""}・${r.total} 題</span>` +
+      `<span class="rs">${r.score} 分</span>` +
+      `<span class="rd">${fmtTime(r.ts)}</span>`;
+    list.appendChild(li);
+  });
+}
+
+$("records-btn").addEventListener("click", () => {
+  renderRecords();
+  show("screen-records");
+});
+$("records-home-btn").addEventListener("click", () => show("screen-home"));
+$("clear-records-btn").addEventListener("click", () => {
+  if (confirm("確定要清空所有成績紀錄嗎？")) {
+    localStorage.removeItem(REC_KEY);
+    renderRecords();
+  }
+});
 
 $("retry-btn").addEventListener("click", () => {
   primeSpeech();

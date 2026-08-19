@@ -144,6 +144,34 @@
   .rbtn.primary { background: #3b82f6; border-color: #3b82f6; color: #fff; }
   .rbtn:active { transform: scale(.97); }
   .footer { text-align: center; color: #94a3b8; font-size: .78rem; margin-top: 18px; }
+
+  /* 姓名輸入 */
+  .name-group { margin-bottom: 24px; }
+  .name-input {
+    width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px;
+    font-size: 1.1rem; font-weight: 700; text-align: center; color: #0f172a;
+    outline: none; background: #ffffff;
+  }
+  .name-input:focus { border-color: #3b82f6; }
+  .records-btn {
+    width: 100%; margin-top: 12px; padding: 16px; border: 2px solid #e2e8f0; border-radius: 16px;
+    background: #f8fafc; font-size: 1.05rem; font-weight: 700; cursor: pointer; color: #334155;
+  }
+  .records-btn:active { transform: scale(.97); }
+
+  /* 成績紀錄 */
+  .records-header { text-align: center; margin-bottom: 16px; }
+  .records-list { list-style: none; margin-bottom: 16px; }
+  .records-item {
+    display: flex; align-items: center; gap: 10px;
+    background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
+    padding: 12px 14px; margin-bottom: 8px;
+  }
+  .records-item .rn { font-weight: 800; flex: 1; color: #0f172a; }
+  .records-item .rm { color: #475569; font-size: .85rem; flex: 1.6; }
+  .records-item .rs { font-weight: 800; color: #059669; flex: none; }
+  .records-item .rd { color: #94a3b8; font-size: .78rem; flex: none; }
+  .empty-records { color: #64748b; text-align: center; padding: 16px; }
 </style>
 </head>
 <body>
@@ -185,7 +213,14 @@
       </div>
     </div>
 
+    <div class="name-group">
+      <div class="mode-label">姓名（選填，用來記錄成績）</div>
+      <input class="name-input" id="name-input" placeholder="輸入姓名…"
+             autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+
     <button class="start-btn" id="start-btn">開始測驗 ▶</button>
+    <button class="records-btn" id="records-btn">📊 老師成績紀錄</button>
     <div class="footer">單字題 73 題・句子題 34 題・點喇叭可發音</div>
   </div>
 
@@ -231,8 +266,20 @@
     </div>
   </div>
 
-</div>
+<!-- 成績紀錄 -->
+  <div class="screen" id="screen-records">
+    <div class="records-header">
+      <h1>📊 成績紀錄</h1>
+      <div class="subtitle">小朋友作答後自動記錄在本機</div>
+    </div>
+    <ul class="records-list" id="records-list"></ul>
+    <div class="result-btns">
+      <button class="rbtn" id="clear-records-btn">🗑️ 清空紀錄</button>
+      <button class="rbtn primary" id="records-home-btn">🏠 回首頁</button>
+    </div>
+  </div>
 
+</div>
 <script src="data.js"></script>
 <script src="app.js"></script>
 </body>
