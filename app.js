@@ -377,6 +377,13 @@ $("clear-records-btn").addEventListener("click", () => {
   }
 });
 
+// ===== QR 分享 =====
+$("qr-btn").addEventListener("click", () => {
+  $("qr-url").textContent = location.href;
+  show("screen-qr");
+});
+$("qr-home-btn").addEventListener("click", () => show("screen-home"));
+
 $("retry-btn").addEventListener("click", () => {
   primeSpeech();
   startQuiz();
