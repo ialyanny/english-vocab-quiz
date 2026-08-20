@@ -46,6 +46,79 @@ function fmtScore(n) {
   return Number.isInteger(n) ? n.toString() : n.toFixed(1);
 }
 
+// ===== 範圍選擇 =====
+let selectedUnits = new Set(["all"]); // all | 07 08 09 10 可複選
+function getActiveUnits() {
+  if (selectedUnits.has("all")) return ["07","08","09","10"];
+  return Array.from(selectedUnits);
+}
+function getFilteredWords() {
+  const units = getActiveUnits();
+  let out = [];
+  units.forEach(u => { if (WORDS_BY_UNIT[u]) out = out.concat(WORDS_BY_UNIT[u].map(w => ({ w, unit: u }))); });
+  return out;
+}
+function getFilteredSentences() {
+  const units = getActiveUnits();
+  let out = [];
+  units.forEach(u => { if (SENTENCES_BY_UNIT[u]) out = out.concat(SENTENCES_BY_UNIT[u].map(s => ({ s, unit: u }))); });
+  return out;
+}
+function updateRangeCounts() {
+  ["07","08","09","10"].forEach(u => {
+    const el = document.getElementById("cnt-" + u);
+    if (el) el.textContent = (WORDS_BY_UNIT[u] ? WORDS_BY_UNIT[u].length : 0) + " 題";
+  });
+  const allEl = document.getElementById("cnt-all");
+  if (allEl) {
+    const tot = ["07","08","09","10"].reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
+    allEl.textContent = tot + " 題";
+  }
+  // 停用空的回
+  document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
+    const u = b.dataset.unit;
+    if (u !== "all" && (!WORDS_BY_UNIT[u] || WORDS_BY_UNIT[u].length === 0)) {
+      b.disabled = true;
+      b.title = "此回尚未建置";
+    } else {
+      b.disabled = false;
+      b.title = "";
+    }
+  });
+  updateFooter();
+}
+function updateFooter() {
+  const w = getFilteredWords().length;
+  const s = getFilteredSentences().length;
+  const el = document.querySelector(".footer");
+  if (el) el.textContent = `已選範圍：單字 ${w} 題・句子 ${s} 題・點喇叭可發音`;
+}
+setTimeout(updateRangeCounts, 100);
+
+const rangeBtns = document.querySelectorAll(".range-btn");
+rangeBtns.forEach(b => b.addEventListener("click", () => {
+  const u = b.dataset.unit;
+  if (u === "all") {
+    selectedUnits = new Set(["all"]);
+    rangeBtns.forEach(x => x.classList.toggle("selected", x.dataset.unit === "all"));
+  } else {
+    selectedUnits.delete("all");
+    if (selectedUnits.has(u)) selectedUnits.delete(u);
+    else selectedUnits.add(u);
+    if (selectedUnits.size === 0) { selectedUnits = new Set(["all"]); }
+    rangeBtns.forEach(x => {
+      if (x.dataset.unit === "all") x.classList.toggle("selected", selectedUnits.has("all"));
+      else x.classList.toggle("selected", selectedUnits.has(x.dataset.unit));
+    });
+    // 若選滿四回，自動切回全部
+    if (["07","08","09","10"].every(v => selectedUnits.has(v))) {
+      selectedUnits = new Set(["all"]);
+      rangeBtns.forEach(x => x.classList.toggle("selected", x.dataset.unit === "all"));
+    }
+    updateFooter();
+  }
+}));
+
 // ===== 首頁 UI =====
 const modeBtns = document.querySelectorAll(".mode-btn");
 modeBtns.forEach(b => b.addEventListener("click", () => {
@@ -75,7 +148,11 @@ function shuffle(arr) {
 }
 
 function poolSize() {
-  return mode === "sentence" ? SENTENCES.length : WORDS.length;
+  const w = getFilteredWords().length;
+  const s = getFilteredSentences().length;
+  if (mode === "sentence") return s;
+  if (mode === "mixed") return w + s;
+  return w;
 }
 
 const MIX_TYPES = ["listen", "en2zh", "zh2en", "sentence"];
@@ -83,34 +160,47 @@ const MIX_TYPES = ["listen", "en2zh", "zh2en", "sentence"];
 function startQuiz() {
   qIndex = 0; score = 0; wrong = [];
   reviewMode = false;
+  const fWords = getFilteredWords();       // [{w:[en,zh],unit}]
+  const fSents = getFilteredSentences();   // [{s:{...},unit}]
+
+  if (fWords.length === 0 && fSents.length === 0) { alert("此範圍尚未有題目"); return; }
+  if (mode !== "sentence" && mode !== "mixed" && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
+  if (mode === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
 
   if (mode === "mixed") {
-    // 混合模式：四種題型平均分配後再打亂
     const per = questionCount === 0 ? Infinity : Math.ceil(questionCount / MIX_TYPES.length);
     let all = [];
     MIX_TYPES.forEach(t => {
-      const total = t === "sentence" ? SENTENCES.length : WORDS.length;
-      const idx = shuffle(Array.from({ length: total }, (_, i) => i));
+      const isSent = t === "sentence";
+      const pool = isSent ? fSents : fWords;
+      const idx = shuffle(Array.from({ length: pool.length }, (_, i) => i));
       const take = Math.min(per, idx.length);
-      idx.slice(0, take).forEach(i => all.push({ type: t, idx: i }));
+      idx.slice(0, take).forEach(i => {
+        const entry = isSent ? pool[i].s : pool[i].w;
+        all.push({ type: t, entry });
+      });
     });
     const n = questionCount === 0 ? all.length : Math.min(questionCount, all.length);
     questions = shuffle(all).slice(0, n);
-  } else {
-    const total = poolSize();
-    const idx = shuffle(Array.from({ length: total }, (_, i) => i));
+  } else if (mode === "sentence") {
+    const idx = shuffle(Array.from({ length: fSents.length }, (_, i) => i));
     const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: mode, idx: i }));
+    questions = idx.slice(0, n).map(i => ({ type: mode, entry: fSents[i].s }));
+  } else {
+    const idx = shuffle(Array.from({ length: fWords.length }, (_, i) => i));
+    const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
+    questions = idx.slice(0, n).map(i => ({ type: mode, entry: fWords[i].w }));
   }
 
   show("screen-quiz");
   renderQuestion();
 }
 
-// 目前題目的單字資料（支援錯題快照：questions 元素可能是 {type, idx} 或 {type, snap}）
+// 目前題目的單字資料（支援三種：{type, idx} 舊、{type, snap} 複習、{type, entry} 範圍過濾）
 function curEntry() {
   const q = questions[qIndex];
-  if (q.snap) return q.snap;   // {base, zh, s?, blank?}
+  if (q.snap) return q.snap;   // 複習快照 {base, zh, s?, blank?}
+  if (q.entry) return q.entry; // 範圍過濾後的實際資料 ([en,zh] 或 {s,blank,base,zh})
   return q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx];
 }
 
@@ -204,7 +294,7 @@ function renderQuestion() {
     setupTyping(en, en);
   } else { // sentence
     $("qtype-tag").textContent = "📝 句子填空";
-    const s = q.snap ? q.snap : SENTENCES[q.idx];
+    const s = q.snap ? q.snap : (q.entry ? q.entry : SENTENCES[q.idx]);
     const display = s.s.replace("{blank}", '<span class="blank">＿＿＿＿</span>');
     $("qword").innerHTML = display;
     $("zh-hint").textContent = "💡 " + s.zh;
@@ -312,7 +402,7 @@ $("speak-btn").addEventListener("click", () => {
   if (q.type === "zh2en") return;
   const entry = curEntry();
   if (q.type === "sentence") {
-    const s = entry.s !== undefined ? entry.s : SENTENCES[q.idx].s;
+    const s = entry.s !== undefined ? entry.s : (q.entry ? q.entry.s : SENTENCES[q.idx].s);
     speak(s.replace("{blank}", "blank"));
   } else {
     speak(entry.base !== undefined ? entry.base : entry[0]);
@@ -321,7 +411,7 @@ $("speak-btn").addEventListener("click", () => {
 
 // ===== 提醒（分階：先首字母，再完整答案；不影響計分） =====
 function getHintText(q, level) {
-  const entry = q.snap ? q.snap : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]);
+  const entry = q.snap ? q.snap : (q.entry ? q.entry : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]));
   const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
   const zh = entry.zh !== undefined ? entry.zh : entry[1];
   if (q.type === "listen") {
@@ -360,7 +450,7 @@ $("hint-btn").addEventListener("click", () => {
 
   // 填空題：直接把提示字填入輸入框，方便手寫/打字
   if (q.type === "zh2en" || q.type === "sentence") {
-    const entry = q.snap ? q.snap : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]);
+    const entry = q.snap ? q.snap : (q.entry ? q.entry : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]));
     const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
     const input = $("type-input");
     if (input && !input.disabled) {
@@ -378,6 +468,11 @@ $("hint-btn").addEventListener("click", () => {
 $("next-btn").addEventListener("click", () => goNext());
 
 // ===== 結果 =====
+function getRangeLabel() {
+  if (selectedUnits.has("all")) return "全部";
+  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回"};
+  return Array.from(selectedUnits).sort().map(u=>m[u]||u).join("＋");
+}
 function showResult() {
   $("rs-correct").textContent = fmtScore(score);
   $("rs-total").textContent = questions.length;
@@ -394,7 +489,7 @@ function showResult() {
   // 記錄成績（複習模式不再另存成績）
   if (!reviewMode) {
     const name = $("name-input").value.trim();
-    saveRecord({ name, mode: MODE_NAMES[mode], score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
+    saveRecord({ name, mode: MODE_NAMES[mode], range: getRangeLabel(), score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
   }
 
   const list = $("review-list");
@@ -450,7 +545,7 @@ function renderRecords() {
     li.className = "records-item";
     li.innerHTML =
       `<span class="rn">${r.name || "（未署名）"}</span>` +
-      `<span class="rm">${r.mode || ""}・${r.total} 題</span>` +
+      `<span class="rm">${r.mode || ""}${r.range?"・"+r.range:""}・${r.total} 題</span>` +
       `<span class="rs">${fmtScore(r.score)} 分</span>` +
       `<span class="rd">${fmtTime(r.ts)}</span>` +
       `<span class="ro">▶</span>`;
@@ -463,8 +558,8 @@ function openRecordDetail(i) {
   const recs = loadRecords();
   const r = recs[i];
   if (!r) return;
-  $("rd-title").textContent = `${r.name || "（未署名）"}・${r.mode || ""}・${fmtScore(r.score)} 分`;
-  $("rd-sub").textContent = `${r.total} 題・${fmtTime(r.ts)}`;
+  $("rd-title").textContent = `${r.name || "（未署名）"}・${r.mode || ""}${r.range?"・"+r.range:""}・${fmtScore(r.score)} 分`;
+  $("rd-sub").textContent = `${r.total} 題・${r.range||""}・${fmtTime(r.ts)}`;
   const w = r.wrong || [];
   const list = $("rd-list");
   list.innerHTML = "";
