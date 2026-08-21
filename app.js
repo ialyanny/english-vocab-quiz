@@ -263,16 +263,11 @@ function renderQuestion() {
   $("speak-hint").textContent = "點一下聽發音";
 
   if (q.type === "listen") {
-    $("qtype-tag").textContent = "👂 聽音選字";
-    $("qword").textContent = zh;   // 加上中文提示
-    const choices = buildChoices(en, zh, false);
-    choices.forEach(c => {
-      const b = document.createElement("button");
-      b.className = "opt";
-      b.textContent = c;
-      b.addEventListener("click", () => answer(b, c, en));
-      box.appendChild(b);
-    });
+    $("qtype-tag").textContent = "👂 聽音寫字";
+    $("qword").textContent = zh;
+    $("speak-btn").style.display = "none";
+    $("speak-hint").textContent = "";
+    setupTyping(en, en);
     setTimeout(() => speak(en), 200);
   } else if (q.type === "en2zh") {
     $("qtype-tag").textContent = "🇬🇧 英 → 中";
@@ -449,7 +444,7 @@ $("hint-btn").addEventListener("click", () => {
   btn.textContent = hintLevel === 1 ? "💡 再看完整答案" : "✨ 收回提示";
 
   // 填空題：直接把提示字填入輸入框，方便手寫/打字
-  if (q.type === "zh2en" || q.type === "sentence") {
+  if (q.type === "zh2en" || q.type === "sentence" || q.type === "listen") {
     const entry = q.snap ? q.snap : (q.entry ? q.entry : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]));
     const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
     const input = $("type-input");
@@ -514,7 +509,7 @@ function showResult() {
 
 // ===== 成績紀錄（存本機 localStorage） =====
 const REC_KEY = "vocab_quiz_records";
-const MODE_NAMES = { listen: "聽音選字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空", mixed: "混合題型" };
+const MODE_NAMES = { listen: "聽音寫字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空", mixed: "混合題型" };
 
 function loadRecords() {
   try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; }
