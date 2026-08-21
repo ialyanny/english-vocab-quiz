@@ -519,8 +519,10 @@ function getRangeLabel() {
 }
 function showResult() {
   try {
-    $("rs-correct").textContent = fmtScore(score);
-    $("rs-total").textContent = questions.length;
+    const elCorrect = $("rs-correct");
+    if (elCorrect) elCorrect.textContent = fmtScore(score);
+    const elTotal = $("rs-total");
+    if (elTotal) elTotal.textContent = questions.length;
     const pct = questions.length ? Math.round(score / questions.length * 100) : 0;
     let msg;
     if (pct === 100) msg = "🏆 太厲害了，全部答對！";
@@ -528,8 +530,10 @@ function showResult() {
     else if (pct >= 70) msg = "👍 很不錯，繼續加油！";
     else if (pct >= 50) msg = "💪 有進步空間，再試一次！";
     else msg = "📚 再多練習幾次吧！";
-    $("rs-message").textContent = msg;
-    $("review-title").textContent = reviewMode ? "📖 錯題複習結果（不會另存成績）" : "📖 答錯的題目（可點喇叭複習）";
+    const elMsg = $("rs-message");
+    if (elMsg) elMsg.textContent = msg;
+    const elRT = $("review-title") || document.querySelector("#screen-result .review-title");
+    if (elRT) elRT.textContent = reviewMode ? "📖 錯題複習結果（不會另存成績）" : "📖 答錯的題目（可點喇叭複習）";
 
     // 記錄成績（複習模式不再另存成績）— 防禦：避免 localStorage 錯誤阻斷成績顯示
     if (!reviewMode) {
