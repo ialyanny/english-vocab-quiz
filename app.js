@@ -270,7 +270,8 @@ function show(id) {
 function buildChoices(en, zh, isZh) {
   const others = WORDS.filter(w => w[1] !== zh);
   const dist = shuffle(others).slice(0, 3);
-  const choices = shuffle([en, ...dist.map(w => isZh ? w[1] : w[0])]);
+  const correct = isZh ? zh : en;
+  const choices = shuffle([correct, ...dist.map(w => isZh ? w[1] : w[0])]);
   return choices;
 }
 
@@ -292,19 +293,9 @@ function renderQuestion() {
   hintBtn.style.display = "";
   $("hint-box").textContent = "";
 
-  // 顯示單字圖片（有圖就顯示，無圖則隱藏；中→英填空不顯示圖片）
+  // 圖片已全面移除（WORD_IMAGES 仍對應舊清單，為避免誤導，所有題型皆不顯示圖片）
   const imgWrap = document.querySelector(".word-img-wrap");
-  const imgEl = $("word-img");
-  const imgUrl = WORD_IMAGES ? WORD_IMAGES[en] : null;
-  if (q.type === "zh2en") {
-    imgWrap.classList.remove("show");
-  } else if (imgUrl) {
-    imgEl.src = imgUrl;
-    imgEl.onerror = () => imgWrap.classList.remove("show");
-    imgWrap.classList.add("show");
-  } else {
-    imgWrap.classList.remove("show");
-  }
+  imgWrap.classList.remove("show");
 
   $("progress-text").textContent = `第 ${qIndex + 1} / ${questions.length} 題`;
   $("score-text").textContent = `✓ ${fmtScore(score)}`;
@@ -527,42 +518,53 @@ function getRangeLabel() {
   return Array.from(selectedUnits).sort().map(u=>m[u]||u).join("＋");
 }
 function showResult() {
-  $("rs-correct").textContent = fmtScore(score);
-  $("rs-total").textContent = questions.length;
-  const pct = Math.round(score / questions.length * 100);
-  let msg;
-  if (pct === 100) msg = "🏆 太厲害了，全部答對！";
-  else if (pct >= 90) msg = "🌟 超棒！差一點就滿分";
-  else if (pct >= 70) msg = "👍 很不錯，繼續加油！";
-  else if (pct >= 50) msg = "💪 有進步空間，再試一次！";
-  else msg = "📚 再多練習幾次吧！";
-  $("rs-message").textContent = msg;
-  $("review-title").textContent = reviewMode ? "📖 錯題複習結果（不會另存成績）" : "📖 答錯的題目（可點喇叭複習）";
+  try {
+    $("rs-correct").textContent = fmtScore(score);
+    $("rs-total").textContent = questions.length;
+    const pct = questions.length ? Math.round(score / questions.length * 100) : 0;
+    let msg;
+    if (pct === 100) msg = "🏆 太厲害了，全部答對！";
+    else if (pct >= 90) msg = "🌟 超棒！差一點就滿分";
+    else if (pct >= 70) msg = "👍 很不錯，繼續加油！";
+    else if (pct >= 50) msg = "💪 有進步空間，再試一次！";
+    else msg = "📚 再多練習幾次吧！";
+    $("rs-message").textContent = msg;
+    $("review-title").textContent = reviewMode ? "📖 錯題複習結果（不會另存成績）" : "📖 答錯的題目（可點喇叭複習）";
 
-  // 記錄成績（複習模式不再另存成績）
-  if (!reviewMode) {
-    const name = $("name-input").value.trim();
-    saveRecord({ name, mode: getModeLabel(), range: getRangeLabel(), score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
-  }
+    // 記錄成績（複習模式不再另存成績）— 防禦：避免 localStorage 錯誤阻斷成績顯示
+    if (!reviewMode) {
+      try {
+        const name = ($("name-input")?.value || "").trim();
+        saveRecord({ name, mode: getModeLabel(), range: getRangeLabel(), score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
+      } catch (e) { console.warn("saveRecord failed", e); }
+    }
 
-  const list = $("review-list");
-  list.innerHTML = "";
-  if (wrong.length === 0) {
-    list.innerHTML = '<li class="empty-review">沒有答錯的題目，太棒了！</li>';
-  } else {
-    wrong.forEach(w => {
-      const li = document.createElement("li");
-      li.className = "review-item";
-      li.innerHTML = `<span class="w">${w.base}</span><span class="c">${w.zh}</span>`;
-      const spk = document.createElement("button");
-      spk.className = "spk";
-      spk.textContent = "🔊";
-      spk.addEventListener("click", () => speak(w.base));
-      li.appendChild(spk);
-      list.appendChild(li);
-    });
+    const list = $("review-list");
+    list.innerHTML = "";
+    if (wrong.length === 0) {
+      list.innerHTML = '<li class="empty-review">沒有答錯的題目，太棒了！</li>';
+    } else {
+      wrong.forEach(w => {
+        const li = document.createElement("li");
+        li.className = "review-item";
+        li.innerHTML = `<span class="w">${w.base}</span><span class="c">${w.zh}</span>`;
+        const spk = document.createElement("button");
+        spk.className = "spk";
+        spk.textContent = "🔊";
+        spk.addEventListener("click", () => speak(w.base));
+        li.appendChild(spk);
+        list.appendChild(li);
+      });
+    }
+  } catch (e) {
+    console.error("showResult error", e);
+    alert("顯示成績時發生錯誤：" + e.message);
+  } finally {
+    show("screen-result");
+    // 確保進度條滿格
+    const bar = $("bar-fill");
+    if (bar) bar.style.width = "100%";
   }
-  show("screen-result");
 }
 
 // ===== 成績紀錄（存本機 localStorage） =====
