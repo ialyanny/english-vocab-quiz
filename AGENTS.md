@@ -20,8 +20,8 @@
 - [x] app.js fIdx→entry 遷移，支援依範圍出題
 - [x] Unit 08 45字/45句（人工提供，inpresstion→impression）
 - [x] 聽音選字改為聽音寫字（手寫輸入）
-- [ ] Unit 09 藍色字體待補
-- [ ] Unit 10 藍色字體待補
+- [x] Unit 09 46字/46句（人工輸入藍字 + Groq 翻譯例句，已寫入 data.js:119）
+- [x] Unit 10 45字/45句（人工輸入藍字 + Groq 翻譯例句，已寫入 data.js:167）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -38,4 +38,4 @@
 - `data.js` 按回分組，選範圍時用 getFilteredWords()/getFilteredSentences()
 - 考題物件為 {type, entry}（entry 為 [en,zh] 或 {s,blank,base,zh}），複習用 {type, snap}
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
-- Groq Vision 免費版 200K TPD，每張圖 ~4.6K tokens，Unit 07 已用高額度，09/10 待人工或隔日額度重置再補
+- Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成
