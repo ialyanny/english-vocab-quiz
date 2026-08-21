@@ -22,6 +22,9 @@
 - [x] 聽音選字改為聽音寫字（手寫輸入）
 - [x] Unit 09 46字/46句（人工輸入藍字 + Groq 翻譯例句，已寫入 data.js:119）
 - [x] Unit 10 45字/45句（人工輸入藍字 + Groq 翻譯例句，已寫入 data.js:167）
+- [x] 聽音寫字可重複聽發音（app.js:265 顯示喇叭 + 點再聽）
+- [x] 中→英填空取消配圖（app.js:242 依 q.type==='zh2en' 隱藏 WORD_IMAGES）
+- [x] 題型可複選（app.js:37 selectedModes + index.html:264 可複選，混合為全選）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -38,4 +41,5 @@
 - `data.js` 按回分組，選範圍時用 getFilteredWords()/getFilteredSentences()
 - 考題物件為 {type, entry}（entry 為 [en,zh] 或 {s,blank,base,zh}），複習用 {type, snap}
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
+- 聽音寫字顯示喇叭可重播，中→英填空隱藏圖片，題型支援複選（selectedModes）
 - Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成

@@ -1,27 +1,27 @@
 # 交接檔
 
 ## ⏯️ 目前做到哪
-- Unit 09 完成：46 個藍色字體單字 + 46 句已寫入 `data.js:119` WORDS_BY_UNIT["09"] / SENTENCES_BY_UNIT["09"]（人工輸入藍字，Groq openai/gpt-oss-20b 翻譯 + gpt-oss-120b 造例句）
-- Unit 10 完成：45 個藍色字體單字 + 45 句已寫入 `data.js:167` WORDS_BY_UNIT["10"] / SENTENCES_BY_UNIT["10"]（同上，contnual→continual、houswork→housework 已修正）
-- Unit 08 已完成（45字/45句）、聽音改寫字已上線
-- Groq Vision 本地土法 OCR 驗證失敗（RapidOCR 藍色遮罩僅 2.7% 難以區分），改用 `manual_input/index.html` 人工助手收集 21 張圖藍字
+- Unit 09/10 已完成並推上線 `b4a511f`：09 46字/46句 + 10 45字/45句（人工藍字 + Groq 翻譯例句，已修正 contnual/houswork）
+- 本次新增（待推）：聽音寫字重複聽發音（`app.js:265` 顯示喇叭、點再聽）、中→英填空隱藏圖片（`app.js:242`）、題型可複選（`app.js:37` selectedModes + `index.html:264`）
+- 範圍選擇已支援 07/08/09/10 四回 + 全部（可複選），題型支援複選（混合為全選）
 
 ## 🚦 目前狀態
-- 可運行：https://ialyanny.github.io/english-vocab-quiz/ 待部署（本地 data.js 已含 07:64 + 08:45 + 09:46 + 10:45 = 200字 / 184句）
-- 已驗證：`node --check data.js` 通過，`WORDS 09` 46、`SENTS 09` 46、`WORDS 10` 45、`SENTS 10` 45
-- Git：data.js 已修改待 commit，manual_input/ 為本地助手（不納入提交）
+- 可運行：https://ialyanny.github.io/english-vocab-quiz/ 已上線 200字/184句，本地新增三項待部署
+- 已驗證：`node --check app.js/data.js` 通過，`WORDS 09` 46、`SENTS 09` 46、`WORDS 10` 45、`SENTS 10` 45，選型複選邏輯已測
+- Git：`b4a511f` 已推，本地 `app.js/index.html/AGENTS.md` 已改待 commit
 
 ## ➡️ 下一步
-1. `git commit + push` 上線，驗證 GitHub Pages 範圍選擇（07/08/09/10/全部）出題正常
+1. `git commit + push` 本次三項（聽音重播、zh2en無圖、題型複選），驗證 iPad 實際操作
 2. 重建 WORD_IMAGES 配圖（目前仍對應舊清單，需按新 200 字重建）
-3. 清理本地助手與暫存（manual_input、ocr_test.txt 等不提交）
+3. 清理暫存並更新 handoff
 
 ## ⚠️ 注意事項
-- Groq Vision 200K TPD 當日已滿（Used 199961），單張 800px~1.9K tokens 仍需 22分冷卻，09/10 已改人工輸入繞過
-- Groq 文字模型額度獨立，已用 openai/gpt-oss-20b (2022+1549 tokens) 翻譯、openai/gpt-oss-120b (5268+4238 tokens) 造例句
-- data.js 修正：contnual→continual、houswork→housework、fort 保留為「要塞」
+- 聽音寫字：`renderQuestion:265` 顯示喇叭 + `speak-hint` 改為「點一下再聽一次」，`speak-btn` 點擊對 listen 有效、zh2en 仍隱藏
+- 中→英填空：`app.js:242` 以 `q.type==='zh2en'` 隱藏 WORD_IMAGES，與聽音寫字區隔
+- 題型複選：`selectedModes` Set 至少一項，`getSelectedModes()` 展開 mixed，`getModeLabel()` 用於成績紀錄
+- Groq 額度：Vision 200K TPD 已滿，文字模型獨立
 
 ## 🕐 最後更新
 - 時間：2026-08-21 晚間
 - 更新者：Muse Spark @ CORNI
-- Git push：⏳ 待推（09/10 已寫入）
+- Git push：⏳ 待推（聽音重播 + zh2en無圖 + 題型複選）

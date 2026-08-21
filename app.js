@@ -31,7 +31,28 @@ if ("speechSynthesis" in window) {
 }
 
 // ===== 狀態 =====
-let mode = "listen";    // listen | en2zh | zh2en | sentence
+const MIX_TYPES = ["listen", "en2zh", "zh2en", "sentence"];
+const MODE_NAMES = { listen: "聽音寫字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空", mixed: "混合題型" };
+let selectedModes = new Set(["listen"]); // 題型可複選，至少一項
+let mode = "listen";    // 相容舊變數（單選時的首個）
+function syncModeVar() {
+  const arr = Array.from(selectedModes);
+  if (arr.includes("mixed")) mode = "mixed";
+  else if (arr.length === 1) mode = arr[0];
+  else mode = arr[0]; // 多選時 mode 取首個，實際以 selectedModes 為準
+}
+function getSelectedModes() {
+  if (selectedModes.has("mixed")) return MIX_TYPES.slice();
+  // 若四項全選，視為混合
+  if (MIX_TYPES.every(m => selectedModes.has(m))) return MIX_TYPES.slice();
+  return Array.from(selectedModes).filter(m => MIX_TYPES.includes(m));
+}
+function getModeLabel() {
+  const ms = getSelectedModes();
+  if (ms.length === 4) return "混合四種題型";
+  if (ms.length === 1) return MODE_NAMES[ms[0]] || ms[0];
+  return ms.map(m => MODE_NAMES[m]).join("＋");
+}
 let questionCount = 0;  // 0 = 全部
 let questions = [];     // 題目序列（索引）
 let qIndex = 0;
@@ -121,10 +142,43 @@ rangeBtns.forEach(b => b.addEventListener("click", () => {
 
 // ===== 首頁 UI =====
 const modeBtns = document.querySelectorAll(".mode-btn");
+// 初始化預設選聽音寫字
+document.querySelector('.mode-btn[data-mode="listen"]')?.classList.add("selected");
 modeBtns.forEach(b => b.addEventListener("click", () => {
-  modeBtns.forEach(x => x.classList.remove("selected"));
-  b.classList.add("selected");
-  mode = b.dataset.mode;
+  const m = b.dataset.mode;
+  if (m === "mixed") {
+    const isSelected = b.classList.contains("selected");
+    if (isSelected) {
+      b.classList.remove("selected");
+      selectedModes.delete("mixed");
+      if (selectedModes.size === 0) {
+        selectedModes.add("listen");
+        document.querySelector('.mode-btn[data-mode="listen"]')?.classList.add("selected");
+      }
+    } else {
+      MIX_TYPES.forEach(t => selectedModes.add(t));
+      selectedModes.add("mixed");
+      modeBtns.forEach(x => x.classList.add("selected"));
+    }
+  } else {
+    if (selectedModes.has("mixed")) {
+      selectedModes.delete("mixed");
+      document.querySelector('.mode-btn[data-mode="mixed"]')?.classList.remove("selected");
+    }
+    if (selectedModes.has(m)) {
+      if (selectedModes.size === 1) return; // 至少保留一項
+      selectedModes.delete(m);
+      b.classList.remove("selected");
+    } else {
+      selectedModes.add(m);
+      b.classList.add("selected");
+      if (MIX_TYPES.every(t => selectedModes.has(t))) {
+        selectedModes.add("mixed");
+        document.querySelector('.mode-btn[data-mode="mixed"]')?.classList.add("selected");
+      }
+    }
+  }
+  syncModeVar();
 }));
 const countBtns = document.querySelectorAll(".count-btn");
 countBtns.forEach(b => b.addEventListener("click", () => {
@@ -150,12 +204,12 @@ function shuffle(arr) {
 function poolSize() {
   const w = getFilteredWords().length;
   const s = getFilteredSentences().length;
-  if (mode === "sentence") return s;
-  if (mode === "mixed") return w + s;
+  const ms = getSelectedModes();
+  if (ms.length === 1 && ms[0] === "sentence") return s;
+  if (ms.length > 1) return w + s;
+  if (ms[0] === "sentence") return s;
   return w;
 }
-
-const MIX_TYPES = ["listen", "en2zh", "zh2en", "sentence"];
 
 function startQuiz() {
   qIndex = 0; score = 0; wrong = [];
@@ -163,14 +217,16 @@ function startQuiz() {
   const fWords = getFilteredWords();       // [{w:[en,zh],unit}]
   const fSents = getFilteredSentences();   // [{s:{...},unit}]
 
+  const modes = getSelectedModes();
   if (fWords.length === 0 && fSents.length === 0) { alert("此範圍尚未有題目"); return; }
-  if (mode !== "sentence" && mode !== "mixed" && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
-  if (mode === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
+  if (!modes.includes("sentence") && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
+  if (modes.length === 1 && modes[0] === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
+  if (modes.some(m => m==="sentence") && fSents.length===0 && modes.every(m=>m==="sentence")) { alert("此範圍沒有句子題"); return; }
 
-  if (mode === "mixed") {
-    const per = questionCount === 0 ? Infinity : Math.ceil(questionCount / MIX_TYPES.length);
+  if (modes.length > 1) {
+    const per = questionCount === 0 ? Infinity : Math.ceil(questionCount / modes.length);
     let all = [];
-    MIX_TYPES.forEach(t => {
+    modes.forEach(t => {
       const isSent = t === "sentence";
       const pool = isSent ? fSents : fWords;
       const idx = shuffle(Array.from({ length: pool.length }, (_, i) => i));
@@ -182,14 +238,14 @@ function startQuiz() {
     });
     const n = questionCount === 0 ? all.length : Math.min(questionCount, all.length);
     questions = shuffle(all).slice(0, n);
-  } else if (mode === "sentence") {
+  } else if (modes[0] === "sentence") {
     const idx = shuffle(Array.from({ length: fSents.length }, (_, i) => i));
     const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: mode, entry: fSents[i].s }));
+    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fSents[i].s }));
   } else {
     const idx = shuffle(Array.from({ length: fWords.length }, (_, i) => i));
     const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: mode, entry: fWords[i].w }));
+    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fWords[i].w }));
   }
 
   show("screen-quiz");
@@ -236,11 +292,13 @@ function renderQuestion() {
   hintBtn.style.display = "";
   $("hint-box").textContent = "";
 
-  // 顯示單字圖片（有圖就顯示，無圖則隱藏）
+  // 顯示單字圖片（有圖就顯示，無圖則隱藏；中→英填空不顯示圖片）
   const imgWrap = document.querySelector(".word-img-wrap");
   const imgEl = $("word-img");
   const imgUrl = WORD_IMAGES ? WORD_IMAGES[en] : null;
-  if (imgUrl) {
+  if (q.type === "zh2en") {
+    imgWrap.classList.remove("show");
+  } else if (imgUrl) {
     imgEl.src = imgUrl;
     imgEl.onerror = () => imgWrap.classList.remove("show");
     imgWrap.classList.add("show");
@@ -265,8 +323,8 @@ function renderQuestion() {
   if (q.type === "listen") {
     $("qtype-tag").textContent = "👂 聽音寫字";
     $("qword").textContent = zh;
-    $("speak-btn").style.display = "none";
-    $("speak-hint").textContent = "";
+    $("speak-btn").style.display = "";
+    $("speak-hint").textContent = "點一下再聽一次";
     setupTyping(en, en);
     setTimeout(() => speak(en), 200);
   } else if (q.type === "en2zh") {
@@ -484,7 +542,7 @@ function showResult() {
   // 記錄成績（複習模式不再另存成績）
   if (!reviewMode) {
     const name = $("name-input").value.trim();
-    saveRecord({ name, mode: MODE_NAMES[mode], range: getRangeLabel(), score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
+    saveRecord({ name, mode: getModeLabel(), range: getRangeLabel(), score, total: questions.length, ts: Date.now(), wrong: wrong.slice() });
   }
 
   const list = $("review-list");
@@ -509,7 +567,6 @@ function showResult() {
 
 // ===== 成績紀錄（存本機 localStorage） =====
 const REC_KEY = "vocab_quiz_records";
-const MODE_NAMES = { listen: "聽音寫字", en2zh: "英→中", zh2en: "中→英填空", sentence: "句子填空", mixed: "混合題型" };
 
 function loadRecords() {
   try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; }
