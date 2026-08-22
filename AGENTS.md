@@ -25,6 +25,10 @@
 - [x] 聽音寫字可重複聽發音（app.js:265 顯示喇叭 + 點再聽）
 - [x] 中→英填空取消配圖（app.js:242 依 q.type==='zh2en' 隱藏 WORD_IMAGES）
 - [x] 題型可複選（app.js:37 selectedModes + index.html:264 可複選，混合為全選）
+- [x] 成績畫面 null 修正（index.html:347 補 id、app.js:530 防禦，修 Cannot set properties of null）
+- [x] 英翻中選項純中文（app.js:273 correct=zh）、全面移除圖片（app.js:295 一律隱藏）
+- [x] 網頁上方截斷修正（index.html:11 body 改 flex-start + 100dvh + safe-area）
+- [x] 成績紀錄雲端自動同步 + 匯出匯入（app.js:575 NPOINT + index.html 成績紀錄區）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構

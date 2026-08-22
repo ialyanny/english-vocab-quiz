@@ -571,8 +571,10 @@ function showResult() {
   }
 }
 
-// ===== 成績紀錄（存本機 localStorage） =====
+// ===== 成績紀錄（存本機 localStorage + 雲端自動同步） =====
 const REC_KEY = "vocab_quiz_records";
+const SYNC_KEY = "vocab_sync_id";
+const NPOINT_BASE = "https://api.npoint.io";
 
 function loadRecords() {
   try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; }
@@ -583,6 +585,66 @@ function saveRecord(entry) {
   recs.unshift(entry);
   if (recs.length > 200) recs.length = 200;
   localStorage.setItem(REC_KEY, JSON.stringify(recs));
+  // 自動雲端備份（非同步，不阻斷）
+  syncUpload().catch(()=>{});
+}
+async function getSyncId(createIfMissing=true) {
+  let id = localStorage.getItem(SYNC_KEY);
+  if (id) return id;
+  if (!createIfMissing) return null;
+  try {
+    const res = await fetch(NPOINT_BASE, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify([]) });
+    if (!res.ok) throw new Error("create failed");
+    const data = await res.json();
+    id = data.id;
+    if (id) localStorage.setItem(SYNC_KEY, id);
+    return id;
+  } catch(e) { console.warn("getSyncId failed", e); return null; }
+}
+async function syncUpload() {
+  let id = localStorage.getItem(SYNC_KEY);
+  if (!id) {
+    // 自動建立同步碼以實現自動雲端備份
+    id = await getSyncId(true);
+    if (!id) return;
+  }
+  const recs = loadRecords();
+  try {
+    await fetch(`${NPOINT_BASE}/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(recs) });
+    const el = document.getElementById("sync-status");
+    if (el) { el.textContent = "☁️ 已同步 " + new Date().toLocaleTimeString(); el.style.color = "#059669"; }
+  } catch(e) { console.warn("syncUpload failed", e); const el=document.getElementById("sync-status"); if(el){el.textContent="☁️ 同步失敗（離線）"; el.style.color="#dc2626";} }
+}
+async function syncDownload() {
+  const id = localStorage.getItem(SYNC_KEY);
+  if (!id) return null;
+  try {
+    const res = await fetch(`${NPOINT_BASE}/${id}`);
+    if (!res.ok) throw new Error("fetch failed");
+    const cloudRecs = await res.json();
+    if (!Array.isArray(cloudRecs)) return null;
+    const localRecs = loadRecords();
+    const seen = new Set(cloudRecs.map(r => `${r.ts}-${r.name}-${r.score}-${r.total}`));
+    let added = 0;
+    for (const r of localRecs) {
+      const key = `${r.ts}-${r.name}-${r.score}-${r.total}`;
+      if (!seen.has(key)) { cloudRecs.push(r); added++; }
+    }
+    cloudRecs.sort((a,b)=>b.ts-a.ts);
+    if (cloudRecs.length>200) cloudRecs.length=200;
+    // 若有新增，更新本機與雲端
+    if (added>0) {
+      localStorage.setItem(REC_KEY, JSON.stringify(cloudRecs));
+      // 回寫雲端（不等待）
+      fetch(`${NPOINT_BASE}/${id}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(cloudRecs) }).catch(()=>{});
+    } else {
+      // 僅用雲端覆蓋本機（以雲端為準，已排序）
+      localStorage.setItem(REC_KEY, JSON.stringify(cloudRecs));
+    }
+    const el=document.getElementById("sync-status");
+    if(el){ el.textContent="☁️ 已同步 " + new Date().toLocaleTimeString(); el.style.color="#059669"; }
+    return cloudRecs;
+  } catch(e){ console.warn("syncDownload failed", e); const el=document.getElementById("sync-status"); if(el){el.textContent="☁️ 同步失敗（離線）"; el.style.color="#dc2626";} return null; }
 }
 function pad2(n) { return n < 10 ? "0" + n : "" + n; }
 function fmtTime(ts) {
@@ -590,10 +652,22 @@ function fmtTime(ts) {
   return `${pad2(d.getMonth() + 1)}/${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
 }
 
-function renderRecords() {
+async function renderRecords() {
+  // 先嘗試雲端同步（若已有同步碼）
+  const syncId = localStorage.getItem(SYNC_KEY);
+  if (syncId) {
+    const statusEl = document.getElementById("sync-status");
+    if (statusEl) { statusEl.textContent = "☁️ 同步中…"; statusEl.style.color = "#64748b"; }
+    await syncDownload();
+  }
   const recs = loadRecords();
   const list = $("records-list");
   list.innerHTML = "";
+  // 更新同步碼顯示
+  const syncCodeEl = document.getElementById("sync-code");
+  if (syncCodeEl) syncCodeEl.textContent = syncId || "（尚未建立）";
+  const syncInput = document.getElementById("sync-input");
+  if (syncInput && !syncInput.value) syncInput.placeholder = syncId ? "輸入他班同步碼" : "貼上同步碼";
   if (recs.length === 0) {
     list.innerHTML = '<li class="empty-records">還沒有任何成績紀錄。</li>';
     return;
@@ -671,10 +745,94 @@ $("rd-replay").addEventListener("click", () => {
   if (!isNaN(i)) { primeSpeech(); startReviewFromRecord(i); }
 });
 $("clear-records-btn").addEventListener("click", () => {
-  if (confirm("確定要清空所有成績紀錄嗎？")) {
+  if (confirm("確定要清空本機成績紀錄嗎？（雲端仍保留）")) {
     localStorage.removeItem(REC_KEY);
     renderRecords();
   }
+});
+// 建立同步碼
+$("create-sync-btn")?.addEventListener("click", async () => {
+  const btn = $("create-sync-btn");
+  const old = btn.textContent;
+  btn.textContent = "建立中…"; btn.disabled = true;
+  try {
+    // 強制建立新 ID（覆蓋舊的）
+    localStorage.removeItem(SYNC_KEY);
+    const id = await getSyncId(true);
+    if (id) {
+      await syncUpload();
+      alert("已建立同步碼：\n" + id + "\n\n請複製並貼到其他 iPad 的「貼上同步碼」後按加入。");
+      renderRecords();
+    } else throw new Error("建立失敗");
+  } catch(e) { alert("建立失敗：" + e.message); }
+  finally { btn.textContent = old; btn.disabled = false; }
+});
+$("copy-sync-btn")?.addEventListener("click", async () => {
+  const id = localStorage.getItem(SYNC_KEY);
+  if (!id) { alert("尚未建立同步碼，請先按「建立同步碼」"); return; }
+  try { await navigator.clipboard.writeText(id); alert("已複製同步碼"); } catch(e) { prompt("請手動複製同步碼：", id); }
+});
+$("join-sync-btn")?.addEventListener("click", async () => {
+  const input = $("sync-input");
+  const id = (input?.value || "").trim();
+  if (!id) { alert("請貼上同步碼"); return; }
+  // 驗證是否有效
+  try {
+    const res = await fetch(`${NPOINT_BASE}/${id}`);
+    if (!res.ok) throw new Error("同步碼無效或不存在");
+    await res.json(); // 驗證為合法 JSON
+    localStorage.setItem(SYNC_KEY, id);
+    input.value = "";
+    alert("已加入同步碼，正在合併成績…");
+    await syncDownload();
+    renderRecords();
+  } catch(e) { alert("加入失敗：" + e.message); }
+});
+$("manual-sync-btn")?.addEventListener("click", async () => {
+  const btn = $("manual-sync-btn");
+  const old = btn.textContent;
+  btn.textContent = "同步中…"; btn.disabled = true;
+  try {
+    await syncDownload();
+    await syncUpload();
+    renderRecords();
+  } finally { btn.textContent = old; btn.disabled = false; }
+});
+$("export-btn")?.addEventListener("click", () => {
+  const recs = loadRecords();
+  if (recs.length===0) { alert("沒有可匯出的紀錄"); return; }
+  const blob = new Blob([JSON.stringify(recs, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "vocab_records_" + new Date().toISOString().slice(0,10) + ".json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+$("import-btn")?.addEventListener("click", () => { $("import-file")?.click(); });
+$("import-file")?.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (!Array.isArray(data)) throw new Error("格式錯誤");
+    const local = loadRecords();
+    const seen = new Set(local.map(r=>`${r.ts}-${r.name}-${r.score}-${r.total}`));
+    let added=0;
+    for (const r of data) {
+      const key=`${r.ts}-${r.name}-${r.score}-${r.total}`;
+      if(!seen.has(key)){ local.push(r); added++; }
+    }
+    local.sort((a,b)=>b.ts-a.ts);
+    if(local.length>200) local.length=200;
+    localStorage.setItem(REC_KEY, JSON.stringify(local));
+    alert(`已匯入 ${added} 筆新紀錄（共 ${local.length} 筆）`);
+    // 若已有同步碼，自動上傳
+    if (localStorage.getItem(SYNC_KEY)) await syncUpload();
+    renderRecords();
+  } catch(err){ alert("匯入失敗："+err.message); }
+  finally { e.target.value=""; }
 });
 
 // ===== QR 分享 =====
