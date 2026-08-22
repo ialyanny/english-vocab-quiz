@@ -5,11 +5,11 @@
 
 - 網址：https://ialyanny.github.io/english-vocab-quiz/
 - Repo：ialyanny/english-vocab-quiz (public, main 分支)
-- 單字來源：`G:\我的雲端硬碟\英文單字\Unti07`~`Unti10` (44 張 JPG)
+- 單字來源：`G:\我的雲端硬碟\英文單字\Unti07`~`Unti10` (44 張 JPG) + 7月空英 103字（人工清單）
 
 ## 技術栈
 - 前端：純 HTML/CSS/JS (無框架)，Web Speech API 發音
-- 資料：`data.js` (WORDS_BY_UNIT / SENTENCES_BY_UNIT)、`images.js` (WORD_IMAGES)
+- 資料：`data.js` (WORDS_BY_UNIT / SENTENCES_BY_UNIT / KK_BY_UNIT)、`images.js` (WORD_IMAGES)
 - 部署：GitHub Pages
 
 ## 路線圖
@@ -29,6 +29,7 @@
 - [x] 英翻中選項純中文（app.js:273 correct=zh）、全面移除圖片（app.js:295 一律隱藏）
 - [x] 網頁上方截斷修正（index.html:11 body 改 flex-start + 100dvh + safe-area）
 - [x] 成績紀錄雲端自動同步 + 匯出匯入（app.js:575 NPOINT + index.html 成績紀錄區）
+- [x] 7月空英 103字/103句 + KK 音標（JUL, data.js:214/320/626, 英翻中題目顯示 KK via getKK）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -46,4 +47,5 @@
 - 考題物件為 {type, entry}（entry 為 [en,zh] 或 {s,blank,base,zh}），複習用 {type, snap}
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
 - 聽音寫字顯示喇叭可重播，中→英填空隱藏圖片，題型支援複選（selectedModes）
+- 7月空英為獨立單元 JUL，英翻中題目透過 getKK(unit) 顯示 KK 音標（僅 JUL 有，其餘留空）
 - Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成

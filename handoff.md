@@ -1,27 +1,27 @@
 # 交接檔
 
 ## ⏯️ 目前做到哪
-- Unit 09/10 已完成 `b4a511f` + 題型複選 `b26441f` 已上線；本次修復三項 bug 並新增同步與版面修正
-- 修復：英翻中選項純中文（`app.js:273` correct=zh）、考完成績 null（`index.html:347` 補 id + `app.js:530` 防禦）、全面移除圖片（`app.js:295`）
-- 新增：網頁上方截斷修正（`index.html:11` flex-start + 100dvh + safe-area）、成績紀錄雲端自動同步 + 匯出匯入（`app.js:575` NPOINT + `index.html` 成績紀錄區）
+- 7月空英 103字/103句 + KK 音標已完成：`data.js:214` WORDS_BY_UNIT["JUL"]、`data.js:320` KK_BY_UNIT["JUL"]、`data.js:626` SENTENCES_BY_UNIT["JUL"]，英翻中透過 `getKK()` 在題目下方顯示 KK（僅 JUL 有）
+- 範圍選擇已新增「7月空英」按鈕（`index.html:262`），`app.js:82` 已支援 JUL（getActiveUnits/updateRangeCounts/getRangeLabel），`index.html:228` 改 3 欄佈局
+- 先前修復（`c9056dc/ed70627/ed9dbae`）已上線：en2zh 純中文、成績 null、無圖、版面截斷、同步匯出
 
 ## 🚦 目前狀態
-- 可運行：https://ialyanny.github.io/english-vocab-quiz/ 待部署（200字/184句 + 三 bug 修復 + 同步/版面）
-- 已驗證：`node --check app.js/data.js` 通過，`en2zh` 四選項皆中文、成績頁 `review-title` 已補 id、圖片全面隱藏
-- Git：`c9056dc/b26441f/b4a511f` 已推，本地 `app.js/index.html/AGENTS.md` 已改待 commit（同步+版面）
+- 可運行：https://ialyanny.github.io/english-vocab-quiz/ 待部署（200+103=303字 / 184+103=287句，含 JUL）
+- 已驗證：`node --check data.js/app.js` 通過，`WORDS JUL` 103、`KK JUL` 103（74 有值 29 空）、`SENTS JUL` 103，`en2zh` 題目顯示 KK
+- Git：本地 `data.js/index.html/app.js/AGENTS.md` 已改待 commit（JUL + KK）
 
 ## ➡️ 下一步
-1. `git commit + push` 本次（版面 + 同步 + 匯出匯入），iPad 驗證上方不截斷、同步碼共享、匯出 JSON
-2. 重建 WORD_IMAGES 配圖（目前仍對應舊清單，需按新 200 字重建）
-3. 若 NPOINT 500 持續，改用 Google Apps Script 作為備用同步（可選）
+1. `git commit + push` 本次（JUL 103 + KK + 範圍按鈕），iPad 驗證 7月空英範圍與英翻中 KK 顯示
+2. 重建 WORD_IMAGES 配圖（目前仍對應舊清單，需按新 303 字重建）
+3. 補齊 29 個缺 KK（`appeal` 等）或改用 Groq 批次補（可選）
 
 ## ⚠️ 注意事項
-- 成績頁：`index.html:347` 已補 `id="review-title"`，`app.js:530` 已加 `el?.textContent` 與 `try/finally` 確保 `show("screen-result")`
-- 圖片：`app.js:295` 一律 `remove("show")`，徹底移除舊配圖干擾
-- 同步：`app.js:575` 自動雲端備份（`getSyncId`/`syncUpload`/`syncDownload`），`index.html` 成績紀錄區新增同步碼、匯出/匯入；NPOINT 目前 500，若失敗請用匯出 JSON 手動同步
-- 版面：`index.html:11` `body` 改 `align-items:flex-start` + `min-height:100dvh` + `env(safe-area-inset-*)` + `overflow-y:auto`，`.app` 加 `margin:16px auto`
+- JUL 單字來源為人工清單 103 字，已按字母排序寫入；KK 來自 DictionaryAPI IPA 轉括號，29 個缺值留空（app 已防禦）
+- 英翻中 KK：`app.js:331` 透過 `getKK(en, unit)` 顯示於 `zh-hint`，僅 JUL 有值，其他回留空
+- 範圍：`index.html:228` 改 3 欄，`app.js:82/98/104/144/533` 已加入 JUL，所有 `every` 判斷已更新
+- 同步與版面修正已在前次 `ed9dbae` 完成，本次僅新增 JUL
 
 ## 🕐 最後更新
 - 時間：2026-08-22 凌晨
 - 更新者：Muse Spark @ CORNI
-- Git push：⏳ 待推（版面 + 同步 + 匯出匯入 + 三 bug 修復）
+- Git push：⏳ 待推（JUL 103 + KK + 範圍按鈕）

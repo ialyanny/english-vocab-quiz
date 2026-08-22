@@ -53,6 +53,15 @@ function getModeLabel() {
   if (ms.length === 1) return MODE_NAMES[ms[0]] || ms[0];
   return ms.map(m => MODE_NAMES[m]).join("＋");
 }
+function getKK(en, unit) {
+  if (!en) return "";
+  if (typeof KK_BY_UNIT !== 'undefined') {
+    if (unit && KK_BY_UNIT[unit] && KK_BY_UNIT[unit][en]) return KK_BY_UNIT[unit][en];
+    if (KK_BY_UNIT["JUL"] && KK_BY_UNIT["JUL"][en]) return KK_BY_UNIT["JUL"][en];
+    for (const u in KK_BY_UNIT) { if (KK_BY_UNIT[u][en]) return KK_BY_UNIT[u][en]; }
+  }
+  return "";
+}
 let questionCount = 0;  // 0 = 全部
 let questions = [];     // 題目序列（索引）
 let qIndex = 0;
@@ -68,9 +77,9 @@ function fmtScore(n) {
 }
 
 // ===== 範圍選擇 =====
-let selectedUnits = new Set(["all"]); // all | 07 08 09 10 可複選
+let selectedUnits = new Set(["all"]); // all | 07 08 09 10 JUL 可複選
 function getActiveUnits() {
-  if (selectedUnits.has("all")) return ["07","08","09","10"];
+  if (selectedUnits.has("all")) return ["07","08","09","10","JUL"];
   return Array.from(selectedUnits);
 }
 function getFilteredWords() {
@@ -86,13 +95,13 @@ function getFilteredSentences() {
   return out;
 }
 function updateRangeCounts() {
-  ["07","08","09","10"].forEach(u => {
+  ["07","08","09","10","JUL"].forEach(u => {
     const el = document.getElementById("cnt-" + u);
     if (el) el.textContent = (WORDS_BY_UNIT[u] ? WORDS_BY_UNIT[u].length : 0) + " 題";
   });
   const allEl = document.getElementById("cnt-all");
   if (allEl) {
-    const tot = ["07","08","09","10"].reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
+    const tot = ["07","08","09","10","JUL"].reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
     allEl.textContent = tot + " 題";
   }
   // 停用空的回
@@ -131,13 +140,14 @@ rangeBtns.forEach(b => b.addEventListener("click", () => {
       if (x.dataset.unit === "all") x.classList.toggle("selected", selectedUnits.has("all"));
       else x.classList.toggle("selected", selectedUnits.has(x.dataset.unit));
     });
-    // 若選滿四回，自動切回全部
-    if (["07","08","09","10"].every(v => selectedUnits.has(v))) {
+    // 若選滿五回，自動切回全部
+    if (["07","08","09","10","JUL"].every(v => selectedUnits.has(v))) {
       selectedUnits = new Set(["all"]);
       rangeBtns.forEach(x => x.classList.toggle("selected", x.dataset.unit === "all"));
     }
     updateFooter();
   }
+  updateFooter();
 }));
 
 // ===== 首頁 UI =====
@@ -233,7 +243,7 @@ function startQuiz() {
       const take = Math.min(per, idx.length);
       idx.slice(0, take).forEach(i => {
         const entry = isSent ? pool[i].s : pool[i].w;
-        all.push({ type: t, entry });
+        all.push({ type: t, entry, unit: pool[i].unit });
       });
     });
     const n = questionCount === 0 ? all.length : Math.min(questionCount, all.length);
@@ -241,11 +251,11 @@ function startQuiz() {
   } else if (modes[0] === "sentence") {
     const idx = shuffle(Array.from({ length: fSents.length }, (_, i) => i));
     const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fSents[i].s }));
+    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fSents[i].s, unit: fSents[i].unit }));
   } else {
     const idx = shuffle(Array.from({ length: fWords.length }, (_, i) => i));
     const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fWords[i].w }));
+    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fWords[i].w, unit: fWords[i].unit }));
   }
 
   show("screen-quiz");
@@ -321,6 +331,12 @@ function renderQuestion() {
   } else if (q.type === "en2zh") {
     $("qtype-tag").textContent = "🇬🇧 英 → 中";
     $("qword").textContent = en;
+    // 顯示 KK 音標（僅 JUL 目前有）
+    const kk = getKK(en, q.unit);
+    $("zh-hint").textContent = kk || "";
+    $("zh-hint").style.color = kk ? "#64748b" : "";
+    $("zh-hint").style.fontSize = kk ? "1.05rem" : "";
+    $("zh-hint").style.fontFamily = kk ? "'Times New Roman', serif" : "";
     $("hint-btn").style.display = "none";   // 答案為中文，不提供提醒
     const choices = buildChoices(en, zh, true);
     choices.forEach(c => {
@@ -514,7 +530,7 @@ $("next-btn").addEventListener("click", () => goNext());
 // ===== 結果 =====
 function getRangeLabel() {
   if (selectedUnits.has("all")) return "全部";
-  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回"};
+  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"7月空英"};
   return Array.from(selectedUnits).sort().map(u=>m[u]||u).join("＋");
 }
 function showResult() {
