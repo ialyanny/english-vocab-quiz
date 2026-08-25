@@ -201,6 +201,12 @@
   .records-item .rs { font-weight: 800; color: #059669; flex: none; }
   .records-item .rd { color: #94a3b8; font-size: .78rem; flex: none; }
   .records-item .ro { color: #3b82f6; font-weight: 800; flex: none; }
+  .records-item .rdel {
+    border: none; background: #fee2e2; color: #dc2626; border-radius: 50%;
+    width: 32px; height: 32px; font-size: 1rem; cursor: pointer; flex: none;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .records-item .rdel:active { background: #fecaca; }
   .records-item:active { background: #eff6ff; }
   .empty-records { color: #64748b; text-align: center; padding: 16px; }
 
@@ -294,8 +300,10 @@
     <div class="count-group">
       <div class="mode-label">題數</div>
       <div class="count-options">
-        <button class="count-btn" data-count="10">10 題</button>
-        <button class="count-btn" data-count="20">20 題</button>
+        <button class="count-btn" data-count="15">15</button>
+        <button class="count-btn" data-count="20">20</button>
+        <button class="count-btn" data-count="25">25</button>
+        <button class="count-btn" data-count="30">30</button>
         <button class="count-btn selected" data-count="0">全部</button>
       </div>
     </div>
@@ -309,7 +317,7 @@
     <button class="start-btn" id="start-btn">開始測驗 ▶</button>
     <button class="records-btn" id="records-btn">📊 老師成績紀錄</button>
     <button class="records-btn" id="qr-btn">📱 掃 QR 分享此網站</button>
-    <div class="footer">單字題 64 題・句子題 48 題・點喇叭可發音</div>
+    <div class="footer">已選範圍：單字 200+103 題・句子 184+103 題・點喇叭可發音</div>
   </div>
 
   <!-- 測驗 -->

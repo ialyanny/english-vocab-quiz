@@ -30,6 +30,9 @@
 - [x] 網頁上方截斷修正（index.html:11 body 改 flex-start + 100dvh + safe-area）
 - [x] 成績紀錄雲端自動同步 + 匯出匯入（app.js:575 NPOINT + index.html 成績紀錄區）
 - [x] 7月空英 103字/103句 + KK 音標（JUL, data.js:214/320/626, 英翻中題目顯示 KK via getKK）
+- [x] 成績紀錄可單筆刪除（app.js deleteRecord + renderRecords 刪除按鈕）
+- [x] 同姓名錯題加權（app.js getWrongWordsByName + weightedPick，錯題出現頻率 ×3）
+- [x] 題數自訂 15/20/25/30/全部（index.html count-options 五選一）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構

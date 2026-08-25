@@ -233,29 +233,55 @@ function startQuiz() {
   if (modes.length === 1 && modes[0] === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
   if (modes.some(m => m==="sentence") && fSents.length===0 && modes.every(m=>m==="sentence")) { alert("此範圍沒有句子題"); return; }
 
+  // 取得同姓名錯題加權清單
+  const stuName = ($("name-input")?.value || "").trim();
+  const wrongPool = getWrongWordsByName(stuName);
+  const wrongSet = new Set(wrongPool.map(w => w.base));
+
+  function weightedPick(pool, n, isSent) {
+    if (n >= pool.length) return pool.slice();
+    // 建立加權索引：錯題重複 3 次，其餘 1 次
+    let weighted = [];
+    pool.forEach((item, i) => {
+      const base = isSent ? item.s.blank : item.w[0];
+      const times = wrongSet.has(base) ? 3 : 1;
+      for (let t = 0; t < times; t++) weighted.push(i);
+    });
+    weighted = shuffle(weighted);
+    const picked = new Set();
+    const result = [];
+    for (const idx of weighted) {
+      if (picked.has(idx)) continue;
+      picked.add(idx);
+      result.push(pool[idx]);
+      if (result.length >= n) break;
+    }
+    return result;
+  }
+
   if (modes.length > 1) {
     const per = questionCount === 0 ? Infinity : Math.ceil(questionCount / modes.length);
     let all = [];
     modes.forEach(t => {
       const isSent = t === "sentence";
       const pool = isSent ? fSents : fWords;
-      const idx = shuffle(Array.from({ length: pool.length }, (_, i) => i));
-      const take = Math.min(per, idx.length);
-      idx.slice(0, take).forEach(i => {
-        const entry = isSent ? pool[i].s : pool[i].w;
-        all.push({ type: t, entry, unit: pool[i].unit });
+      const take = Math.min(per, pool.length);
+      const picked = weightedPick(pool, take, isSent);
+      picked.forEach(item => {
+        const entry = isSent ? item.s : item.w;
+        all.push({ type: t, entry, unit: item.unit });
       });
     });
     const n = questionCount === 0 ? all.length : Math.min(questionCount, all.length);
     questions = shuffle(all).slice(0, n);
   } else if (modes[0] === "sentence") {
-    const idx = shuffle(Array.from({ length: fSents.length }, (_, i) => i));
-    const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fSents[i].s, unit: fSents[i].unit }));
+    const n = (questionCount === 0) ? fSents.length : Math.min(questionCount, fSents.length);
+    const picked = weightedPick(fSents, n, true);
+    questions = picked.map(item => ({ type: modes[0], entry: item.s, unit: item.unit }));
   } else {
-    const idx = shuffle(Array.from({ length: fWords.length }, (_, i) => i));
-    const n = (questionCount === 0) ? idx.length : Math.min(questionCount, idx.length);
-    questions = idx.slice(0, n).map(i => ({ type: modes[0], entry: fWords[i].w, unit: fWords[i].unit }));
+    const n = (questionCount === 0) ? fWords.length : Math.min(questionCount, fWords.length);
+    const picked = weightedPick(fWords, n, false);
+    questions = picked.map(item => ({ type: modes[0], entry: item.w, unit: item.unit }));
   }
 
   show("screen-quiz");
@@ -604,6 +630,28 @@ function saveRecord(entry) {
   // 自動雲端備份（非同步，不阻斷）
   syncUpload().catch(()=>{});
 }
+function deleteRecord(idx) {
+  const recs = loadRecords();
+  if (idx < 0 || idx >= recs.length) return;
+  recs.splice(idx, 1);
+  localStorage.setItem(REC_KEY, JSON.stringify(recs));
+  syncUpload().catch(()=>{});
+  renderRecords();
+}
+function getWrongWordsByName(name) {
+  if (!name) return [];
+  const recs = loadRecords();
+  const map = {};
+  recs.forEach(r => {
+    if (r.name !== name || !r.wrong) return;
+    r.wrong.forEach(w => {
+      const key = w.base;
+      if (!map[key]) map[key] = { base: w.base, zh: w.zh, type: w.type, count: 0 };
+      map[key].count++;
+    });
+  });
+  return Object.values(map).sort((a, b) => b.count - a.count);
+}
 async function getSyncId(createIfMissing=true) {
   let id = localStorage.getItem(SYNC_KEY);
   if (id) return id;
@@ -696,7 +744,13 @@ async function renderRecords() {
       `<span class="rm">${r.mode || ""}${r.range?"・"+r.range:""}・${r.total} 題</span>` +
       `<span class="rs">${fmtScore(r.score)} 分</span>` +
       `<span class="rd">${fmtTime(r.ts)}</span>` +
-      `<span class="ro">▶</span>`;
+      `<button class="rdel" title="刪除此筆紀錄">✕</button>`;
+    li.querySelector(".rdel").addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (confirm(`確定刪除 ${r.name || "（未署名）"} ${fmtTime(r.ts)} 的成績？`)) {
+        deleteRecord(i);
+      }
+    });
     li.addEventListener("click", () => openRecordDetail(i));
     list.appendChild(li);
   });
