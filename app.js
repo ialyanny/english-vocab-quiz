@@ -77,21 +77,22 @@ function fmtScore(n) {
 }
 
 // ===== 範圍選擇 =====
-const JUNIOR_UNITS = ["07","08","09","10","JUL"];
-const SENIOR_UNITS = ["B1","B2"];
-let selectedUnits = new Set(["all"]); // all=國中全 | HSALL=高中全 | 可混選
+const HS0710_UNITS = ["07","08","09","10"];
+const JUL_UNITS = ["JUL"];
+const HSEXAM_UNITS = ["B1","B2"];
+const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...HSEXAM_UNITS];
+
+let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元 07,08,09,10,JUL,B1,B2
 function getActiveUnits() {
-  if (selectedUnits.has("all") && selectedUnits.has("HSALL")) return [...JUNIOR_UNITS, ...SENIOR_UNITS];
-  if (selectedUnits.has("all")) {
-    // 若還有單選的高中單元，併入
-    const extra = Array.from(selectedUnits).filter(u => SENIOR_UNITS.includes(u));
-    return extra.length ? [...JUNIOR_UNITS, ...extra] : JUNIOR_UNITS.slice();
-  }
-  if (selectedUnits.has("HSALL")) {
-    const extra = Array.from(selectedUnits).filter(u => JUNIOR_UNITS.includes(u));
-    return extra.length ? [...SENIOR_UNITS, ...extra] : SENIOR_UNITS.slice();
-  }
-  return Array.from(selectedUnits);
+  const units = Array.from(selectedUnits);
+  let expanded = [];
+  units.forEach(u => {
+    if (u === "HS0710") expanded.push(...HS0710_UNITS);
+    else if (u === "JUL") expanded.push(...JUL_UNITS);
+    else if (u === "HSEXAM") expanded.push(...HSEXAM_UNITS);
+    else expanded.push(u);
+  });
+  return expanded;
 }
 function getFilteredWords() {
   const units = getActiveUnits();
@@ -106,24 +107,22 @@ function getFilteredSentences() {
   return out;
 }
 function updateRangeCounts() {
-  [...JUNIOR_UNITS, ...SENIOR_UNITS].forEach(u => {
-    const el = document.getElementById("cnt-" + u);
-    if (el) el.textContent = (WORDS_BY_UNIT[u] ? WORDS_BY_UNIT[u].length : 0) + " 題";
-  });
-  const allEl = document.getElementById("cnt-all");
-  if (allEl) {
-    const tot = JUNIOR_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
-    allEl.textContent = tot + " 題";
-  }
-  const hsEl = document.getElementById("cnt-HSALL");
-  if (hsEl) {
-    const tot2 = SENIOR_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
-    hsEl.textContent = tot2 + " 題";
-  }
+  // 顯示三大類計數
+  const hs0710Count = HS0710_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
+  const julCount = JUL_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
+  const hsexamCount = HSEXAM_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
+  
+  const e0710 = document.getElementById("cnt-HS0710");
+  if (e0710) e0710.textContent = hs0710Count + " 題";
+  const ejul = document.getElementById("cnt-JUL");
+  if (ejul) ejul.textContent = julCount + " 題";
+  const ehexam = document.getElementById("cnt-HSEXAM");
+  if (ehexam) ehexam.textContent = hsexamCount + " 題";
+  
   // 停用空的單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
-    if (u === "all" || u === "HSALL") { b.disabled = false; b.title = ""; return; }
+    if (u === "HS0710" || u === "JUL" || u === "HSEXAM") { b.disabled = false; b.title = ""; return; }
     if (!WORDS_BY_UNIT[u] || WORDS_BY_UNIT[u].length === 0) {
       b.disabled = true;
       b.title = "此單元尚未建置";
@@ -143,82 +142,40 @@ function updateFooter() {
 setTimeout(updateRangeCounts, 100);
 
 const rangeBtns = document.querySelectorAll(".range-btn");
-rangeBtns.forEach(b => b.addEventListener("click", () => {
+rangeBtns.forEach(b => {
+  b.addEventListener("click", () => {
   const u = b.dataset.unit;
-  if (u === "all") {
-    // 切換 國中全部：若已是全部則取消，否則選全部並保留已選的高中單選（不保留 HSALL）
-    if (selectedUnits.has("all") && selectedUnits.size===1) {
-      // 已是單獨全部，維持
-      rangeBtns.forEach(x => x.classList.toggle("selected", x.dataset.unit === "all"));
-    } else {
-      const keepSenior = Array.from(selectedUnits).filter(x=>SENIOR_UNITS.includes(x));
-      selectedUnits = new Set(["all", ...keepSenior]);
-      rangeBtns.forEach(x => {
-        const v=x.dataset.unit;
-        if (v==="all") x.classList.add("selected");
-        else if (v==="HSALL") x.classList.remove("selected");
-        else if (SENIOR_UNITS.includes(v)) x.classList.toggle("selected", selectedUnits.has(v));
-        else x.classList.toggle("selected", v==="all");
-      });
-      // 若同時選了所有國中單元，視為 all
-      if (JUNIOR_UNITS.every(v=>selectedUnits.has(v))) {
-        JUNIOR_UNITS.forEach(v=>selectedUnits.delete(v));
-        selectedUnits.add("all");
-      }
-    }
-  } else if (u === "HSALL") {
-    if (selectedUnits.has("HSALL") && selectedUnits.size===1) {
-      rangeBtns.forEach(x => x.classList.toggle("selected", x.dataset.unit === "HSALL"));
-    } else {
-      const keepJunior = Array.from(selectedUnits).filter(x=>JUNIOR_UNITS.includes(x) || x==="all");
-      // 若 keepJunior 是 all，保留 all
-      selectedUnits = new Set(["HSALL", ...keepJunior]);
-      rangeBtns.forEach(x => {
-        const v=x.dataset.unit;
-        if (v==="HSALL") x.classList.add("selected");
-        else if (v==="all") x.classList.toggle("selected", selectedUnits.has("all"));
-        else if (JUNIOR_UNITS.includes(v)) x.classList.toggle("selected", selectedUnits.has(v) || selectedUnits.has("all"));
-        else x.classList.toggle("selected", v==="HSALL");
-      });
-      if (SENIOR_UNITS.every(v=>selectedUnits.has(v))) {
-        SENIOR_UNITS.forEach(v=>selectedUnits.delete(v));
-        selectedUnits.add("HSALL");
-      }
-    }
-  } else {
-    // 單元切換
-    selectedUnits.delete("all");
-    selectedUnits.delete("HSALL");
+  // 三大類按鈕：HS0710, JUL, HSEXAM
+  if (["HS0710","JUL","HSEXAM"].includes(u)) {
     if (selectedUnits.has(u)) selectedUnits.delete(u);
     else selectedUnits.add(u);
-    if (selectedUnits.size === 0) { selectedUnits = new Set(["all"]); }
-    rangeBtns.forEach(x => {
-      const v=x.dataset.unit;
-      if (v==="all") x.classList.toggle("selected", selectedUnits.has("all") || JUNIOR_UNITS.every(j=>selectedUnits.has(j)));
-      else if (v==="HSALL") x.classList.toggle("selected", selectedUnits.has("HSALL") || SENIOR_UNITS.every(s=>selectedUnits.has(s)));
-      else x.classList.toggle("selected", selectedUnits.has(v));
-    });
-    // 若選滿國中五回，自動收為 all
-    if (JUNIOR_UNITS.every(v => selectedUnits.has(v))) {
-      JUNIOR_UNITS.forEach(v=>selectedUnits.delete(v));
-      selectedUnits.add("all");
-      rangeBtns.forEach(x => {
-        if (JUNIOR_UNITS.includes(x.dataset.unit)) x.classList.remove("selected");
-        if (x.dataset.unit==="all") x.classList.add("selected");
-      });
+    // 若選了大類，移除其子單元
+    if (u === "HS0710") HS0710_UNITS.forEach(x => selectedUnits.delete(x));
+    if (u === "HSEXAM") HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
+    rangeBtns.forEach(x => x.classList.toggle("selected", selectedUnits.has(x.dataset.unit)));
+  } else {
+    // 單獨單元切換
+    if (selectedUnits.has(u)) selectedUnits.delete(u);
+    else selectedUnits.add(u);
+    // 若子單元全選，自動切為大類
+    if (HS0710_UNITS.every(x => selectedUnits.has(x))) {
+      HS0710_UNITS.forEach(x => selectedUnits.delete(x));
+      selectedUnits.add("HS0710");
     }
-    if (SENIOR_UNITS.every(v => selectedUnits.has(v))) {
-      SENIOR_UNITS.forEach(v=>selectedUnits.delete(v));
-      selectedUnits.add("HSALL");
-      rangeBtns.forEach(x => {
-        if (SENIOR_UNITS.includes(x.dataset.unit)) x.classList.remove("selected");
-        if (x.dataset.unit==="HSALL") x.classList.add("selected");
-      });
+    if (HSEXAM_UNITS.every(x => selectedUnits.has(x))) {
+      HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
+      selectedUnits.add("HSEXAM");
     }
+    rangeBtns.forEach(x => x.classList.toggle("selected", selectedUnits.has(x.dataset.unit)));
+  }
+  if (selectedUnits.size === 0) { 
+    selectedUnits.add("HS0710"); 
+    rangeBtns.forEach(x => x.classList.toggle("selected", x.dataset.unit === "HS0710"));
   }
   updateFooter();
   updateRangeCounts();
-}));
+});
+});
 
 // ===== 首頁 UI =====
 const modeBtns = document.querySelectorAll(".mode-btn");
@@ -625,12 +582,15 @@ $("next-btn").addEventListener("click", () => goNext());
 
 // ===== 結果 =====
 function getRangeLabel() {
-  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"7月空英","B1":"龍騰B1","B2":"龍騰B2"};
-  if (selectedUnits.has("all") && selectedUnits.has("HSALL")) return "全部";
-  if (selectedUnits.has("all") && selectedUnits.size===1) return "國中全部";
-  if (selectedUnits.has("HSALL") && selectedUnits.size===1) return "高中全部";
+  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","B1":"龍騰B1","B2":"龍騰B2",
+    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考"};
   const active = getActiveUnits();
-  if (active.length === JUNIOR_UNITS.length + SENIOR_UNITS.length) return "全部";
+  if (active.length === ALL_UNITS.length) return "全部";
+  // 優先顯示大類標籤
+  const selected = Array.from(selectedUnits);
+  if (selected.length > 0) {
+    return selected.map(u => m[u] || u).join("＋");
+  }
   return active.sort().map(u=>m[u]||u).join("＋");
 }
 function showResult() {
