@@ -279,7 +279,6 @@ rangeContainer.addEventListener("click", (e) => {
 
 // 初始預設
 setTimeout(() => {
-  if (selectedUnits.size === 0) { selectedUnits.add("07"); selectedUnits.add("08"); }
   updateRangeUI();
   updateFooter();
   updateRangeCounts();
@@ -368,7 +367,7 @@ function startQuiz() {
   if (subjActive.length > 0) { startSubjectQuiz(subjActive); return; }
 
   const modes = getSelectedModes();
-  if (fWords.length === 0 && fSents.length === 0) { alert("此範圍尚未有題目"); return; }
+  if (fWords.length === 0 && fSents.length === 0) { alert(selectedUnits.size === 0 ? "請先在上方選擇要考的範圍" : "此範圍尚未有題目"); return; }
   if (!modes.includes("sentence") && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
   if (modes.length === 1 && modes[0] === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
   if (modes.some(m => m==="sentence") && fSents.length===0 && modes.every(m=>m==="sentence")) { alert("此範圍沒有句子題"); return; }
