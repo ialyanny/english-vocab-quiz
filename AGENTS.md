@@ -6,6 +6,11 @@
 - 網址：https://ialyanny.github.io/english-vocab-quiz/
 - Repo：ialyanny/english-vocab-quiz (public, main 分支)
 - 單字來源：`G:\我的雲端硬碟\英文單字\Unti07`~`Unti10` (44 張 JPG) + 7月空英 103字（人工清單） + 龍騰高中英文 B1/B2 454字
+- 高中開學考四科**教材版本**（出題內容需以此為準）：
+  - 國文、數學、歷史：龍騰版
+  - 地理、化學、生物、公民與社會：南一版
+  - 物理：泰宇版
+  - ※ 目前 `subjects.js` 範例題為通用高一層級內容，尚未逐版對齊章節，擴充時請依上述版本
 
 ## 技術栈
 - 前端：純 HTML/CSS/JS (無框架)，Web Speech API 發音
