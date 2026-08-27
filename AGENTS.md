@@ -5,7 +5,7 @@
 
 - 網址：https://ialyanny.github.io/english-vocab-quiz/
 - Repo：ialyanny/english-vocab-quiz (public, main 分支)
-- 單字來源：`G:\我的雲端硬碟\英文單字\Unti07`~`Unti10` (44 張 JPG) + 7月空英 103字（人工清單）
+- 單字來源：`G:\我的雲端硬碟\英文單字\Unti07`~`Unti10` (44 張 JPG) + 7月空英 103字（人工清單） + 龍騰高中英文 B1/B2 454字
 
 ## 技術栈
 - 前端：純 HTML/CSS/JS (無框架)，Web Speech API 發音
@@ -33,6 +33,8 @@
 - [x] 成績紀錄可單筆刪除（app.js deleteRecord + renderRecords 刪除按鈕）
 - [x] 同姓名錯題加權（app.js getWrongWordsByName + weightedPick，錯題出現頻率 ×3）
 - [x] 題數自訂 15/20/25/30/全部（index.html count-options 五選一）
+- [x] 龍騰高中 B1 294字/294句 + B2 160字/160句（data.js WORDS_BY_UNIT/SENTENCES_BY_UNIT，範圍可與國中並選）
+- [x] 高中範圍選擇區（龍騰 B1 / B2 / 高中全部），與國中區互不干擾
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -51,4 +53,5 @@
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
 - 聽音寫字顯示喇叭可重播，中→英填空隱藏圖片，題型支援複選（selectedModes）
 - 7月空英為獨立單元 JUL，英翻中題目透過 getKK(unit) 顯示 KK 音標（僅 JUL 有，其餘留空）
+- 龍騰 B1/B2 為獨立高中單元，範圍與國中可混選（getActiveUnits 自動合併），句子填空完整
 - Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成

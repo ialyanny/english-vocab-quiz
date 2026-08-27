@@ -315,7 +315,1827 @@ const WORDS_BY_UNIT = {
     ["visual", "視覺的"],
     ["volcano", "火山"],
     ["witch", "魔女；女巫"]
-  ]
+  ],
+  "B1": [
+    [
+        "a means of",
+        "一種方法"
+    ],
+    [
+        "accordingly",
+        "因此"
+    ],
+    [
+        "actually",
+        "實際上"
+    ],
+    [
+        "additionally",
+        "此外"
+    ],
+    [
+        "air-traffic control",
+        "航空管制"
+    ],
+    [
+        "aisle",
+        "通道"
+    ],
+    [
+        "Alert",
+        "警報"
+    ],
+    [
+        "also",
+        "也"
+    ],
+    [
+        "and",
+        "和"
+    ],
+    [
+        "App",
+        "應用程式"
+    ],
+    [
+        "Artificial Intelligence",
+        "人工智慧"
+    ],
+    [
+        "as a consequence",
+        "結果"
+    ],
+    [
+        "as a result",
+        "結果"
+    ],
+    [
+        "Automation",
+        "自動化"
+    ],
+    [
+        "awareness",
+        "意識"
+    ],
+    [
+        "bag",
+        "袋子"
+    ],
+    [
+        "bare hands",
+        "空手"
+    ],
+    [
+        "barely",
+        "幾乎不"
+    ],
+    [
+        "besides",
+        "此外"
+    ],
+    [
+        "beverage",
+        "飲料"
+    ],
+    [
+        "billion",
+        "十億"
+    ],
+    [
+        "billionaire",
+        "億萬富翁"
+    ],
+    [
+        "biodegradable",
+        "可生物降解的"
+    ],
+    [
+        "Bite",
+        "咬"
+    ],
+    [
+        "Bite mark",
+        "咬痕"
+    ],
+    [
+        "Burrow",
+        "洞穴"
+    ],
+    [
+        "candy",
+        "糖果"
+    ],
+    [
+        "Canine",
+        "犬類的"
+    ],
+    [
+        "carbon footprint",
+        "碳足跡"
+    ],
+    [
+        "cash",
+        "現金"
+    ],
+    [
+        "cash register",
+        "收銀機"
+    ],
+    [
+        "certain",
+        "某一；確定的"
+    ],
+    [
+        "certainly",
+        "當然"
+    ],
+    [
+        "checkout",
+        "結帳"
+    ],
+    [
+        "chef",
+        "主廚"
+    ],
+    [
+        "Circadian rhythm",
+        "循環節律"
+    ],
+    [
+        "circular economy",
+        "循環經濟"
+    ],
+    [
+        "Citizen",
+        "公民"
+    ],
+    [
+        "Climate",
+        "氣候"
+    ],
+    [
+        "Cloud",
+        "雲端"
+    ],
+    [
+        "communicate",
+        "溝通"
+    ],
+    [
+        "Communication",
+        "溝通"
+    ],
+    [
+        "compost",
+        "堆肥"
+    ],
+    [
+        "connect A with B",
+        "將A與B連接"
+    ],
+    [
+        "connection",
+        "連接"
+    ],
+    [
+        "consequently",
+        "因此"
+    ],
+    [
+        "conservation",
+        "保育"
+    ],
+    [
+        "consumption",
+        "消費"
+    ],
+    [
+        "contamination",
+        "污染"
+    ],
+    [
+        "coupon",
+        "優惠券"
+    ],
+    [
+        "credit card",
+        "信用卡"
+    ],
+    [
+        "Crime",
+        "犯罪"
+    ],
+    [
+        "Crime scene",
+        "犯罪現場"
+    ],
+    [
+        "Culture",
+        "文化"
+    ],
+    [
+        "customer",
+        "顧客"
+    ],
+    [
+        "Data",
+        "數據"
+    ],
+    [
+        "Deep sleep",
+        "深度睡眠"
+    ],
+    [
+        "degree",
+        "程度；學位"
+    ],
+    [
+        "Democracy",
+        "民主"
+    ],
+    [
+        "Den",
+        "巢穴"
+    ],
+    [
+        "Detection",
+        "探測"
+    ],
+    [
+        "Detection dog",
+        "探測犬"
+    ],
+    [
+        "Dialect",
+        "方言"
+    ],
+    [
+        "Digital",
+        "數位"
+    ],
+    [
+        "Diplomacy",
+        "外交"
+    ],
+    [
+        "disconnect",
+        "斷開"
+    ],
+    [
+        "discount",
+        "折扣"
+    ],
+    [
+        "disposable",
+        "可丟棄的"
+    ],
+    [
+        "disposal",
+        "處理"
+    ],
+    [
+        "distinguish",
+        "區分"
+    ],
+    [
+        "distinguished",
+        "卓越的"
+    ],
+    [
+        "Diurnal",
+        "日行性"
+    ],
+    [
+        "Diversity",
+        "多樣性"
+    ],
+    [
+        "Dog",
+        "狗"
+    ],
+    [
+        "Dream",
+        "夢"
+    ],
+    [
+        "eco-friendly",
+        "環保的"
+    ],
+    [
+        "ecological",
+        "生態的"
+    ],
+    [
+        "Economy",
+        "經濟"
+    ],
+    [
+        "ecosystem",
+        "生態系統"
+    ],
+    [
+        "educate",
+        "教育"
+    ],
+    [
+        "educated",
+        "受過教育的"
+    ],
+    [
+        "education",
+        "教育"
+    ],
+    [
+        "educational",
+        "教育的"
+    ],
+    [
+        "embrace",
+        "擁抱"
+    ],
+    [
+        "Environment",
+        "環境"
+    ],
+    [
+        "environmental impact",
+        "環境影響"
+    ],
+    [
+        "etc",
+        "等等"
+    ],
+    [
+        "Evidence",
+        "證據"
+    ],
+    [
+        "Exhibit",
+        "展示"
+    ],
+    [
+        "Export",
+        "出口"
+    ],
+    [
+        "extinguish",
+        "熄滅"
+    ],
+    [
+        "fiction",
+        "小說；虛構作品"
+    ],
+    [
+        "fire extinguisher",
+        "滅火器"
+    ],
+    [
+        "Footprint",
+        "足跡"
+    ],
+    [
+        "for instance",
+        "例如"
+    ],
+    [
+        "Forensic",
+        "法醫的"
+    ],
+    [
+        "Forensic science",
+        "法醫科學"
+    ],
+    [
+        "Foundation",
+        "基礎"
+    ],
+    [
+        "Freedom",
+        "自由"
+    ],
+    [
+        "Freedom of assembly",
+        "集會自由"
+    ],
+    [
+        "Freedom of choice",
+        "選擇自由"
+    ],
+    [
+        "Freedom of expression",
+        "表達自由"
+    ],
+    [
+        "Freedom of movement",
+        "移動自由"
+    ],
+    [
+        "Freedom of religion",
+        "宗教自由"
+    ],
+    [
+        "Freedom of speech",
+        "言論自由"
+    ],
+    [
+        "Freedom of the press",
+        "報紙自由"
+    ],
+    [
+        "Global Positioning System",
+        "全球定位系統"
+    ],
+    [
+        "global warming",
+        "全球暖化"
+    ],
+    [
+        "Globalization",
+        "全球化"
+    ],
+    [
+        "globe",
+        "球體；地球儀"
+    ],
+    [
+        "govern",
+        "統治"
+    ],
+    [
+        "government",
+        "政府"
+    ],
+    [
+        "green",
+        "綠色的"
+    ],
+    [
+        "greenhouse gas",
+        "溫室氣體"
+    ],
+    [
+        "habitat",
+        "棲息地"
+    ],
+    [
+        "Handler",
+        "牽引者"
+    ],
+    [
+        "Hardware",
+        "硬體"
+    ],
+    [
+        "hazardous",
+        "有害的"
+    ],
+    [
+        "hence",
+        "因此"
+    ],
+    [
+        "Heritage",
+        "遺產"
+    ],
+    [
+        "Hibernation",
+        "冬眠"
+    ],
+    [
+        "History",
+        "歷史"
+    ],
+    [
+        "hug",
+        "擁抱"
+    ],
+    [
+        "Iconic",
+        "標誌性的"
+    ],
+    [
+        "imagination",
+        "想像力"
+    ],
+    [
+        "imagine",
+        "想像"
+    ],
+    [
+        "Immigrant",
+        "移民"
+    ],
+    [
+        "Immigration",
+        "移民"
+    ],
+    [
+        "Immigration law",
+        "移民法"
+    ],
+    [
+        "Immigration policy",
+        "移民政策"
+    ],
+    [
+        "Import",
+        "進口"
+    ],
+    [
+        "in addition",
+        "另外"
+    ],
+    [
+        "in fact",
+        "事實上"
+    ],
+    [
+        "in practice",
+        "實際上"
+    ],
+    [
+        "in reality",
+        "實際上"
+    ],
+    [
+        "in truth",
+        "事實上"
+    ],
+    [
+        "Inauguration",
+        "揭幕"
+    ],
+    [
+        "incineration",
+        "焚燒"
+    ],
+    [
+        "inform sb of sth",
+        "通知某人某事"
+    ],
+    [
+        "information",
+        "資訊"
+    ],
+    [
+        "information desk",
+        "服務台"
+    ],
+    [
+        "Innovation",
+        "創新"
+    ],
+    [
+        "Insomnia",
+        "失眠"
+    ],
+    [
+        "instant",
+        "即時的"
+    ],
+    [
+        "instead",
+        "反而；改為"
+    ],
+    [
+        "instead of",
+        "代替…；而不是"
+    ],
+    [
+        "international",
+        "國際的"
+    ],
+    [
+        "Internet",
+        "互聯網"
+    ],
+    [
+        "invention",
+        "發明"
+    ],
+    [
+        "inventory",
+        "庫存"
+    ],
+    [
+        "Investigation",
+        "調查"
+    ],
+    [
+        "K-9",
+        "警犬"
+    ],
+    [
+        "K9 unit",
+        "警犬隊"
+    ],
+    [
+        "karaoke",
+        "卡拉OK"
+    ],
+    [
+        "ketchup",
+        "番茄醬"
+    ],
+    [
+        "landfill",
+        "垃圾填埋場"
+    ],
+    [
+        "Landmark",
+        "地標"
+    ],
+    [
+        "Language",
+        "語言"
+    ],
+    [
+        "Liberation",
+        "解放"
+    ],
+    [
+        "Liberty",
+        "自由"
+    ],
+    [
+        "Light exposure",
+        "光照"
+    ],
+    [
+        "litter",
+        "垃圾"
+    ],
+    [
+        "loyalty card",
+        "會員卡"
+    ],
+    [
+        "Machine Learning",
+        "機器學習"
+    ],
+    [
+        "main idea",
+        "主旨"
+    ],
+    [
+        "major",
+        "主要的；主修"
+    ],
+    [
+        "major in English",
+        "主修英文"
+    ],
+    [
+        "majority",
+        "多數"
+    ],
+    [
+        "marine pollution",
+        "海洋污染"
+    ],
+    [
+        "media",
+        "媒體（複數）"
+    ],
+    [
+        "medium",
+        "媒介"
+    ],
+    [
+        "Melatonin",
+        "褪黑激素"
+    ],
+    [
+        "Migration",
+        "遷徙"
+    ],
+    [
+        "Monument",
+        "紀念碑"
+    ],
+    [
+        "Nap",
+        "小睡"
+    ],
+    [
+        "Narcolepsy",
+        "嗜睡症"
+    ],
+    [
+        "National",
+        "國家"
+    ],
+    [
+        "Negotiation",
+        "談判"
+    ],
+    [
+        "Network",
+        "網路"
+    ],
+    [
+        "Nocturnal",
+        "夜行性"
+    ],
+    [
+        "Nose",
+        "鼻子"
+    ],
+    [
+        "Nose work",
+        "嗅覺工作"
+    ],
+    [
+        "novel",
+        "小說"
+    ],
+    [
+        "novelist",
+        "小說家"
+    ],
+    [
+        "Obedience",
+        "順從"
+    ],
+    [
+        "one-third of",
+        "三分之一"
+    ],
+    [
+        "outstanding",
+        "傑出的"
+    ],
+    [
+        "overuse",
+        "過度使用"
+    ],
+    [
+        "Partnership",
+        "合作夥伴關係"
+    ],
+    [
+        "Patriot",
+        "愛國者"
+    ],
+    [
+        "Paw",
+        "爪子"
+    ],
+    [
+        "Paw print",
+        "爪印"
+    ],
+    [
+        "Pedestal",
+        "底座"
+    ],
+    [
+        "percent",
+        "百分之"
+    ],
+    [
+        "percentage",
+        "百分比"
+    ],
+    [
+        "plastic",
+        "塑膠"
+    ],
+    [
+        "plastic waste",
+        "塑膠廢棄物"
+    ],
+    [
+        "plus",
+        "加上"
+    ],
+    [
+        "Police",
+        "警察"
+    ],
+    [
+        "Police dog",
+        "警犬"
+    ],
+    [
+        "pollution",
+        "污染"
+    ],
+    [
+        "pop a question",
+        "求婚"
+    ],
+    [
+        "pop music",
+        "流行音樂"
+    ],
+    [
+        "population",
+        "人口"
+    ],
+    [
+        "Predator",
+        "捕食者"
+    ],
+    [
+        "Preservation",
+        "保存"
+    ],
+    [
+        "Prey",
+        "獵物"
+    ],
+    [
+        "price tag",
+        "價格標籤"
+    ],
+    [
+        "product",
+        "商品"
+    ],
+    [
+        "propose",
+        "提議"
+    ],
+    [
+        "put out",
+        "熄滅"
+    ],
+    [
+        "rare",
+        "稀有的"
+    ],
+    [
+        "rarely",
+        "很少"
+    ],
+    [
+        "receipt",
+        "收據"
+    ],
+    [
+        "recycle",
+        "回收"
+    ],
+    [
+        "recycling",
+        "回收"
+    ],
+    [
+        "reduce",
+        "減少"
+    ],
+    [
+        "REM sleep",
+        "快速眼動睡眠"
+    ],
+    [
+        "renewable",
+        "可再生的"
+    ],
+    [
+        "Renewable Energy",
+        "可再生能源"
+    ],
+    [
+        "repurpose",
+        "重新利用"
+    ],
+    [
+        "Rescue",
+        "救援"
+    ],
+    [
+        "research",
+        "研究"
+    ],
+    [
+        "researcher",
+        "研究者"
+    ],
+    [
+        "resource",
+        "資源"
+    ],
+    [
+        "resourceful",
+        "足智多謀的"
+    ],
+    [
+        "Rest",
+        "休息"
+    ],
+    [
+        "Restlessness",
+        "焦躁"
+    ],
+    [
+        "Robotics",
+        "機器人"
+    ],
+    [
+        "Routine",
+        "日常"
+    ],
+    [
+        "Scent",
+        "氣味"
+    ],
+    [
+        "Scent detection",
+        "嗅覺檢測"
+    ],
+    [
+        "Scent trail",
+        "嗅線"
+    ],
+    [
+        "sci-fi movie",
+        "科幻電影"
+    ],
+    [
+        "science fiction",
+        "科幻小說"
+    ],
+    [
+        "Search",
+        "搜索"
+    ],
+    [
+        "Seasonal",
+        "季節性的"
+    ],
+    [
+        "shopping cart",
+        "購物車"
+    ],
+    [
+        "single-use",
+        "一次性"
+    ],
+    [
+        "Sleep",
+        "睡眠"
+    ],
+    [
+        "Sleep apnea",
+        "睡眠呼吸暫停症"
+    ],
+    [
+        "Sleep architecture",
+        "睡眠結構"
+    ],
+    [
+        "Sleep cycle",
+        "睡眠週期"
+    ],
+    [
+        "Sleep deprivation",
+        "睡眠剝奪"
+    ],
+    [
+        "Sleep disorders",
+        "睡眠障礙"
+    ],
+    [
+        "Sleep duration",
+        "睡眠時長"
+    ],
+    [
+        "Sleep fragmentation",
+        "睡眠碎片化"
+    ],
+    [
+        "Sleep hygiene",
+        "睡眠衛生"
+    ],
+    [
+        "Sleep latency",
+        "入睡潛伏期"
+    ],
+    [
+        "Sleep onset",
+        "入睡"
+    ],
+    [
+        "Sleep quality",
+        "睡眠品質"
+    ],
+    [
+        "Sleep schedule",
+        "睡眠排程"
+    ],
+    [
+        "Slumber",
+        "沉睡"
+    ],
+    [
+        "Smartphone",
+        "智慧手機"
+    ],
+    [
+        "snack",
+        "小吃"
+    ],
+    [
+        "Sniff",
+        "嗅探"
+    ],
+    [
+        "Software",
+        "軟體"
+    ],
+    [
+        "stand out",
+        "突出"
+    ],
+    [
+        "Statue",
+        "雕像"
+    ],
+    [
+        "store clerk",
+        "店員"
+    ],
+    [
+        "storefront",
+        "店面"
+    ],
+    [
+        "Suspect",
+        "嫌疑人"
+    ],
+    [
+        "Sustainability",
+        "可持續發展"
+    ],
+    [
+        "sustainable",
+        "可持續的"
+    ],
+    [
+        "Symbol",
+        "象徵"
+    ],
+    [
+        "Tariff",
+        "關稅"
+    ],
+    [
+        "Technology",
+        "科技"
+    ],
+    [
+        "therefore",
+        "因此"
+    ],
+    [
+        "thus",
+        "因此"
+    ],
+    [
+        "to some degree",
+        "在某種程度上"
+    ],
+    [
+        "Torpor",
+        "低代謝"
+    ],
+    [
+        "Tourist",
+        "旅客"
+    ],
+    [
+        "toxic",
+        "毒性的"
+    ],
+    [
+        "Track",
+        "足跡"
+    ],
+    [
+        "Tracking dog",
+        "追蹤犬"
+    ],
+    [
+        "Trade",
+        "貿易"
+    ],
+    [
+        "Trail",
+        "追蹤線"
+    ],
+    [
+        "Training",
+        "訓練"
+    ],
+    [
+        "transfer",
+        "轉移；轉學"
+    ],
+    [
+        "transformer",
+        "變壓器"
+    ],
+    [
+        "translate",
+        "翻譯"
+    ],
+    [
+        "Translation",
+        "翻譯"
+    ],
+    [
+        "Treaty",
+        "條約"
+    ],
+    [
+        "Tribute",
+        "敬意"
+    ],
+    [
+        "tsunami",
+        "海嘯"
+    ],
+    [
+        "upcycle",
+        "升級再利用"
+    ],
+    [
+        "Visitor",
+        "參觀者"
+    ],
+    [
+        "Wakeful",
+        "醒著"
+    ],
+    [
+        "warn",
+        "警告"
+    ],
+    [
+        "waste",
+        "廢棄物"
+    ],
+    [
+        "waste management",
+        "廢棄物管理"
+    ],
+    [
+        "what's more",
+        "更何況"
+    ],
+    [
+        "wildlife",
+        "野生動物"
+    ],
+    [
+        "zero waste",
+        "零廢棄"
+    ]
+],
+  "B2": [
+    [
+        "activism",
+        "行動主義"
+    ],
+    [
+        "advocacy",
+        "倡導"
+    ],
+    [
+        "air traffic control",
+        "空中交通管制"
+    ],
+    [
+        "airplane",
+        "飛機"
+    ],
+    [
+        "airplane mode",
+        "飛行模式"
+    ],
+    [
+        "aisle",
+        "走道"
+    ],
+    [
+        "Alchemy",
+        "炼金術"
+    ],
+    [
+        "Ambition",
+        "雄心"
+    ],
+    [
+        "animation",
+        "動畫"
+    ],
+    [
+        "appetizer",
+        "前菜"
+    ],
+    [
+        "aptitude",
+        "才能"
+    ],
+    [
+        "arrival",
+        "抵達"
+    ],
+    [
+        "artificial intelligence",
+        "人工智慧"
+    ],
+    [
+        "audience",
+        "觀眾"
+    ],
+    [
+        "autism",
+        "自閉症"
+    ],
+    [
+        "Ban-doh",
+        "板凍"
+    ],
+    [
+        "Birthmark",
+        "斑點"
+    ],
+    [
+        "blockchain",
+        "區塊鏈"
+    ],
+    [
+        "braised",
+        "紅燒"
+    ],
+    [
+        "brand",
+        "品牌"
+    ],
+    [
+        "breakthrough",
+        "突破"
+    ],
+    [
+        "caregiver",
+        "照顧者"
+    ],
+    [
+        "challenge",
+        "挑戰"
+    ],
+    [
+        "champion",
+        "冠軍"
+    ],
+    [
+        "character",
+        "角色"
+    ],
+    [
+        "co-pilot",
+        "副飛行員"
+    ],
+    [
+        "coach",
+        "教練"
+    ],
+    [
+        "cockpit",
+        "機艙"
+    ],
+    [
+        "collaboration",
+        "合作"
+    ],
+    [
+        "communication",
+        "溝通"
+    ],
+    [
+        "confidence",
+        "信心"
+    ],
+    [
+        "Consequence",
+        "後果"
+    ],
+    [
+        "courage",
+        "勇氣"
+    ],
+    [
+        "creativity",
+        "創造力"
+    ],
+    [
+        "crowdsource",
+        "眾包"
+    ],
+    [
+        "crunchy",
+        "酥脆的"
+    ],
+    [
+        "culinary",
+        "烹飪的"
+    ],
+    [
+        "dedication",
+        "奉獻"
+    ],
+    [
+        "defeat",
+        "失敗"
+    ],
+    [
+        "departure",
+        "出發"
+    ],
+    [
+        "determination",
+        "決心"
+    ],
+    [
+        "diagnosis",
+        "診斷"
+    ],
+    [
+        "digitalization",
+        "數位化"
+    ],
+    [
+        "Dilemma",
+        "兩難"
+    ],
+    [
+        "discipline",
+        "紀律"
+    ],
+    [
+        "discrimination",
+        "歧視"
+    ],
+    [
+        "disrupt",
+        "顛覆"
+    ],
+    [
+        "dream",
+        "夢想"
+    ],
+    [
+        "ecosystem",
+        "生態系統"
+    ],
+    [
+        "education",
+        "教育"
+    ],
+    [
+        "empathy",
+        "同理心"
+    ],
+    [
+        "empowerment",
+        "賦權"
+    ],
+    [
+        "entrepreneurship",
+        "創業精神"
+    ],
+    [
+        "environment",
+        "環境"
+    ],
+    [
+        "Epitome",
+        "典型"
+    ],
+    [
+        "equality",
+        "平等"
+    ],
+    [
+        "Experiment",
+        "實驗"
+    ],
+    [
+        "family",
+        "家庭"
+    ],
+    [
+        "flavor",
+        "風味"
+    ],
+    [
+        "Flaw",
+        "缺陷"
+    ],
+    [
+        "flight",
+        "航班"
+    ],
+    [
+        "flight deck",
+        "飛行甲板"
+    ],
+    [
+        "focus",
+        "專注"
+    ],
+    [
+        "franchise",
+        "特許經營"
+    ],
+    [
+        "freedom",
+        "自由"
+    ],
+    [
+        "frequency",
+        "頻率"
+    ],
+    [
+        "gate",
+        "登機門"
+    ],
+    [
+        "genetics",
+        "遺傳學"
+    ],
+    [
+        "goal",
+        "目標"
+    ],
+    [
+        "grit",
+        "堅韌"
+    ],
+    [
+        "Guilt",
+        "罪疚"
+    ],
+    [
+        "heritage",
+        "文化遺產"
+    ],
+    [
+        "iconic",
+        "標誌性的"
+    ],
+    [
+        "Ideal",
+        "理想"
+    ],
+    [
+        "imagination",
+        "想像力"
+    ],
+    [
+        "in-flight entertainment",
+        "機上娛樂"
+    ],
+    [
+        "inclusion",
+        "包容"
+    ],
+    [
+        "independence",
+        "獨立"
+    ],
+    [
+        "ingredients",
+        "食材"
+    ],
+    [
+        "injustice",
+        "不公"
+    ],
+    [
+        "innovation",
+        "創新"
+    ],
+    [
+        "inspiration",
+        "靈感"
+    ],
+    [
+        "intervention",
+        "干預"
+    ],
+    [
+        "legacy",
+        "遺產"
+    ],
+    [
+        "literacy",
+        "識字能力"
+    ],
+    [
+        "marinated",
+        "醃製"
+    ],
+    [
+        "mental toughness",
+        "心理韌性"
+    ],
+    [
+        "mentorship",
+        "指導"
+    ],
+    [
+        "merchandise",
+        "商品"
+    ],
+    [
+        "Morality",
+        "道德"
+    ],
+    [
+        "motivation",
+        "動力"
+    ],
+    [
+        "nanotechnology",
+        "奈米技術"
+    ],
+    [
+        "neurodiversity",
+        "神經多樣性"
+    ],
+    [
+        "night market",
+        "夜市"
+    ],
+    [
+        "Obsession",
+        "痴迷"
+    ],
+    [
+        "oppression",
+        "壓迫"
+    ],
+    [
+        "overcome",
+        "克服"
+    ],
+    [
+        "paradigm",
+        "範式"
+    ],
+    [
+        "Paradox",
+        "悖論"
+    ],
+    [
+        "parents",
+        "父母"
+    ],
+    [
+        "passion",
+        "熱情"
+    ],
+    [
+        "Perfection",
+        "完美"
+    ],
+    [
+        "perseverance",
+        "毅力"
+    ],
+    [
+        "pilot",
+        "飛行員"
+    ],
+    [
+        "pitch",
+        "簡報"
+    ],
+    [
+        "potential",
+        "潛力"
+    ],
+    [
+        "prototype",
+        "原型"
+    ],
+    [
+        "radio",
+        "無線電"
+    ],
+    [
+        "recipe",
+        "食譜"
+    ],
+    [
+        "Redemption",
+        "救贖"
+    ],
+    [
+        "reform",
+        "改革"
+    ],
+    [
+        "Regret",
+        "後悔"
+    ],
+    [
+        "renewable energy",
+        "再生能源"
+    ],
+    [
+        "resilience",
+        "韌性"
+    ],
+    [
+        "rights",
+        "權利"
+    ],
+    [
+        "risk‑taking",
+        "冒險精神"
+    ],
+    [
+        "routine",
+        "日常"
+    ],
+    [
+        "Sacrifice",
+        "牺牲"
+    ],
+    [
+        "sauce",
+        "醬汁"
+    ],
+    [
+        "savory",
+        "鹹味的"
+    ],
+    [
+        "scholarship",
+        "獎學金"
+    ],
+    [
+        "seat",
+        "座位"
+    ],
+    [
+        "seat belt",
+        "安全帶"
+    ],
+    [
+        "self-advocacy",
+        "自我倡導"
+    ],
+    [
+        "self-awareness",
+        "自我覺察"
+    ],
+    [
+        "self-esteem",
+        "自尊"
+    ],
+    [
+        "siblings",
+        "兄弟姐妹"
+    ],
+    [
+        "silent mode",
+        "靜音模式"
+    ],
+    [
+        "skill",
+        "技能"
+    ],
+    [
+        "snack",
+        "小吃"
+    ],
+    [
+        "social skills",
+        "社交技巧"
+    ],
+    [
+        "solidarity",
+        "團結"
+    ],
+    [
+        "special needs",
+        "特殊需求"
+    ],
+    [
+        "spectrum",
+        "譜系"
+    ],
+    [
+        "spicy",
+        "辣的"
+    ],
+    [
+        "sportsmanship",
+        "運動精神"
+    ],
+    [
+        "startup",
+        "新創公司"
+    ],
+    [
+        "stewed",
+        "燉煮"
+    ],
+    [
+        "storyboard",
+        "分鏡腳本"
+    ],
+    [
+        "storytelling",
+        "敘事"
+    ],
+    [
+        "street food",
+        "街頭小吃"
+    ],
+    [
+        "support",
+        "支援"
+    ],
+    [
+        "sustainability",
+        "永續性"
+    ],
+    [
+        "synergy",
+        "協同效應"
+    ],
+    [
+        "Synthesis",
+        "合成"
+    ],
+    [
+        "talent",
+        "天賦"
+    ],
+    [
+        "teamwork",
+        "團隊合作"
+    ],
+    [
+        "tender",
+        "嫩的"
+    ],
+    [
+        "texture",
+        "口感"
+    ],
+    [
+        "theme park",
+        "主題公園"
+    ],
+    [
+        "therapy",
+        "治療"
+    ],
+    [
+        "think outside the box",
+        "跳脫框架思考"
+    ],
+    [
+        "tradition",
+        "傳統"
+    ],
+    [
+        "training",
+        "訓練"
+    ],
+    [
+        "Transgression",
+        "過犯"
+    ],
+    [
+        "Vanity",
+        "虛榮"
+    ],
+    [
+        "victory",
+        "勝利"
+    ],
+    [
+        "visionary",
+        "有遠見的"
+    ],
+    [
+        "voice",
+        "聲音"
+    ],
+    [
+        "window seat",
+        "窗邊座位"
+    ]
+]
 };
 
 // ===== KK 音標（僅 JUL 目前有，其餘為空）=====
@@ -324,6 +2144,8 @@ const KK_BY_UNIT = {
   "08": {},
   "09": {},
   "10": {},
+  "B1": {},
+  "B2": {},
   "JUL": {
     "acceptance": "[ək.ˈsɛp.təns]",
     "accuse": "[əˈkjuːz]",
@@ -728,7 +2550,2735 @@ const SENTENCES_BY_UNIT = {
     { s: "The teacher used a {blank} aid to explain the concept.", blank: "visual", base: "visual", zh: "老師使用視覺教具來說明概念。" },
     { s: "The {blank} erupted and covered the town with ash.", blank: "volcano", base: "volcano", zh: "火山爆發，將城鎮覆蓋在灰燼之中。" },
     { s: "In the story, the kind {blank} helped the lost child.", blank: "witch", base: "witch", zh: "在故事裡，那位善良的女巫幫助了迷路的孩子。" }
-  ]
+  ],
+  "B1": [
+    {
+        "s": "This device is {blank} to improve communication.",
+        "blank": "a means of",
+        "base": "a means of",
+        "zh": "此裝置是{blank}以改善通訊。"
+    },
+    {
+        "s": "We will adjust the schedule {blank}.",
+        "blank": "accordingly",
+        "base": "accordingly",
+        "zh": "我們將根據{blank}調整時間表。"
+    },
+    {
+        "s": "I {blank} think the project is complete.",
+        "blank": "actually",
+        "base": "actually",
+        "zh": "我{blank}認為專案已完成。"
+    },
+    {
+        "s": "We will provide training {blank}.",
+        "blank": "additionally",
+        "base": "additionally",
+        "zh": "我們將額外{blank}提供培訓。"
+    },
+    {
+        "s": "The system monitors {blank} to ensure safety.",
+        "blank": "air-traffic control",
+        "base": "air-traffic control",
+        "zh": "系統監控{blank}以確保安全。"
+    },
+    {
+        "s": "Please keep the {blank} clear for passengers.",
+        "blank": "aisle",
+        "base": "aisle",
+        "zh": "請保持{blank}暢通，方便乘客。"
+    },
+    {
+        "s": "The system will {blank} you when a problem occurs.",
+        "blank": "Alert",
+        "base": "Alert",
+        "zh": "系統在出現問題時會{blank}您。"
+    },
+    {
+        "s": "She will join us {blank}.",
+        "blank": "also",
+        "base": "also",
+        "zh": "她將{blank}加入我們。"
+    },
+    {
+        "s": "We need to review the report {blank} the budget.",
+        "blank": "and",
+        "base": "and",
+        "zh": "我們需要審查報告{blank}預算。"
+    },
+    {
+        "s": "You can download the new {blank} from the store.",
+        "blank": "App",
+        "base": "App",
+        "zh": "您可以從商店下載新的{blank}。"
+    },
+    {
+        "s": "We {blank} is already reshaping the future of work.",
+        "blank": "Artificial Intelligence",
+        "base": "Artificial Intelligence",
+        "zh": "我們的{blank}已經在重塑未來的工作方式。"
+    },
+    {
+        "s": "The policy was tightened, {blank} the market saw a decline.",
+        "blank": "as a consequence",
+        "base": "as a consequence",
+        "zh": "政策被收緊，{blank}市場出現下滑。"
+    },
+    {
+        "s": "The experiment failed, {blank} the team had to restart.",
+        "blank": "as a result",
+        "base": "as a result",
+        "zh": "實驗失敗，{blank}團隊不得不重新開始。"
+    },
+    {
+        "s": "The factory adopted {blank} to increase efficiency.",
+        "blank": "Automation",
+        "base": "Automation",
+        "zh": "工廠採用了{blank}以提高效率。"
+    },
+    {
+        "s": "Public {blank} about climate change is growing.",
+        "blank": "awareness",
+        "base": "awareness",
+        "zh": "公眾對氣候變化的{blank}正在增長。"
+    },
+    {
+        "s": "She carried her books in a sturdy {blank}.",
+        "blank": "bag",
+        "base": "bag",
+        "zh": "她把書放在一個堅固的{blank}裡。"
+    },
+    {
+        "s": "He repaired the delicate device with {blank}.",
+        "blank": "bare hands",
+        "base": "bare hands",
+        "zh": "他用{blank}修理了精細的裝置。"
+    },
+    {
+        "s": "The car {blank} passed the inspection.",
+        "blank": "barely",
+        "base": "barely",
+        "zh": "車輛{blank}通過了檢查。"
+    },
+    {
+        "s": "I have no time, {blank} I can't help.",
+        "blank": "besides",
+        "base": "besides",
+        "zh": "我沒有時間，{blank}我無法幫忙。"
+    },
+    {
+        "s": "They offered a refreshing {blank} to guests.",
+        "blank": "beverage",
+        "base": "beverage",
+        "zh": "他們為客人提供了一種清爽的{blank}。"
+    },
+    {
+        "s": "The startup aims to raise a {blank} dollars in its next funding round.",
+        "blank": "billion",
+        "base": "billion",
+        "zh": "該新創公司目標在下一輪融資中籌集{blank}美元。"
+    },
+    {
+        "s": "He aspires to become a {blank} by the age of forty.",
+        "blank": "billionaire",
+        "base": "billionaire",
+        "zh": "他立志在四十歲前成為一名{blank}。"
+    },
+    {
+        "s": "The new packaging is fully {blank} and will decompose within months.",
+        "blank": "biodegradable",
+        "base": "biodegradable",
+        "zh": "新包裝完全{blank}，將在數月內分解。"
+    },
+    {
+        "s": "She took a quick {blank} of the apple before putting it in her bag.",
+        "blank": "Bite",
+        "base": "Bite",
+        "zh": "她在把蘋果放進袋子前快速咬了一口{blank}。"
+    },
+    {
+        "s": "The detective examined the {blank} on the victim's arm for clues.",
+        "blank": "Bite mark",
+        "base": "Bite mark",
+        "zh": "偵探檢查受害者手臂上的{blank}以尋找線索。"
+    },
+    {
+        "s": "The rabbit created a deep {blank} beneath the meadow to stay safe.",
+        "blank": "Burrow",
+        "base": "Burrow",
+        "zh": "兔子在草地下挖了一個深{blank}以保持安全。"
+    },
+    {
+        "s": "Children love to trade their {blank} during recess.",
+        "blank": "candy",
+        "base": "candy",
+        "zh": "孩子們在課間喜歡交換他們的{blank}。"
+    },
+    {
+        "s": "Veterinarians often study {blank} behavior to understand dog health.",
+        "blank": "Canine",
+        "base": "Canine",
+        "zh": "獸醫經常研究{blank}行為以了解犬類健康。"
+    },
+    {
+        "s": "Reducing your {blank} can help combat climate change.",
+        "blank": "carbon footprint",
+        "base": "carbon footprint",
+        "zh": "減少你的{blank}有助於對抗氣候變遷。"
+    },
+    {
+        "s": "He kept his {blank} hidden in a secret compartment.",
+        "blank": "cash",
+        "base": "cash",
+        "zh": "他把{blank}藏在一個秘密隔層裡。"
+    },
+    {
+        "s": "The {blank} rang as the customer paid.",
+        "blank": "cash register",
+        "base": "cash register",
+        "zh": "當顧客付款時，{blank} 發出了響聲。"
+    },
+    {
+        "s": "I am {blank} sure that the answer is correct.",
+        "blank": "certain",
+        "base": "certain",
+        "zh": "我對答案正確性 {blank} 確信。"
+    },
+    {
+        "s": "She will {blank} attend the meeting tomorrow.",
+        "blank": "certainly",
+        "base": "certainly",
+        "zh": "她將 {blank} 參加明天的會議。"
+    },
+    {
+        "s": "Please go to the {blank} to pay for your items.",
+        "blank": "checkout",
+        "base": "checkout",
+        "zh": "請前往 {blank} 付款。"
+    },
+    {
+        "s": "The {blank} prepared a delicious meal for the guests.",
+        "blank": "chef",
+        "base": "chef",
+        "zh": "廚師為客人準備了一道美味佳肴。"
+    },
+    {
+        "s": "Your {blank} affects your sleep quality.",
+        "blank": "Circadian rhythm",
+        "base": "Circadian rhythm",
+        "zh": "你的 {blank} 影響睡眠質量。"
+    },
+    {
+        "s": "Adopting a {blank} can reduce waste.",
+        "blank": "circular economy",
+        "base": "circular economy",
+        "zh": "採用 {blank} 可以減少浪費。"
+    },
+    {
+        "s": "Every {blank} has the right to vote.",
+        "blank": "Citizen",
+        "base": "Citizen",
+        "zh": "每個 {blank} 都有投票權。"
+    },
+    {
+        "s": "The {blank} is changing rapidly.",
+        "blank": "Climate",
+        "base": "Climate",
+        "zh": "氣候正迅速變化。"
+    },
+    {
+        "s": "Store your files in the {blank} for easy access.",
+        "blank": "Cloud",
+        "base": "Cloud",
+        "zh": "將文件存儲在 {blank} 中以便輕鬆訪問。"
+    },
+    {
+        "s": "We {blank} the message to everyone.",
+        "blank": "communicate",
+        "base": "communicate",
+        "zh": "傳達"
+    },
+    {
+        "s": "We {blank} the project details with the team.",
+        "blank": "Communication",
+        "base": "Communication",
+        "zh": "溝通"
+    },
+    {
+        "s": "We {blank} the kitchen waste into nutrient-rich soil.",
+        "blank": "compost",
+        "base": "compost",
+        "zh": "堆肥"
+    },
+    {
+        "s": "We {blank} A with B to streamline the process.",
+        "blank": "connect A with B",
+        "base": "connect A with B",
+        "zh": "將A與B連接"
+    },
+    {
+        "s": "We {blank} the two systems to improve efficiency.",
+        "blank": "connection",
+        "base": "connection",
+        "zh": "連接"
+    },
+    {
+        "s": "We {blank} the data, the results were surprising.",
+        "blank": "consequently",
+        "base": "consequently",
+        "zh": "因此"
+    },
+    {
+        "s": "We {blank} our resources to protect biodiversity.",
+        "blank": "conservation",
+        "base": "conservation",
+        "zh": "保育"
+    },
+    {
+        "s": "We {blank} the energy consumption to reduce costs.",
+        "blank": "consumption",
+        "base": "consumption",
+        "zh": "消費"
+    },
+    {
+        "s": "We {blank} the water supply to ensure safety.",
+        "blank": "contamination",
+        "base": "contamination",
+        "zh": "污染"
+    },
+    {
+        "s": "We {blank} the discount for loyal customers.",
+        "blank": "coupon",
+        "base": "coupon",
+        "zh": "優惠券"
+    },
+    {
+        "s": "The {blank} was used to purchase groceries.",
+        "blank": "credit card",
+        "base": "credit card",
+        "zh": "那張{blank}被用來購買雜貨。"
+    },
+    {
+        "s": "The {blank} was investigated by the police.",
+        "blank": "Crime",
+        "base": "Crime",
+        "zh": "那起{blank}被警方調查。"
+    },
+    {
+        "s": "The {blank} was cordoned off for evidence.",
+        "blank": "Crime scene",
+        "base": "Crime scene",
+        "zh": "那個{blank}被封鎖以保存證據。"
+    },
+    {
+        "s": "The {blank} of the region is rich in traditions.",
+        "blank": "Culture",
+        "base": "Culture",
+        "zh": "該地區的{blank}充滿傳統。"
+    },
+    {
+        "s": "The {blank} left a positive review.",
+        "blank": "customer",
+        "base": "customer",
+        "zh": "那位{blank}留下了正面評論。"
+    },
+    {
+        "s": "The {blank} was analyzed for patterns.",
+        "blank": "Data",
+        "base": "Data",
+        "zh": "這些{blank}被分析以尋找模式。"
+    },
+    {
+        "s": "During {blank}, the brain consolidates memories.",
+        "blank": "Deep sleep",
+        "base": "Deep sleep",
+        "zh": "在{blank}期間，大腦會鞏固記憶。"
+    },
+    {
+        "s": "She earned a {blank} in physics.",
+        "blank": "degree",
+        "base": "degree",
+        "zh": "她獲得了物理學{blank}。"
+    },
+    {
+        "s": "The {blank} allows citizens to vote.",
+        "blank": "Democracy",
+        "base": "Democracy",
+        "zh": "{blank}允許公民投票。"
+    },
+    {
+        "s": "The {blank} was a cozy corner of the house.",
+        "blank": "Den",
+        "base": "Den",
+        "zh": "那個{blank}是房子裡一個舒適的角落。"
+    },
+    {
+        "s": "We {blank} all incoming signals for anomalies.",
+        "blank": "Detection",
+        "base": "Detection",
+        "zh": "我們 {blank} 所有進入訊號以尋找異常。"
+    },
+    {
+        "s": "The {blank} was trained to locate hidden explosives.",
+        "blank": "Detection dog",
+        "base": "Detection dog",
+        "zh": "那隻 {blank} 已經訓練好能尋找隱藏的爆炸物。"
+    },
+    {
+        "s": "She can speak the local {blank} with ease.",
+        "blank": "Dialect",
+        "base": "Dialect",
+        "zh": "她能輕鬆說當地的 {blank}。"
+    },
+    {
+        "s": "The company launched a new {blank} marketing campaign.",
+        "blank": "Digital",
+        "base": "Digital",
+        "zh": "公司推出了一個新的 {blank} 行銷活動。"
+    },
+    {
+        "s": "Effective {blank} can resolve conflicts without war.",
+        "blank": "Diplomacy",
+        "base": "Diplomacy",
+        "zh": "有效的 {blank} 能在不戰爭的情況下解決衝突。"
+    },
+    {
+        "s": "Please {blank} your device before leaving the office.",
+        "blank": "disconnect",
+        "base": "disconnect",
+        "zh": "請在離開辦公室前 {blank} 您的裝置。"
+    },
+    {
+        "s": "Customers receive a {blank} when they buy two items.",
+        "blank": "discount",
+        "base": "discount",
+        "zh": "顧客購買兩件商品時可享受 {blank}。"
+    },
+    {
+        "s": "Use a {blank} coffee cup to reduce waste.",
+        "blank": "disposable",
+        "base": "disposable",
+        "zh": "使用一個 {blank} 咖啡杯以減少浪費。"
+    },
+    {
+        "s": "Proper {blank} of hazardous waste is mandatory.",
+        "blank": "disposal",
+        "base": "disposal",
+        "zh": "正確的 {blank} 有害廢棄物是必須的。"
+    },
+    {
+        "s": "It is hard to {blank} between the two similar species.",
+        "blank": "distinguish",
+        "base": "distinguish",
+        "zh": "很難 {blank} 兩種相似物種之間的差異。"
+    },
+    {
+        "s": "She is {blank} in her field.",
+        "blank": "distinguished",
+        "base": "distinguished",
+        "zh": "她在她的領域中是{blank}的。"
+    },
+    {
+        "s": "The {blank} habits of the animal affect its feeding patterns.",
+        "blank": "Diurnal",
+        "base": "Diurnal",
+        "zh": "該動物的{blank}習性影響其進食模式。"
+    },
+    {
+        "s": "Our city celebrates cultural {blank} every year.",
+        "blank": "Diversity",
+        "base": "Diversity",
+        "zh": "我們的城市每年慶祝文化{blank}。"
+    },
+    {
+        "s": "The {blank} barked loudly at the stranger.",
+        "blank": "Dog",
+        "base": "Dog",
+        "zh": "那隻{blank}對陌生人大聲吠叫。"
+    },
+    {
+        "s": "I often {blank} of traveling the world.",
+        "blank": "Dream",
+        "base": "Dream",
+        "zh": "我常常{blank}環遊世界。"
+    },
+    {
+        "s": "We aim to build a more {blank} office space.",
+        "blank": "eco-friendly",
+        "base": "eco-friendly",
+        "zh": "我們的目標是打造更{blank}的辦公空間。"
+    },
+    {
+        "s": "Scientists study the {blank} impact of climate change.",
+        "blank": "ecological",
+        "base": "ecological",
+        "zh": "科學家研究氣候變遷的{blank}影響。"
+    },
+    {
+        "s": "The government introduced policies to strengthen the {blank}.",
+        "blank": "Economy",
+        "base": "Economy",
+        "zh": "政府推出政策以加強{blank}。"
+    },
+    {
+        "s": "Protecting the {blank} is essential for biodiversity.",
+        "blank": "ecosystem",
+        "base": "ecosystem",
+        "zh": "保護{blank}對生物多樣性至關重要。"
+    },
+    {
+        "s": "Teachers strive to {blank} students about critical thinking.",
+        "blank": "educate",
+        "base": "educate",
+        "zh": "教師努力{blank}學生關於批判性思考。"
+    },
+    {
+        "s": "We {blank} to think critically about the world.",
+        "blank": "educated",
+        "base": "educated",
+        "zh": "我們{blank}去批判性地思考世界。"
+    },
+    {
+        "s": "We {blank} every child deserves equal opportunities.",
+        "blank": "education",
+        "base": "education",
+        "zh": "我們{blank}每個孩子都應該擁有平等的機會。"
+    },
+    {
+        "s": "We {blank} resources can enhance learning experiences.",
+        "blank": "educational",
+        "base": "educational",
+        "zh": "我們{blank}資源可以提升學習體驗。"
+    },
+    {
+        "s": "We {blank} change to foster innovation.",
+        "blank": "embrace",
+        "base": "embrace",
+        "zh": "我們{blank}變化以促進創新。"
+    },
+    {
+        "s": "We {blank} our actions affect the planet.",
+        "blank": "Environment",
+        "base": "Environment",
+        "zh": "我們{blank}的行動會影響地球。"
+    },
+    {
+        "s": "We {blank} of our choices on ecosystems.",
+        "blank": "environmental impact",
+        "base": "environmental impact",
+        "zh": "我們{blank}對生態系統的影響。"
+    },
+    {
+        "s": "We {blank} include other relevant factors.",
+        "blank": "etc",
+        "base": "etc",
+        "zh": "我們{blank}包括其他相關因素。"
+    },
+    {
+        "s": "We {blank} supports the hypothesis strongly.",
+        "blank": "Evidence",
+        "base": "Evidence",
+        "zh": "我們{blank}強有力地支持假設。"
+    },
+    {
+        "s": "We {blank} our findings at the conference.",
+        "blank": "Exhibit",
+        "base": "Exhibit",
+        "zh": "我們{blank}在會議上展示我們的發現。"
+    },
+    {
+        "s": "We {blank} goods to international markets.",
+        "blank": "Export",
+        "base": "Export",
+        "zh": "我們{blank}商品到國際市場。"
+    },
+    {
+        "s": "We must {blank} the flames before they spread.",
+        "blank": "extinguish",
+        "base": "extinguish",
+        "zh": "我們必須{blank}火焰，以防它蔓延。"
+    },
+    {
+        "s": "She enjoys reading {blank} before bedtime.",
+        "blank": "fiction",
+        "base": "fiction",
+        "zh": "她喜歡在睡前閱讀{blank}。"
+    },
+    {
+        "s": "Every office should keep a {blank} within easy reach.",
+        "blank": "fire extinguisher",
+        "base": "fire extinguisher",
+        "zh": "每個辦公室都應該把{blank}放在易於取用的地方。"
+    },
+    {
+        "s": "The hiker left a clear {blank} in the soft mud.",
+        "blank": "Footprint",
+        "base": "Footprint",
+        "zh": "徒步者在柔軟的泥土中留下了明顯的{blank}。"
+    },
+    {
+        "s": "Many examples exist, {blank}, of successful community gardens.",
+        "blank": "for instance",
+        "base": "for instance",
+        "zh": "有許多例子，例如{blank}，顯示社區花園的成功。"
+    },
+    {
+        "s": "The detective used {blank} techniques to solve the case.",
+        "blank": "Forensic",
+        "base": "Forensic",
+        "zh": "偵探使用{blank}技術破解此案。"
+    },
+    {
+        "s": "Students enrolled in {blank} learn to analyze evidence.",
+        "blank": "Forensic science",
+        "base": "Forensic science",
+        "zh": "修讀{blank}的學生學會分析證據。"
+    },
+    {
+        "s": "The charity's {blank} supports education worldwide.",
+        "blank": "Foundation",
+        "base": "Foundation",
+        "zh": "該慈善機構的{blank}支援全球教育。"
+    },
+    {
+        "s": "Citizens cherish {blank} as a fundamental right.",
+        "blank": "Freedom",
+        "base": "Freedom",
+        "zh": "公民珍視{blank}作為基本權利。"
+    },
+    {
+        "s": "Protests are protected under {blank}, allowing people to gather peacefully.",
+        "blank": "Freedom of assembly",
+        "base": "Freedom of assembly",
+        "zh": "抗議活動受到{blank}的保護，允許人們和平集會。"
+    },
+    {
+        "s": "We {blank} to choose our own path.",
+        "blank": "Freedom of choice",
+        "base": "Freedom of choice",
+        "zh": "選擇自由"
+    },
+    {
+        "s": "Everyone should have the right to {blank}.",
+        "blank": "Freedom of expression",
+        "base": "Freedom of expression",
+        "zh": "表達自由"
+    },
+    {
+        "s": "The law protects our {blank} across borders.",
+        "blank": "Freedom of movement",
+        "base": "Freedom of movement",
+        "zh": "移動自由"
+    },
+    {
+        "s": "Respecting the {blank} is essential for a tolerant society.",
+        "blank": "Freedom of religion",
+        "base": "Freedom of religion",
+        "zh": "宗教自由"
+    },
+    {
+        "s": "The {blank} is a cornerstone of democracy.",
+        "blank": "Freedom of speech",
+        "base": "Freedom of speech",
+        "zh": "言論自由"
+    },
+    {
+        "s": "The {blank} ensures unbiased reporting.",
+        "blank": "Freedom of the press",
+        "base": "Freedom of the press",
+        "zh": "新聞自由"
+    },
+    {
+        "s": "The {blank} helps drivers navigate accurately.",
+        "blank": "Global Positioning System",
+        "base": "Global Positioning System",
+        "zh": "全球定位系統"
+    },
+    {
+        "s": "Scientists warn that {blank} could alter ecosystems worldwide.",
+        "blank": "global warming",
+        "base": "global warming",
+        "zh": "全球暖化"
+    },
+    {
+        "s": "The rapid pace of {blank} connects markets and cultures.",
+        "blank": "Globalization",
+        "base": "Globalization",
+        "zh": "全球化"
+    },
+    {
+        "s": "The {blank} spins once every 24 hours.",
+        "blank": "globe",
+        "base": "globe",
+        "zh": "地球"
+    },
+    {
+        "s": "We {blank} the organization with integrity.",
+        "blank": "govern",
+        "base": "govern",
+        "zh": "我們以誠信治理該組織。"
+    },
+    {
+        "s": "The {blank} announced new environmental policies.",
+        "blank": "government",
+        "base": "government",
+        "zh": "政府宣布了新的環境政策。"
+    },
+    {
+        "s": "The park is {blank} and full of trees.",
+        "blank": "green",
+        "base": "green",
+        "zh": "公園是綠色的，充滿了樹木。"
+    },
+    {
+        "s": "Reducing {blank} is essential for climate action.",
+        "blank": "greenhouse gas",
+        "base": "greenhouse gas",
+        "zh": "減少溫室氣體對氣候行動至關重要。"
+    },
+    {
+        "s": "Protecting the {blank} ensures species survival.",
+        "blank": "habitat",
+        "base": "habitat",
+        "zh": "保護棲息地確保物種存活。"
+    },
+    {
+        "s": "The {blank} managed the data flow efficiently.",
+        "blank": "Handler",
+        "base": "Handler",
+        "zh": "處理者有效地管理了資料流。"
+    },
+    {
+        "s": "Upgrading the {blank} improved system performance.",
+        "blank": "Hardware",
+        "base": "Hardware",
+        "zh": "升級硬體提升了系統效能。"
+    },
+    {
+        "s": "The waste was labeled as {blank} and handled carefully.",
+        "blank": "hazardous",
+        "base": "hazardous",
+        "zh": "該廢棄物被標示為危險，並被小心處理。"
+    },
+    {
+        "s": "The experiment failed, {blank} we must revise our approach.",
+        "blank": "hence",
+        "base": "hence",
+        "zh": "實驗失敗，因此我們必須修正方法。"
+    },
+    {
+        "s": "Preserving cultural {blank} enriches future generations.",
+        "blank": "Heritage",
+        "base": "Heritage",
+        "zh": "保存文化遺產豐富了未來世代。"
+    },
+    {
+        "s": "The bear will enter {blank} during the winter months.",
+        "blank": "Hibernation",
+        "base": "Hibernation",
+        "zh": "冬眠"
+    },
+    {
+        "s": "The museum displays artifacts that tell the story of {blank}.",
+        "blank": "History",
+        "base": "History",
+        "zh": "歷史"
+    },
+    {
+        "s": "After the long journey, she gave him a warm {blank}.",
+        "blank": "hug",
+        "base": "hug",
+        "zh": "擁抱"
+    },
+    {
+        "s": "The Eiffel Tower is an {blank} symbol of Paris.",
+        "blank": "Iconic",
+        "base": "Iconic",
+        "zh": "標誌性的"
+    },
+    {
+        "s": "Children use their {blank} to create fantastical worlds.",
+        "blank": "imagination",
+        "base": "imagination",
+        "zh": "想像力"
+    },
+    {
+        "s": "Can you {blank} a world where everyone shares knowledge?",
+        "blank": "imagine",
+        "base": "imagine",
+        "zh": "想像"
+    },
+    {
+        "s": "Every year, thousands of {blank} arrive seeking better opportunities.",
+        "blank": "Immigrant",
+        "base": "Immigrant",
+        "zh": "移民"
+    },
+    {
+        "s": "The debate over {blank} has intensified in recent years.",
+        "blank": "Immigration",
+        "base": "Immigration",
+        "zh": "移民"
+    },
+    {
+        "s": "The new {blank} will affect how visas are processed.",
+        "blank": "Immigration law",
+        "base": "Immigration law",
+        "zh": "移民法"
+    },
+    {
+        "s": "The government announced a revised {blank} to address labor shortages.",
+        "blank": "Immigration policy",
+        "base": "Immigration policy",
+        "zh": "移民政策"
+    },
+    {
+        "s": "We {blank} the data from abroad.",
+        "blank": "Import",
+        "base": "Import",
+        "zh": "我們{blank}從國外的資料。"
+    },
+    {
+        "s": "The report mentions the cost, and {blank} the time required.",
+        "blank": "in addition",
+        "base": "in addition",
+        "zh": "報告提到成本，{blank}所需的時間。"
+    },
+    {
+        "s": "He said he was busy, but {blank} he was at home.",
+        "blank": "in fact",
+        "base": "in fact",
+        "zh": "他說自己很忙，{blank}他其實在家。"
+    },
+    {
+        "s": "The theory sounds simple, yet {blank} it is hard to implement.",
+        "blank": "in practice",
+        "base": "in practice",
+        "zh": "理論聽起來簡單，{blank}實際上很難執行。"
+    },
+    {
+        "s": "The project seems profitable, but {blank} expenses are higher.",
+        "blank": "in reality",
+        "base": "in reality",
+        "zh": "該項目看似有利潤，{blank}實際支出更高。"
+    },
+    {
+        "s": "She appears confident, {blank} she feels uncertain.",
+        "blank": "in truth",
+        "base": "in truth",
+        "zh": "她看起來很自信，{blank}事實上她感到不確定。"
+    },
+    {
+        "s": "The city celebrated the {blank} of the new museum.",
+        "blank": "Inauguration",
+        "base": "Inauguration",
+        "zh": "城市慶祝新博物館的{blank}。"
+    },
+    {
+        "s": "The waste is processed through {blank} to reduce volume.",
+        "blank": "incineration",
+        "base": "incineration",
+        "zh": "廢棄物透過{blank}處理以減少體積。"
+    },
+    {
+        "s": "Please {blank} the manager of the schedule change.",
+        "blank": "inform sb of sth",
+        "base": "inform sb of sth",
+        "zh": "請{blank}經理有關時間表的變更。"
+    },
+    {
+        "s": "The website provides accurate {blank} about the event.",
+        "blank": "information",
+        "base": "information",
+        "zh": "網站提供關於活動的準確{blank}。"
+    },
+    {
+        "s": "I went to the {blank} to ask for directions.",
+        "blank": "information desk",
+        "base": "information desk",
+        "zh": "我走到資訊櫃檯詢問方向。"
+    },
+    {
+        "s": "The company's success is largely due to {blank}.",
+        "blank": "Innovation",
+        "base": "Innovation",
+        "zh": "公司的成功在很大程度上歸功於創新。"
+    },
+    {
+        "s": "After a long day, I struggled with {blank}.",
+        "blank": "Insomnia",
+        "base": "Insomnia",
+        "zh": "長時間工作後，我因失眠而苦惱。"
+    },
+    {
+        "s": "She made an {blank} decision without thinking.",
+        "blank": "instant",
+        "base": "instant",
+        "zh": "她毫不猶豫地做了一個即時決定。"
+    },
+    {
+        "s": "I chose to stay home {blank} go out.",
+        "blank": "instead",
+        "base": "instead",
+        "zh": "我選擇留在家裡，而不是外出。"
+    },
+    {
+        "s": "She took a walk {blank} studying.",
+        "blank": "instead of",
+        "base": "instead of",
+        "zh": "她選擇散步，而不是學習。"
+    },
+    {
+        "s": "The conference attracted {blank} experts.",
+        "blank": "international",
+        "base": "international",
+        "zh": "該會議吸引了國際專家。"
+    },
+    {
+        "s": "He accessed the {blank} to find information.",
+        "blank": "Internet",
+        "base": "Internet",
+        "zh": "他上網搜尋資訊。"
+    },
+    {
+        "s": "The {blank} changed the way we communicate.",
+        "blank": "invention",
+        "base": "invention",
+        "zh": "這項發明改變了我們的溝通方式。"
+    },
+    {
+        "s": "She checked the {blank} before the audit.",
+        "blank": "inventory",
+        "base": "inventory",
+        "zh": "她在審核前檢查了庫存。"
+    },
+    {
+        "s": "The detective opened an {blank} to uncover the truth.",
+        "blank": "Investigation",
+        "base": "Investigation",
+        "zh": "調查"
+    },
+    {
+        "s": "The officer relied on his {blank} to track the suspect.",
+        "blank": "K-9",
+        "base": "K-9",
+        "zh": "警犬"
+    },
+    {
+        "s": "The city’s {blank} responded quickly to the emergency.",
+        "blank": "K9 unit",
+        "base": "K9 unit",
+        "zh": "警犬部隊"
+    },
+    {
+        "s": "After dinner, we enjoyed a lively session of {blank}.",
+        "blank": "karaoke",
+        "base": "karaoke",
+        "zh": "卡拉OK"
+    },
+    {
+        "s": "He added a splash of {blank} to his fries.",
+        "blank": "ketchup",
+        "base": "ketchup",
+        "zh": "番茄醬"
+    },
+    {
+        "s": "The new {blank} is located on the outskirts of town.",
+        "blank": "landfill",
+        "base": "landfill",
+        "zh": "垃圾掩埋場"
+    },
+    {
+        "s": "The ancient tower is a famous {blank} for tourists.",
+        "blank": "Landmark",
+        "base": "Landmark",
+        "zh": "地標"
+    },
+    {
+        "s": "Learning a new {blank} can open many doors.",
+        "blank": "Language",
+        "base": "Language",
+        "zh": "語言"
+    },
+    {
+        "s": "The country's {blank} was celebrated with fireworks.",
+        "blank": "Liberation",
+        "base": "Liberation",
+        "zh": "解放"
+    },
+    {
+        "s": "She fought tirelessly for {blank} and equality.",
+        "blank": "Liberty",
+        "base": "Liberty",
+        "zh": "自由"
+    },
+    {
+        "s": "We must limit {blank} to protect our circadian rhythms.",
+        "blank": "Light exposure",
+        "base": "Light exposure",
+        "zh": "我們必須限制{blank}以保護我們的晝夜節律。"
+    },
+    {
+        "s": "The park was covered in {blank} after the festival.",
+        "blank": "litter",
+        "base": "litter",
+        "zh": "節慶結束後，公園被{blank}覆蓋。"
+    },
+    {
+        "s": "Customers can earn points by using their {blank} at checkout.",
+        "blank": "loyalty card",
+        "base": "loyalty card",
+        "zh": "顧客在結帳時使用{blank}即可累積點數。"
+    },
+    {
+        "s": "Researchers applied {blank} to predict climate patterns.",
+        "blank": "Machine Learning",
+        "base": "Machine Learning",
+        "zh": "研究人員運用{blank}來預測氣候模式。"
+    },
+    {
+        "s": "To understand the article, identify the {blank} first.",
+        "blank": "main idea",
+        "base": "main idea",
+        "zh": "要理解文章，首先要找出{blank}。"
+    },
+    {
+        "s": "She chose {blank} as her field of study because of its versatility.",
+        "blank": "major",
+        "base": "major",
+        "zh": "她選擇{blank}作為她的主修，因為它的多樣性。"
+    },
+    {
+        "s": "He decided to {blank} to improve his career prospects.",
+        "blank": "major in English",
+        "base": "major in English",
+        "zh": "他決定{blank}以提升職業前景。"
+    },
+    {
+        "s": "The {blank} of voters supported the new policy.",
+        "blank": "majority",
+        "base": "majority",
+        "zh": "大多數選民的{blank}支持了新政策。"
+    },
+    {
+        "s": "Efforts are underway to reduce {blank} in coastal areas.",
+        "blank": "marine pollution",
+        "base": "marine pollution",
+        "zh": "正在努力減少沿海地區的{blank}。"
+    },
+    {
+        "s": "The {blank} influences public opinion on many issues.",
+        "blank": "media",
+        "base": "media",
+        "zh": "{blank}影響了公眾對許多議題的看法。"
+    },
+    {
+        "s": "The artist chose a {blank} to convey subtle tones.",
+        "blank": "medium",
+        "base": "medium",
+        "zh": "中等"
+    },
+    {
+        "s": "Your body releases more {blank} when it gets dark, helping you feel sleepy.",
+        "blank": "Melatonin",
+        "base": "Melatonin",
+        "zh": "褪黑激素"
+    },
+    {
+        "s": "Birds begin their long {blank} south as winter approaches.",
+        "blank": "Migration",
+        "base": "Migration",
+        "zh": "遷徙"
+    },
+    {
+        "s": "The city unveiled a new {blank} to honor its founding heroes.",
+        "blank": "Monument",
+        "base": "Monument",
+        "zh": "紀念碑"
+    },
+    {
+        "s": "A short {blank} after lunch can boost your afternoon productivity.",
+        "blank": "Nap",
+        "base": "Nap",
+        "zh": "小睡"
+    },
+    {
+        "s": "People with {blank} often struggle to stay awake during the day.",
+        "blank": "Narcolepsy",
+        "base": "Narcolepsy",
+        "zh": "嗜睡症"
+    },
+    {
+        "s": "The {blank} flag features a white star on a blue background.",
+        "blank": "National",
+        "base": "National",
+        "zh": "國家"
+    },
+    {
+        "s": "Successful {blank} requires both listening and clear articulation of goals.",
+        "blank": "Negotiation",
+        "base": "Negotiation",
+        "zh": "談判"
+    },
+    {
+        "s": "A reliable {blank} can keep your devices connected across the house.",
+        "blank": "Network",
+        "base": "Network",
+        "zh": "網路"
+    },
+    {
+        "s": "Owls are {blank} hunters, relying on darkness to stalk their prey.",
+        "blank": "Nocturnal",
+        "base": "Nocturnal",
+        "zh": "夜行的"
+    },
+    {
+        "s": "We use our {blank} to detect hidden aromas.",
+        "blank": "Nose",
+        "base": "Nose",
+        "zh": "我們使用我們的{blank}來偵測隱藏的香氣。"
+    },
+    {
+        "s": "We practice {blank} to sharpen our scent abilities.",
+        "blank": "Nose work",
+        "base": "Nose work",
+        "zh": "我們練習{blank}以提升嗅覺能力。"
+    },
+    {
+        "s": "She wrote a {blank} that surprised everyone.",
+        "blank": "novel",
+        "base": "novel",
+        "zh": "她寫了一本{blank}讓所有人都感到驚訝。"
+    },
+    {
+        "s": "He became a famous {blank} after his debut book.",
+        "blank": "novelist",
+        "base": "novelist",
+        "zh": "他的處女作出版後，他成為了著名的{blank}。"
+    },
+    {
+        "s": "The dog's {blank} impressed the judges.",
+        "blank": "Obedience",
+        "base": "Obedience",
+        "zh": "那隻狗的{blank}讓評委印象深刻。"
+    },
+    {
+        "s": "She ate {blank} the cake before anyone else noticed.",
+        "blank": "one-third of",
+        "base": "one-third of",
+        "zh": "她在其他人注意之前吃掉了{blank}的蛋糕。"
+    },
+    {
+        "s": "His performance was {blank} among the competitors.",
+        "blank": "outstanding",
+        "base": "outstanding",
+        "zh": "他的表現在競爭者中是{blank}的。"
+    },
+    {
+        "s": "The {blank} of antibiotics can lead to resistance.",
+        "blank": "overuse",
+        "base": "overuse",
+        "zh": "抗生素的{blank}可能導致抗藥性。"
+    },
+    {
+        "s": "Their {blank} lasted for decades.",
+        "blank": "Partnership",
+        "base": "Partnership",
+        "zh": "他們的{blank}持續了數十年。"
+    },
+    {
+        "s": "He was celebrated as a true {blank} of his country.",
+        "blank": "Patriot",
+        "base": "Patriot",
+        "zh": "他被譽為國家的真正{blank}。"
+    },
+    {
+        "s": "We {blank} the dog gently on the couch.",
+        "blank": "Paw",
+        "base": "Paw",
+        "zh": "我們在沙發上輕輕{blank}狗。"
+    },
+    {
+        "s": "The detective examined the {blank} left at the crime scene.",
+        "blank": "Paw print",
+        "base": "Paw print",
+        "zh": "偵探檢查了犯罪現場留下的{blank}。"
+    },
+    {
+        "s": "The statue stood on a marble {blank} in the garden.",
+        "blank": "Pedestal",
+        "base": "Pedestal",
+        "zh": "雕像站在花園的大理石{blank}上。"
+    },
+    {
+        "s": "The interest rate increased by {blank}.",
+        "blank": "percent",
+        "base": "percent",
+        "zh": "利率上升了{blank}。"
+    },
+    {
+        "s": "The survey showed a {blank} of respondents favoring the new policy.",
+        "blank": "percentage",
+        "base": "percentage",
+        "zh": "調查顯示有{blank}的受訪者支持新政策。"
+    },
+    {
+        "s": "They recycled the {blank} bottles to reduce waste.",
+        "blank": "plastic",
+        "base": "plastic",
+        "zh": "他們回收了{blank}瓶子以減少垃圾。"
+    },
+    {
+        "s": "The city launched a campaign to clean up {blank} from the river.",
+        "blank": "plastic waste",
+        "base": "plastic waste",
+        "zh": "城市發起了清理河流中{blank}的活動。"
+    },
+    {
+        "s": "Add two and three to get a {blank} of five.",
+        "blank": "plus",
+        "base": "plus",
+        "zh": "二加三得到的{blank}是五。"
+    },
+    {
+        "s": "The {blank} arrived at the scene within minutes.",
+        "blank": "Police",
+        "base": "Police",
+        "zh": "{blank}在幾分鐘內到達現場。"
+    },
+    {
+        "s": "The {blank} helped locate the missing hiker.",
+        "blank": "Police dog",
+        "base": "Police dog",
+        "zh": "{blank}幫助找到了失蹤的徒步旅行者。"
+    },
+    {
+        "s": "The river suffers from {blank} caused by industrial waste.",
+        "blank": "pollution",
+        "base": "pollution",
+        "zh": "這條河因工業廢棄物而受到{blank}的侵害。"
+    },
+    {
+        "s": "He decided to {blank} during the meeting to clarify the project scope.",
+        "blank": "pop a question",
+        "base": "pop a question",
+        "zh": "他決定在會議中{blank}，以釐清專案範圍。"
+    },
+    {
+        "s": "She enjoys listening to {blank} while studying.",
+        "blank": "pop music",
+        "base": "pop music",
+        "zh": "她在學習時喜歡聽{blank}。"
+    },
+    {
+        "s": "The country's {blank} has grown rapidly over the past decade.",
+        "blank": "population",
+        "base": "population",
+        "zh": "該國的{blank}在過去十年迅速增長。"
+    },
+    {
+        "s": "In the documentary, the {blank} stalks its prey with silent precision.",
+        "blank": "Predator",
+        "base": "Predator",
+        "zh": "在紀錄片中，{blank}以無聲的精準追蹤獵物。"
+    },
+    {
+        "s": "The museum focuses on the {blank} of ancient artifacts.",
+        "blank": "Preservation",
+        "base": "Preservation",
+        "zh": "博物館專注於古代文物的{blank}。"
+    },
+    {
+        "s": "The lion's {blank} tried to escape the savannah's harsh conditions.",
+        "blank": "Prey",
+        "base": "Prey",
+        "zh": "獅子的{blank}試圖逃離草原的嚴酷環境。"
+    },
+    {
+        "s": "Every product in the store has a clearly displayed {blank}.",
+        "blank": "price tag",
+        "base": "price tag",
+        "zh": "店內每件商品都有清晰標示的{blank}。"
+    },
+    {
+        "s": "The new {blank} promises to improve energy efficiency.",
+        "blank": "product",
+        "base": "product",
+        "zh": "新{blank}承諾提升能源效率。"
+    },
+    {
+        "s": "She will {blank} a new strategy at tomorrow's conference.",
+        "blank": "propose",
+        "base": "propose",
+        "zh": "她將在明天的會議上{blank}一項新策略。"
+    },
+    {
+        "s": "We {blank} the fire before it spreads.",
+        "blank": "put out",
+        "base": "put out",
+        "zh": "我們在火勢蔓延前把它{blank}。"
+    },
+    {
+        "s": "The comet is {blank} in our sky.",
+        "blank": "rare",
+        "base": "rare",
+        "zh": "彗星在我們的天空中是{blank}的。"
+    },
+    {
+        "s": "She {blank} visits the museum, preferring to stay at home.",
+        "blank": "rarely",
+        "base": "rarely",
+        "zh": "她{blank}參觀博物館，寧願留在家。"
+    },
+    {
+        "s": "Please keep the {blank} for future reference.",
+        "blank": "receipt",
+        "base": "receipt",
+        "zh": "請保留{blank}以備將來參考。"
+    },
+    {
+        "s": "We should {blank} plastic bottles to reduce waste.",
+        "blank": "recycle",
+        "base": "recycle",
+        "zh": "我們應該{blank}塑膠瓶以減少垃圾。"
+    },
+    {
+        "s": "Proper {blank} can save a lot of resources.",
+        "blank": "recycling",
+        "base": "recycling",
+        "zh": "適當的{blank}可以節省大量資源。"
+    },
+    {
+        "s": "Try to {blank} your energy consumption by turning off lights.",
+        "blank": "reduce",
+        "base": "reduce",
+        "zh": "嘗試通過關燈來{blank}你的能源消耗。"
+    },
+    {
+        "s": "During {blank}, the brain consolidates memories.",
+        "blank": "REM sleep",
+        "base": "REM sleep",
+        "zh": "在{blank}期間，大腦會鞏固記憶。"
+    },
+    {
+        "s": "Solar panels are a {blank} source of power.",
+        "blank": "renewable",
+        "base": "renewable",
+        "zh": "太陽能板是{blank}的電力來源。"
+    },
+    {
+        "s": "Investing in {blank} can reduce carbon emissions.",
+        "blank": "Renewable Energy",
+        "base": "Renewable Energy",
+        "zh": "投資{blank}可以減少碳排放。"
+    },
+    {
+        "s": "We {blank} the discarded wood into a stylish bookshelf.",
+        "blank": "repurpose",
+        "base": "repurpose",
+        "zh": "我們將廢棄的木材{blank}成時尚的書架。"
+    },
+    {
+        "s": "The team will {blank} the stranded hikers before nightfall.",
+        "blank": "Rescue",
+        "base": "Rescue",
+        "zh": "團隊將在天黑前{blank}被困的登山者。"
+    },
+    {
+        "s": "Scientists {blank} the effects of microplastics on marine life.",
+        "blank": "research",
+        "base": "research",
+        "zh": "科學家{blank}微塑料對海洋生物的影響。"
+    },
+    {
+        "s": "The {blank} presented her findings at the international conference.",
+        "blank": "researcher",
+        "base": "researcher",
+        "zh": "那位{blank}在國際會議上發表了她的研究成果。"
+    },
+    {
+        "s": "Clean water is a vital {blank} for sustainable development.",
+        "blank": "resource",
+        "base": "resource",
+        "zh": "清潔水是永續發展的重要{blank}。"
+    },
+    {
+        "s": "She is incredibly {blank} when solving unexpected problems.",
+        "blank": "resourceful",
+        "base": "resourceful",
+        "zh": "她在解決突發問題時非常{blank}。"
+    },
+    {
+        "s": "After a long journey, we need to {blank} and recover our strength.",
+        "blank": "Rest",
+        "base": "Rest",
+        "zh": "長途旅行後，我們需要{blank}並恢復體力。"
+    },
+    {
+        "s": "His {blank} made it hard for him to sit still during the lecture.",
+        "blank": "Restlessness",
+        "base": "Restlessness",
+        "zh": "他的{blank}使他在講座中難以靜坐。"
+    },
+    {
+        "s": "The university launched a new program in {blank} engineering.",
+        "blank": "Robotics",
+        "base": "Robotics",
+        "zh": "大學開設了全新的{blank}工程課程。"
+    },
+    {
+        "s": "Establishing a healthy {blank} can improve overall well-being.",
+        "blank": "Routine",
+        "base": "Routine",
+        "zh": "建立健康的{blank}可以提升整體福祉。"
+    },
+    {
+        "s": "We {blank} the garden to discover the lingering fragrance.",
+        "blank": "Scent",
+        "base": "Scent",
+        "zh": "我們在花園裡{blank}，以發現殘留的香氣。"
+    },
+    {
+        "s": "The dog excels at {blank} during the search operation.",
+        "blank": "Scent detection",
+        "base": "Scent detection",
+        "zh": "這隻狗在搜索行動中擅長{blank}。"
+    },
+    {
+        "s": "The hiker followed the {blank} through the forest.",
+        "blank": "Scent trail",
+        "base": "Scent trail",
+        "zh": "徒步者沿著{blank}穿過森林。"
+    },
+    {
+        "s": "Everyone gathered to watch the new {blank} tonight.",
+        "blank": "sci-fi movie",
+        "base": "sci-fi movie",
+        "zh": "大家今晚聚在一起觀看全新的{blank}。"
+    },
+    {
+        "s": "She writes compelling {blank} stories set in distant galaxies.",
+        "blank": "science fiction",
+        "base": "science fiction",
+        "zh": "她寫出引人入勝的{blank}故事，背景設定在遙遠的星系。"
+    },
+    {
+        "s": "We must {blank} the archives for any relevant records.",
+        "blank": "Search",
+        "base": "Search",
+        "zh": "我們必須{blank}檔案，以尋找任何相關記錄。"
+    },
+    {
+        "s": "The market offers {blank} produce during the harvest months.",
+        "blank": "Seasonal",
+        "base": "Seasonal",
+        "zh": "市場在收穫季節提供{blank}農產品。"
+    },
+    {
+        "s": "Please add the items to your {blank} before checkout.",
+        "blank": "shopping cart",
+        "base": "shopping cart",
+        "zh": "請在結帳前將商品加入您的{blank}。"
+    },
+    {
+        "s": "The policy bans {blank} plastics to protect the environment.",
+        "blank": "single-use",
+        "base": "single-use",
+        "zh": "該政策禁止{blank}塑料，以保護環境。"
+    },
+    {
+        "s": "A good night of {blank} improves focus and mood.",
+        "blank": "Sleep",
+        "base": "Sleep",
+        "zh": "充足的{blank}能提升專注力與情緒。"
+    },
+    {
+        "s": "We are concerned about {blank}.",
+        "blank": "Sleep apnea",
+        "base": "Sleep apnea",
+        "zh": "睡眠呼吸暫停症"
+    },
+    {
+        "s": "We study {blank} to understand sleep stages.",
+        "blank": "Sleep architecture",
+        "base": "Sleep architecture",
+        "zh": "睡眠結構"
+    },
+    {
+        "s": "We monitor {blank} throughout the night.",
+        "blank": "Sleep cycle",
+        "base": "Sleep cycle",
+        "zh": "睡眠週期"
+    },
+    {
+        "s": "We experience {blank} when we work late.",
+        "blank": "Sleep deprivation",
+        "base": "Sleep deprivation",
+        "zh": "睡眠剝奪"
+    },
+    {
+        "s": "We diagnose {blank} with polysomnography.",
+        "blank": "Sleep disorders",
+        "base": "Sleep disorders",
+        "zh": "睡眠障礙"
+    },
+    {
+        "s": "We track {blank} to assess health.",
+        "blank": "Sleep duration",
+        "base": "Sleep duration",
+        "zh": "睡眠時長"
+    },
+    {
+        "s": "We observe {blank} in restless patients.",
+        "blank": "Sleep fragmentation",
+        "base": "Sleep fragmentation",
+        "zh": "睡眠碎片化"
+    },
+    {
+        "s": "We recommend {blank} for better rest.",
+        "blank": "Sleep hygiene",
+        "base": "Sleep hygiene",
+        "zh": "睡眠衛生"
+    },
+    {
+        "s": "We measure {blank} to evaluate insomnia.",
+        "blank": "Sleep latency",
+        "base": "Sleep latency",
+        "zh": "睡眠潛伏期"
+    },
+    {
+        "s": "We record {blank} to study sleep patterns.",
+        "blank": "Sleep onset",
+        "base": "Sleep onset",
+        "zh": "睡眠開始"
+    },
+    {
+        "s": "We should monitor our {blank} to ensure better health.",
+        "blank": "Sleep quality",
+        "base": "Sleep quality",
+        "zh": "睡眠品質"
+    },
+    {
+        "s": "Keeping a consistent {blank} helps regulate our circadian rhythm.",
+        "blank": "Sleep schedule",
+        "base": "Sleep schedule",
+        "zh": "睡眠時間表"
+    },
+    {
+        "s": "A good {blank} is essential for recovery after a long day.",
+        "blank": "Slumber",
+        "base": "Slumber",
+        "zh": "熟睡"
+    },
+    {
+        "s": "I can't imagine traveling without my trusty {blank}.",
+        "blank": "Smartphone",
+        "base": "Smartphone",
+        "zh": "智慧手機"
+    },
+    {
+        "s": "A quick {blank} can boost energy during a break.",
+        "blank": "snack",
+        "base": "snack",
+        "zh": "零食"
+    },
+    {
+        "s": "She gave the perfume a gentle {blank} before deciding.",
+        "blank": "Sniff",
+        "base": "Sniff",
+        "zh": "嗅聞"
+    },
+    {
+        "s": "The new {blank} update fixed many bugs.",
+        "blank": "Software",
+        "base": "Software",
+        "zh": "軟體"
+    },
+    {
+        "s": "His bright tie helped him {blank} in the crowd.",
+        "blank": "stand out",
+        "base": "stand out",
+        "zh": "脫穎而出"
+    },
+    {
+        "s": "The ancient {blank} attracted many tourists.",
+        "blank": "Statue",
+        "base": "Statue",
+        "zh": "雕像"
+    },
+    {
+        "s": "The friendly {blank} assisted me with my purchase.",
+        "blank": "store clerk",
+        "base": "store clerk",
+        "zh": "店員"
+    },
+    {
+        "s": "The new {blank} attracted many customers.",
+        "blank": "storefront",
+        "base": "storefront",
+        "zh": "新的門面吸引了許多顧客。"
+    },
+    {
+        "s": "The detective considered the man a {blank}.",
+        "blank": "Suspect",
+        "base": "Suspect",
+        "zh": "偵探認為那個男人是嫌疑犯。"
+    },
+    {
+        "s": "The company pledged to improve its {blank} practices.",
+        "blank": "Sustainability",
+        "base": "Sustainability",
+        "zh": "公司承諾改善其可持續性做法。"
+    },
+    {
+        "s": "They built a {blank} energy system.",
+        "blank": "sustainable",
+        "base": "sustainable",
+        "zh": "他們建造了一個可持續的能源系統。"
+    },
+    {
+        "s": "The flag is a powerful {blank} of freedom.",
+        "blank": "Symbol",
+        "base": "Symbol",
+        "zh": "旗幟是自由的強大象徵。"
+    },
+    {
+        "s": "The government imposed a high {blank} on imports.",
+        "blank": "Tariff",
+        "base": "Tariff",
+        "zh": "政府對進口商品徵收高關稅。"
+    },
+    {
+        "s": "Advances in {blank} are reshaping the industry.",
+        "blank": "Technology",
+        "base": "Technology",
+        "zh": "科技進步正在重塑這個行業。"
+    },
+    {
+        "s": "It rained heavily, {blank} the event was canceled.",
+        "blank": "therefore",
+        "base": "therefore",
+        "zh": "下了大雨，因此活動被取消。"
+    },
+    {
+        "s": "She studied hard, {blank} she passed the exam.",
+        "blank": "thus",
+        "base": "thus",
+        "zh": "她努力學習，因此通過了考試。"
+    },
+    {
+        "s": "The policy affected the economy, {blank}.",
+        "blank": "to some degree",
+        "base": "to some degree",
+        "zh": "該政策在某種程度上影響了經濟。"
+    },
+    {
+        "s": "The hiker fell into {blank} during the scorching noon.",
+        "blank": "Torpor",
+        "base": "Torpor",
+        "zh": "徒步者在炙熱的正午陷入{blank}。"
+    },
+    {
+        "s": "The {blank} snapped photos of every street corner.",
+        "blank": "Tourist",
+        "base": "Tourist",
+        "zh": "那位{blank}對每個街角都拍照。"
+    },
+    {
+        "s": "The river water turned {blank} after the spill.",
+        "blank": "toxic",
+        "base": "toxic",
+        "zh": "泄漏後，河水變得{blank}。"
+    },
+    {
+        "s": "She tried to {blank} the missing car through the mud.",
+        "blank": "Track",
+        "base": "Track",
+        "zh": "她試圖{blank}失蹤的車輛穿過泥濘。"
+    },
+    {
+        "s": "The {blank} led the rescue team to the trapped hikers.",
+        "blank": "Tracking dog",
+        "base": "Tracking dog",
+        "zh": "那隻{blank}把救援隊帶到被困的徒步者。"
+    },
+    {
+        "s": "The merchants decided to {blank} goods at the market.",
+        "blank": "Trade",
+        "base": "Trade",
+        "zh": "商人們決定在市場{blank}貨物。"
+    },
+    {
+        "s": "We followed the {blank} that wound through the forest.",
+        "blank": "Trail",
+        "base": "Trail",
+        "zh": "我們沿著蜿蜒穿過森林的{blank}前進。"
+    },
+    {
+        "s": "The athletes began {blank} early in the morning.",
+        "blank": "Training",
+        "base": "Training",
+        "zh": "運動員們在清晨開始{blank}。"
+    },
+    {
+        "s": "He needed to {blank} the files to the new server.",
+        "blank": "transfer",
+        "base": "transfer",
+        "zh": "他需要將檔案{blank}到新伺服器。"
+    },
+    {
+        "s": "The {blank} powered the entire city during the blackout.",
+        "blank": "transformer",
+        "base": "transformer",
+        "zh": "那個{blank}在停電時為整座城市供電。"
+    },
+    {
+        "s": "We {blank} the documents.",
+        "blank": "translate",
+        "base": "translate",
+        "zh": "翻譯"
+    },
+    {
+        "s": "The {blank} was published in the journal.",
+        "blank": "Translation",
+        "base": "Translation",
+        "zh": "翻譯"
+    },
+    {
+        "s": "They signed the {blank} last night.",
+        "blank": "Treaty",
+        "base": "Treaty",
+        "zh": "條約"
+    },
+    {
+        "s": "The king received a {blank} from the neighboring kingdom.",
+        "blank": "Tribute",
+        "base": "Tribute",
+        "zh": "供品"
+    },
+    {
+        "s": "The {blank} devastated the coastal town.",
+        "blank": "tsunami",
+        "base": "tsunami",
+        "zh": "海嘯"
+    },
+    {
+        "s": "We plan to {blank} the old furniture.",
+        "blank": "upcycle",
+        "base": "upcycle",
+        "zh": "循環再利用"
+    },
+    {
+        "s": "The {blank} was greeted by the receptionist.",
+        "blank": "Visitor",
+        "base": "Visitor",
+        "zh": "參觀者"
+    },
+    {
+        "s": "She remained {blank} throughout the meeting.",
+        "blank": "Wakeful",
+        "base": "Wakeful",
+        "zh": "警覺的"
+    },
+    {
+        "s": "Please {blank} the guests about the hazard.",
+        "blank": "warn",
+        "base": "warn",
+        "zh": "警告"
+    },
+    {
+        "s": "We must reduce {blank} in our processes.",
+        "blank": "waste",
+        "base": "waste",
+        "zh": "廢棄物"
+    },
+    {
+        "s": "Effective {blank} reduces landfill use.",
+        "blank": "waste management",
+        "base": "waste management",
+        "zh": "有效的{blank}可減少填埋場的使用。"
+    },
+    {
+        "s": "The project succeeded, and {blank} the profits increased.",
+        "blank": "what's more",
+        "base": "what's more",
+        "zh": "該項目成功，{blank}利潤增加了。"
+    },
+    {
+        "s": "Protecting {blank} is essential for ecosystem health.",
+        "blank": "wildlife",
+        "base": "wildlife",
+        "zh": "保護{blank}對生態系統健康至關重要。"
+    },
+    {
+        "s": "Our goal is to achieve {blank} by 2030.",
+        "blank": "zero waste",
+        "base": "zero waste",
+        "zh": "我們的目標是到2030年實現{blank}。"
+    }
+],
+  "B2": [
+    {
+        "s": "We {blank} for climate justice.",
+        "blank": "activism",
+        "base": "activism",
+        "zh": "我們參與{blank}以爭取氣候正義。"
+    },
+    {
+        "s": "She pursued {blank} of human rights.",
+        "blank": "advocacy",
+        "base": "advocacy",
+        "zh": "她致力於人權的{blank}。"
+    },
+    {
+        "s": "The {blank} team coordinated the busy runway.",
+        "blank": "air traffic control",
+        "base": "air traffic control",
+        "zh": "{blank}團隊協調了繁忙的跑道。"
+    },
+    {
+        "s": "He boarded the {blank} at dawn.",
+        "blank": "airplane",
+        "base": "airplane",
+        "zh": "他在黎明時登上了{blank}。"
+    },
+    {
+        "s": "Remember to switch to {blank} before the flight.",
+        "blank": "airplane mode",
+        "base": "airplane mode",
+        "zh": "請在飛行前切換到{blank}。"
+    },
+    {
+        "s": "She walked down the {blank} of the theater.",
+        "blank": "aisle",
+        "base": "aisle",
+        "zh": "她走過劇院的{blank}。"
+    },
+    {
+        "s": "The novel explores the mystery of {blank}.",
+        "blank": "Alchemy",
+        "base": "Alchemy",
+        "zh": "小說探討了{blank}的奧秘。"
+    },
+    {
+        "s": "His {blank} drove him to start a company.",
+        "blank": "Ambition",
+        "base": "Ambition",
+        "zh": "他的{blank}驅使他創辦公司。"
+    },
+    {
+        "s": "The studio specializes in {blank} for video games.",
+        "blank": "animation",
+        "base": "animation",
+        "zh": "該工作室專注於為電子遊戲製作{blank}。"
+    },
+    {
+        "s": "We shared a delicious {blank} before dinner.",
+        "blank": "appetizer",
+        "base": "appetizer",
+        "zh": "我們在晚餐前分享了一道美味的{blank}。"
+    },
+    {
+        "s": "She has a remarkable {blank} for solving complex puzzles.",
+        "blank": "aptitude",
+        "base": "aptitude",
+        "zh": "她對解決複雜謎題有著驚人的{blank}。"
+    },
+    {
+        "s": "The {blank} of the train was delayed by two hours.",
+        "blank": "arrival",
+        "base": "arrival",
+        "zh": "火車的{blank}被延遲了兩個小時。"
+    },
+    {
+        "s": "The new {blank} system can predict market trends.",
+        "blank": "artificial intelligence",
+        "base": "artificial intelligence",
+        "zh": "新的{blank}系統能夠預測市場趨勢。"
+    },
+    {
+        "s": "The {blank} applauded loudly after the performance.",
+        "blank": "audience",
+        "base": "audience",
+        "zh": "觀眾{blank}在表演後熱烈鼓掌。"
+    },
+    {
+        "s": "He was diagnosed with {blank} at the age of five.",
+        "blank": "autism",
+        "base": "autism",
+        "zh": "他在五歲時被診斷出{blank}。"
+    },
+    {
+        "s": "{blank} is known for his adventurous spirit.",
+        "blank": "Ban-doh",
+        "base": "Ban-doh",
+        "zh": "{blank}以其冒險精神聞名。"
+    },
+    {
+        "s": "The {blank} on her cheek was a family heirloom.",
+        "blank": "Birthmark",
+        "base": "Birthmark",
+        "zh": "她頰上的{blank}是一件家族傳承。"
+    },
+    {
+        "s": "The {blank} technology ensures secure transactions.",
+        "blank": "blockchain",
+        "base": "blockchain",
+        "zh": "{blank}技術確保安全交易。"
+    },
+    {
+        "s": "The {blank} pork was tender and flavorful.",
+        "blank": "braised",
+        "base": "braised",
+        "zh": "這道{blank}豬肉嫩滑多汁。"
+    },
+    {
+        "s": "They launched a new {blank} last month.",
+        "blank": "brand",
+        "base": "brand",
+        "zh": "他們在上個月推出了一個新的{blank}。"
+    },
+    {
+        "s": "The scientists announced a {blank} that could change renewable energy.",
+        "blank": "breakthrough",
+        "base": "breakthrough",
+        "zh": "突破"
+    },
+    {
+        "s": "She works tirelessly as a {blank} for her elderly neighbor.",
+        "blank": "caregiver",
+        "base": "caregiver",
+        "zh": "照顧者"
+    },
+    {
+        "s": "The upcoming marathon presents a {blank} for even seasoned runners.",
+        "blank": "challenge",
+        "base": "challenge",
+        "zh": "挑戰"
+    },
+    {
+        "s": "He was hailed as a {blank} of environmental justice.",
+        "blank": "champion",
+        "base": "champion",
+        "zh": "冠軍"
+    },
+    {
+        "s": "The novel's protagonist is a complex {blank} who evolves over time.",
+        "blank": "character",
+        "base": "character",
+        "zh": "角色"
+    },
+    {
+        "s": "During the flight, the {blank} assisted with navigation and communication.",
+        "blank": "co-pilot",
+        "base": "co-pilot",
+        "zh": "副駕駛"
+    },
+    {
+        "s": "The veteran {blank} motivated the team to exceed their limits.",
+        "blank": "coach",
+        "base": "coach",
+        "zh": "教練"
+    },
+    {
+        "s": "All controls are located within the aircraft's {blank} for quick access.",
+        "blank": "cockpit",
+        "base": "cockpit",
+        "zh": "駕駛艙"
+    },
+    {
+        "s": "The project succeeded thanks to seamless {blank} between departments.",
+        "blank": "collaboration",
+        "base": "collaboration",
+        "zh": "協作"
+    },
+    {
+        "s": "Effective {blank} is essential for remote teams to stay aligned.",
+        "blank": "communication",
+        "base": "communication",
+        "zh": "溝通"
+    },
+    {
+        "s": "We {blank} the team to achieve our goals.",
+        "blank": "confidence",
+        "base": "confidence",
+        "zh": "我們{blank}團隊以實現我們的目標。"
+    },
+    {
+        "s": "Every action has a {blank} that we must consider.",
+        "blank": "Consequence",
+        "base": "Consequence",
+        "zh": "每個行動都有一個{blank}我們必須考慮。"
+    },
+    {
+        "s": "It takes {blank} to face the unknown.",
+        "blank": "courage",
+        "base": "courage",
+        "zh": "面對未知需要{blank}。"
+    },
+    {
+        "s": "Let {blank} guide your design process.",
+        "blank": "creativity",
+        "base": "creativity",
+        "zh": "讓{blank}指引你的設計流程。"
+    },
+    {
+        "s": "We can {blank} ideas from our community.",
+        "blank": "crowdsource",
+        "base": "crowdsource",
+        "zh": "我們可以{blank}來自社群的想法。"
+    },
+    {
+        "s": "The {blank} texture of the snack made it irresistible.",
+        "blank": "crunchy",
+        "base": "crunchy",
+        "zh": "這種{blank}的口感讓人無法抗拒。"
+    },
+    {
+        "s": "Her {blank} skills impressed everyone at the dinner.",
+        "blank": "culinary",
+        "base": "culinary",
+        "zh": "她的{blank}技巧讓晚宴上的每個人都印象深刻。"
+    },
+    {
+        "s": "His {blank} to the craft earned him respect.",
+        "blank": "dedication",
+        "base": "dedication",
+        "zh": "他對工藝的{blank}贏得了尊重。"
+    },
+    {
+        "s": "After the {blank}, the team regrouped and tried again.",
+        "blank": "defeat",
+        "base": "defeat",
+        "zh": "在{blank}之後，團隊重新集結並再次嘗試。"
+    },
+    {
+        "s": "Her {blank} from the company shocked many.",
+        "blank": "departure",
+        "base": "departure",
+        "zh": "她離職的{blank}震驚了許多人。"
+    },
+    {
+        "s": "We {blank} our goals with unwavering determination.",
+        "blank": "determination",
+        "base": "determination",
+        "zh": "決心"
+    },
+    {
+        "s": "The doctor made a quick {blank} to identify the illness.",
+        "blank": "diagnosis",
+        "base": "diagnosis",
+        "zh": "診斷"
+    },
+    {
+        "s": "Companies are accelerating {blank} to stay competitive.",
+        "blank": "digitalization",
+        "base": "digitalization",
+        "zh": "數位化"
+    },
+    {
+        "s": "She faced a {blank} when choosing between career and family.",
+        "blank": "Dilemma",
+        "base": "Dilemma",
+        "zh": "兩難"
+    },
+    {
+        "s": "The coach emphasized {blank} to improve the team's performance.",
+        "blank": "discipline",
+        "base": "discipline",
+        "zh": "紀律"
+    },
+    {
+        "s": "Society must confront {blank} to ensure equal opportunities.",
+        "blank": "discrimination",
+        "base": "discrimination",
+        "zh": "歧視"
+    },
+    {
+        "s": "Innovative ideas can {blank} traditional markets.",
+        "blank": "disrupt",
+        "base": "disrupt",
+        "zh": "擾亂"
+    },
+    {
+        "s": "He pursued his {blank} of becoming an astronaut.",
+        "blank": "dream",
+        "base": "dream",
+        "zh": "夢想"
+    },
+    {
+        "s": "Protecting the {blank} is essential for biodiversity.",
+        "blank": "ecosystem",
+        "base": "ecosystem",
+        "zh": "生態系統"
+    },
+    {
+        "s": "Lifelong {blank} empowers individuals to adapt to change.",
+        "blank": "education",
+        "base": "education",
+        "zh": "教育"
+    },
+    {
+        "s": "She listened with {blank} to understand everyone's feelings.",
+        "blank": "empathy",
+        "base": "empathy",
+        "zh": "她以同理心傾聽，了解每個人的感受。"
+    },
+    {
+        "s": "The workshop aimed to give participants {blank} to pursue their goals.",
+        "blank": "empowerment",
+        "base": "empowerment",
+        "zh": "這個工作坊旨在賦予參與者實現目標的賦能。"
+    },
+    {
+        "s": "His {blank} spirit led him to start a tech company.",
+        "blank": "entrepreneurship",
+        "base": "entrepreneurship",
+        "zh": "他的創業精神促使他創辦了一家科技公司。"
+    },
+    {
+        "s": "We must protect the {blank} for future generations.",
+        "blank": "environment",
+        "base": "environment",
+        "zh": "我們必須保護環境，為未來世代。"
+    },
+    {
+        "s": "She is the {blank} of grace and intelligence.",
+        "blank": "Epitome",
+        "base": "Epitome",
+        "zh": "她是優雅與智慧的典範。"
+    },
+    {
+        "s": "The law promotes {blank} among all citizens.",
+        "blank": "equality",
+        "base": "equality",
+        "zh": "法律促進所有公民之間的平等。"
+    },
+    {
+        "s": "The scientist conducted a {blank} to test the hypothesis.",
+        "blank": "Experiment",
+        "base": "Experiment",
+        "zh": "科學家進行了一個實驗以測試假設。"
+    },
+    {
+        "s": "A strong {blank} is the foundation of a happy life.",
+        "blank": "family",
+        "base": "family",
+        "zh": "堅強的家庭是快樂生活的基礎。"
+    },
+    {
+        "s": "The dish has a subtle {blank} of citrus.",
+        "blank": "flavor",
+        "base": "flavor",
+        "zh": "這道菜帶有微妙的柑橘風味。"
+    },
+    {
+        "s": "Despite its success, the project had a major {blank}.",
+        "blank": "Flaw",
+        "base": "Flaw",
+        "zh": "儘管成功，該項目仍存在一個重大缺陷。"
+    },
+    {
+        "s": "The airline announced a delay for our {blank} due to a storm.",
+        "blank": "flight",
+        "base": "flight",
+        "zh": "航空公司因暴風雨宣布我們的{blank}延遲。"
+    },
+    {
+        "s": "Engineers performed routine checks on the {blank} to ensure safety.",
+        "blank": "flight deck",
+        "base": "flight deck",
+        "zh": "工程師對{blank}進行例行檢查以確保安全。"
+    },
+    {
+        "s": "She needed to sharpen her {blank} to complete the project.",
+        "blank": "focus",
+        "base": "focus",
+        "zh": "她需要加強{blank}以完成該項目。"
+    },
+    {
+        "s": "The company expanded its {blank} into three new countries last year.",
+        "blank": "franchise",
+        "base": "franchise",
+        "zh": "該公司去年將其{blank}擴展到三個新國家。"
+    },
+    {
+        "s": "He cherished the {blank} of speaking his mind without fear.",
+        "blank": "freedom",
+        "base": "freedom",
+        "zh": "他珍惜無所畏懼表達意見的{blank}。"
+    },
+    {
+        "s": "The radio station increased the {blank} of its broadcasts during the holidays.",
+        "blank": "frequency",
+        "base": "frequency",
+        "zh": "該電台在假期期間提高了廣播的{blank}。"
+    },
+    {
+        "s": "Passengers waited anxiously at the {blank} for boarding.",
+        "blank": "gate",
+        "base": "gate",
+        "zh": "乘客在{blank}焦急等待登機。"
+    },
+    {
+        "s": "Researchers made a breakthrough in {blank} that could cure the disease.",
+        "blank": "genetics",
+        "base": "genetics",
+        "zh": "研究人員在{blank}方面取得突破，可能治癒此疾病。"
+    },
+    {
+        "s": "The team's {blank} for the season is to win the championship.",
+        "blank": "goal",
+        "base": "goal",
+        "zh": "該隊本賽季的{blank}是贏得冠軍。"
+    },
+    {
+        "s": "She faced the challenge with remarkable {blank} and never gave up.",
+        "blank": "grit",
+        "base": "grit",
+        "zh": "她以非凡的{blank}面對挑戰，從未放棄。"
+    },
+    {
+        "s": "We feel {blank} after realizing our mistake.",
+        "blank": "Guilt",
+        "base": "Guilt",
+        "zh": "我們在意識到錯誤後會感到{blank}。"
+    },
+    {
+        "s": "Our family {blank} is a treasure we must protect.",
+        "blank": "heritage",
+        "base": "heritage",
+        "zh": "我們的家族{blank}是我們必須保護的寶藏。"
+    },
+    {
+        "s": "The statue has become {blank} symbol of the city.",
+        "blank": "iconic",
+        "base": "iconic",
+        "zh": "這座雕像已成為{blank}的城市象徵。"
+    },
+    {
+        "s": "She strives to live by the {blank} of honesty.",
+        "blank": "Ideal",
+        "base": "Ideal",
+        "zh": "她努力以{blank}的誠實為生活準則。"
+    },
+    {
+        "s": "Children's {blank} can turn a simple box into a spaceship.",
+        "blank": "imagination",
+        "base": "imagination",
+        "zh": "孩子們的{blank}能把一個簡單的盒子變成太空船。"
+    },
+    {
+        "s": "Passengers enjoy {blank} during long flights.",
+        "blank": "in-flight entertainment",
+        "base": "in-flight entertainment",
+        "zh": "乘客在長途飛行中享受{blank}。"
+    },
+    {
+        "s": "The school promotes {blank} for all students.",
+        "blank": "inclusion",
+        "base": "inclusion",
+        "zh": "學校為所有學生推廣{blank}。"
+    },
+    {
+        "s": "He values {blank} and makes his own choices.",
+        "blank": "independence",
+        "base": "independence",
+        "zh": "他重視{blank}並自行做出選擇。"
+    },
+    {
+        "s": "The chef carefully selects the {blank} for the dish.",
+        "blank": "ingredients",
+        "base": "ingredients",
+        "zh": "廚師仔細挑選菜餚的{blank}。"
+    },
+    {
+        "s": "The protest was sparked by a sense of {blank}.",
+        "blank": "injustice",
+        "base": "injustice",
+        "zh": "示威是因為一種{blank}的感覺而引發的。"
+    },
+    {
+        "s": "We {blank} new ideas to stay ahead of the curve.",
+        "blank": "innovation",
+        "base": "innovation",
+        "zh": "我們{blank}新想法以保持領先。"
+    },
+    {
+        "s": "She {blank} her team with stories of perseverance.",
+        "blank": "inspiration",
+        "base": "inspiration",
+        "zh": "她以{blank}的故事激勵團隊。"
+    },
+    {
+        "s": "The committee decided on a timely {blank} to address the issue.",
+        "blank": "intervention",
+        "base": "intervention",
+        "zh": "委員會決定進行及時的{blank}以解決問題。"
+    },
+    {
+        "s": "He hopes his work will leave a lasting {blank}.",
+        "blank": "legacy",
+        "base": "legacy",
+        "zh": "他希望自己的工作留下持久的{blank}。"
+    },
+    {
+        "s": "The program aims to improve {blank} among adults.",
+        "blank": "literacy",
+        "base": "literacy",
+        "zh": "該計畫旨在提升成人的{blank}。"
+    },
+    {
+        "s": "The chef {blank} the chicken overnight for extra flavor.",
+        "blank": "marinated",
+        "base": "marinated",
+        "zh": "廚師將雞肉{blank}過夜以增添風味。"
+    },
+    {
+        "s": "Athletes train to develop {blank} for competition.",
+        "blank": "mental toughness",
+        "base": "mental toughness",
+        "zh": "運動員訓練以培養{blank}以備比賽。"
+    },
+    {
+        "s": "The company values {blank} as a path to growth.",
+        "blank": "mentorship",
+        "base": "mentorship",
+        "zh": "公司重視{blank}作為成長之路。"
+    },
+    {
+        "s": "Fans eagerly await the new {blank} release.",
+        "blank": "merchandise",
+        "base": "merchandise",
+        "zh": "粉絲熱切期待新的{blank}發佈。"
+    },
+    {
+        "s": "Philosophers debate the foundations of {blank} in society.",
+        "blank": "Morality",
+        "base": "Morality",
+        "zh": "哲學家討論社會中{blank}的基礎。"
+    },
+    {
+        "s": "We {blank} every day to fuel our progress.",
+        "blank": "motivation",
+        "base": "motivation",
+        "zh": "動機"
+    },
+    {
+        "s": "The future of medicine relies on {blank} breakthroughs.",
+        "blank": "nanotechnology",
+        "base": "nanotechnology",
+        "zh": "納米技術"
+    },
+    {
+        "s": "Celebrating {blank} fosters inclusive communities.",
+        "blank": "neurodiversity",
+        "base": "neurodiversity",
+        "zh": "神經多樣性"
+    },
+    {
+        "s": "The aroma of street food draws crowds to the {blank}.",
+        "blank": "night market",
+        "base": "night market",
+        "zh": "夜市"
+    },
+    {
+        "s": "Her {blank} for the novel consumed her every thought.",
+        "blank": "Obsession",
+        "base": "Obsession",
+        "zh": "痴迷"
+    },
+    {
+        "s": "They fought against {blank} to claim their rights.",
+        "blank": "oppression",
+        "base": "oppression",
+        "zh": "壓迫"
+    },
+    {
+        "s": "With determination, she {blank} the challenges ahead.",
+        "blank": "overcome",
+        "base": "overcome",
+        "zh": "克服"
+    },
+    {
+        "s": "This study challenges the existing {blank} in physics.",
+        "blank": "paradigm",
+        "base": "paradigm",
+        "zh": "範式"
+    },
+    {
+        "s": "The situation presents a clear {blank} between theory and practice.",
+        "blank": "Paradox",
+        "base": "Paradox",
+        "zh": "悖論"
+    },
+    {
+        "s": "Both {blank} support their children through thick and thin.",
+        "blank": "parents",
+        "base": "parents",
+        "zh": "父母"
+    },
+    {
+        "s": "We {blank} our dreams with relentless fire.",
+        "blank": "passion",
+        "base": "passion",
+        "zh": "我們以不懈的熱情燃燒夢想。"
+    },
+    {
+        "s": "She strives for {blank} in every brushstroke.",
+        "blank": "Perfection",
+        "base": "Perfection",
+        "zh": "她在每一筆畫中追求完美。"
+    },
+    {
+        "s": "His {blank} carried him across the toughest climbs.",
+        "blank": "perseverance",
+        "base": "perseverance",
+        "zh": "他的毅力讓他跨過最艱難的高峰。"
+    },
+    {
+        "s": "The {blank} guided the plane through stormy skies.",
+        "blank": "pilot",
+        "base": "pilot",
+        "zh": "飛行員在暴風雨的天空中駕駛飛機。"
+    },
+    {
+        "s": "They delivered a {blank} that won the investors' hearts.",
+        "blank": "pitch",
+        "base": "pitch",
+        "zh": "他們的提案贏得了投資者的青睞。"
+    },
+    {
+        "s": "Every child holds {blank} waiting to be nurtured.",
+        "blank": "potential",
+        "base": "potential",
+        "zh": "每個孩子都擁有待培育的潛能。"
+    },
+    {
+        "s": "The team unveiled a {blank} that could change the industry.",
+        "blank": "prototype",
+        "base": "prototype",
+        "zh": "團隊展示了一個可能改變產業的原型。"
+    },
+    {
+        "s": "She tuned the {blank} to catch the distant melody.",
+        "blank": "radio",
+        "base": "radio",
+        "zh": "她調整收音機以捕捉遠方的旋律。"
+    },
+    {
+        "s": "Grandma shared her secret {blank} for perfect dumplings.",
+        "blank": "recipe",
+        "base": "recipe",
+        "zh": "奶奶分享了完美水餃的祕密食譜。"
+    },
+    {
+        "s": "His final act was one of {blank} and forgiveness.",
+        "blank": "Redemption",
+        "base": "Redemption",
+        "zh": "他最後的行為是救贖與寬恕。"
+    },
+    {
+        "s": "We {blank} the outdated system to improve efficiency.",
+        "blank": "reform",
+        "base": "reform",
+        "zh": "我們將 {blank} 這個過時的系統以提高效率。"
+    },
+    {
+        "s": "I {blank} the missed opportunity.",
+        "blank": "Regret",
+        "base": "Regret",
+        "zh": "我對錯過的機會感到 {blank}。"
+    },
+    {
+        "s": "Investing in {blank} can reduce carbon emissions.",
+        "blank": "renewable energy",
+        "base": "renewable energy",
+        "zh": "投資於 {blank} 可以減少碳排放。"
+    },
+    {
+        "s": "Her {blank} helped her recover quickly.",
+        "blank": "resilience",
+        "base": "resilience",
+        "zh": "她的 {blank} 幫助她迅速恢復。"
+    },
+    {
+        "s": "Everyone deserves basic {blank}.",
+        "blank": "rights",
+        "base": "rights",
+        "zh": "每個人都應享有基本的 {blank}。"
+    },
+    {
+        "s": "Successful entrepreneurs embrace {blank}.",
+        "blank": "risk‑taking",
+        "base": "risk‑taking",
+        "zh": "成功的企業家擁抱 {blank}。"
+    },
+    {
+        "s": "A healthy {blank} can improve sleep.",
+        "blank": "routine",
+        "base": "routine",
+        "zh": "健康的 {blank} 可以改善睡眠。"
+    },
+    {
+        "s": "He made a {blank} for his family's future.",
+        "blank": "Sacrifice",
+        "base": "Sacrifice",
+        "zh": "他為家人的未來做出了一個 {blank}。"
+    },
+    {
+        "s": "The dish needs a {blank} to taste better.",
+        "blank": "sauce",
+        "base": "sauce",
+        "zh": "這道菜需要一種 {blank} 來提升口味。"
+    },
+    {
+        "s": "The {blank} aroma filled the kitchen.",
+        "blank": "savory",
+        "base": "savory",
+        "zh": "那股 {blank} 的香氣充滿了廚房。"
+    },
+    {
+        "s": "We {blank} a scholarship to support our education.",
+        "blank": "scholarship",
+        "base": "scholarship",
+        "zh": "我們獲得獎學金以支持我們的教育。"
+    },
+    {
+        "s": "Please take your {blank} before the performance begins.",
+        "blank": "seat",
+        "base": "seat",
+        "zh": "請在演出開始前就座。"
+    },
+    {
+        "s": "Remember to fasten your {blank} before the car moves.",
+        "blank": "seat belt",
+        "base": "seat belt",
+        "zh": "請在車子移動前系好安全帶。"
+    },
+    {
+        "s": "Developing {blank} helps you voice your needs effectively.",
+        "blank": "self-advocacy",
+        "base": "self-advocacy",
+        "zh": "培養自我倡導能幫助你有效表達需求。"
+    },
+    {
+        "s": "{blank} allows you to understand your emotions better.",
+        "blank": "self-awareness",
+        "base": "self-awareness",
+        "zh": "自我覺察讓你更了解自己的情緒。"
+    },
+    {
+        "s": "Building {blank} is essential for personal growth.",
+        "blank": "self-esteem",
+        "base": "self-esteem",
+        "zh": "建立自尊對個人成長至關重要。"
+    },
+    {
+        "s": "My {blank} and I share many childhood memories.",
+        "blank": "siblings",
+        "base": "siblings",
+        "zh": "我的兄弟姐妹和我共享許多童年回憶。"
+    },
+    {
+        "s": "Switch your phone to {blank} during the meeting.",
+        "blank": "silent mode",
+        "base": "silent mode",
+        "zh": "會議期間請將手機切換至靜音模式。"
+    },
+    {
+        "s": "Practice daily to improve this {blank}.",
+        "blank": "skill",
+        "base": "skill",
+        "zh": "每天練習以提升此技能。"
+    },
+    {
+        "s": "I grabbed a quick {blank} before the exam.",
+        "blank": "snack",
+        "base": "snack",
+        "zh": "我在考試前快速吃了點零食。"
+    },
+    {
+        "s": "We {blank} to connect with others.",
+        "blank": "social skills",
+        "base": "social skills",
+        "zh": "我們{blank}以與他人建立聯繫。"
+    },
+    {
+        "s": "We {blank} in times of need.",
+        "blank": "solidarity",
+        "base": "solidarity",
+        "zh": "我們{blank}於需要時刻。"
+    },
+    {
+        "s": "We {blank} with empathy and support.",
+        "blank": "special needs",
+        "base": "special needs",
+        "zh": "我們{blank}以同理心與支持。"
+    },
+    {
+        "s": "We {blank} across a wide range of possibilities.",
+        "blank": "spectrum",
+        "base": "spectrum",
+        "zh": "我們{blank}於廣泛的可能性。"
+    },
+    {
+        "s": "We {blank} the dish to add a kick.",
+        "blank": "spicy",
+        "base": "spicy",
+        "zh": "我們{blank}這道菜以增添辣味。"
+    },
+    {
+        "s": "We {blank} even when the competition is fierce.",
+        "blank": "sportsmanship",
+        "base": "sportsmanship",
+        "zh": "我們{blank}即使競爭激烈。"
+    },
+    {
+        "s": "We {blank} with fresh ideas.",
+        "blank": "startup",
+        "base": "startup",
+        "zh": "我們{blank}以新穎的想法。"
+    },
+    {
+        "s": "We {blank} the stew until it is tender.",
+        "blank": "stewed",
+        "base": "stewed",
+        "zh": "我們{blank}炖菜直到柔軟。"
+    },
+    {
+        "s": "We {blank} the scenes before filming.",
+        "blank": "storyboard",
+        "base": "storyboard",
+        "zh": "我們{blank}場景後進行拍攝。"
+    },
+    {
+        "s": "We {blank} to captivate our audience.",
+        "blank": "storytelling",
+        "base": "storytelling",
+        "zh": "我們{blank}以吸引觀眾。"
+    },
+    {
+        "s": "We enjoy {blank} from the bustling market.",
+        "blank": "street food",
+        "base": "street food",
+        "zh": "我們喜歡來自熱鬧市場的{blank}。"
+    },
+    {
+        "s": "Our community thrives with {blank} from local volunteers.",
+        "blank": "support",
+        "base": "support",
+        "zh": "我們的社區在當地志願者的{blank}下蓬勃發展。"
+    },
+    {
+        "s": "The company's future depends on {blank} practices.",
+        "blank": "sustainability",
+        "base": "sustainability",
+        "zh": "公司的未來取決於{blank}的做法。"
+    },
+    {
+        "s": "Great results come from the {blank} of our departments.",
+        "blank": "synergy",
+        "base": "synergy",
+        "zh": "卓越的成果來自於我們各部門的{blank}。"
+    },
+    {
+        "s": "The research breakthrough was achieved through careful {blank} of data.",
+        "blank": "Synthesis",
+        "base": "Synthesis",
+        "zh": "研究突破是透過對資料的仔細{blank}而實現的。"
+    },
+    {
+        "s": "Our growth is fueled by {blank} across the organization.",
+        "blank": "talent",
+        "base": "talent",
+        "zh": "我們的成長由組織內的{blank}所驅動。"
+    },
+    {
+        "s": "Success in the project relies on effective {blank}.",
+        "blank": "teamwork",
+        "base": "teamwork",
+        "zh": "專案的成功依賴於有效的{blank}。"
+    },
+    {
+        "s": "The chef prepared a {blank} piece of meat for the guests.",
+        "blank": "tender",
+        "base": "tender",
+        "zh": "廚師為客人準備了一塊{blank}的肉。"
+    },
+    {
+        "s": "The dessert's appeal lies in its unique {blank}.",
+        "blank": "texture",
+        "base": "texture",
+        "zh": "甜點的吸引力在於其獨特的{blank}。"
+    },
+    {
+        "s": "Families gather at the {blank} for a day of fun.",
+        "blank": "theme park",
+        "base": "theme park",
+        "zh": "家庭們聚集在{blank}度過歡樂的一天。"
+    },
+    {
+        "s": "I often seek {blank} after a stressful day.",
+        "blank": "therapy",
+        "base": "therapy",
+        "zh": "我常在壓力大的一天後尋求{blank}。"
+    },
+    {
+        "s": "Our team needs to {blank} to solve this problem.",
+        "blank": "think outside the box",
+        "base": "think outside the box",
+        "zh": "我們的團隊需要{blank}才能解決這個問題。"
+    },
+    {
+        "s": "Every holiday, we honor {blank} with a family dinner.",
+        "blank": "tradition",
+        "base": "tradition",
+        "zh": "每逢節日，我們會以{blank}舉行家庭晚餐來表達敬意。"
+    },
+    {
+        "s": "She completed her {blank} in martial arts last month.",
+        "blank": "training",
+        "base": "training",
+        "zh": "她上個月完成了她的{blank}。"
+    },
+    {
+        "s": "The novel explores the consequences of {blank} in a utopian society.",
+        "blank": "Transgression",
+        "base": "Transgression",
+        "zh": "這部小說探討在烏托邦社會中{blank}的後果。"
+    },
+    {
+        "s": "He realized that {blank} was empty without genuine connections.",
+        "blank": "Vanity",
+        "base": "Vanity",
+        "zh": "他意識到沒有真誠的連結，{blank}是空洞的。"
+    },
+    {
+        "s": "The crowd erupted in cheers after the team's {blank}.",
+        "blank": "victory",
+        "base": "victory",
+        "zh": "在球隊的{blank}後，觀眾發出歡呼聲。"
+    },
+    {
+        "s": "She is known as a {blank} who envisions a sustainable future.",
+        "blank": "visionary",
+        "base": "visionary",
+        "zh": "她被稱為{blank}，能預見可持續的未來。"
+    },
+    {
+        "s": "The protest gained momentum when the crowd raised their {blank} together.",
+        "blank": "voice",
+        "base": "voice",
+        "zh": "當群眾一起舉起他們的{blank}時，抗議活動勢頭大增。"
+    },
+    {
+        "s": "From the {blank}, I watched the sunrise over the city.",
+        "blank": "window seat",
+        "base": "window seat",
+        "zh": "從{blank}上，我看見城市的日出。"
+    }
+]
 };
 
 // 相容舊版：全部合併（供未選範圍時使用）
