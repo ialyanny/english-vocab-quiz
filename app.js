@@ -549,8 +549,16 @@ function finalize(isRight, fbText, rawAnswer) {
   const entry = curEntry();
   const en = entry.base !== undefined ? entry.base : entry[0];
   const zh = entry.base !== undefined ? entry.zh : entry[1];
+  const stuName = ($("name-input")?.value || "").trim();
   if (isRight) {
-    score += hintUsed ? 0.5 : 1;   // 用過提醒只算半分
+    score += hintUsed ? 0.5 : 1;
+    // 記錄答對次數，用於降低錯題權重
+    if (stuName) {
+      const key = `correct_${stuName}`;
+      const counts = JSON.parse(localStorage.getItem(key)) || {};
+      counts[en] = (counts[en] || 0) + 1;
+      localStorage.setItem(key, JSON.stringify(counts));
+    }
   } else {
     // 記下錯題快照（含題型，供複習）
     wrong.push(q.type === "sentence"
@@ -752,16 +760,28 @@ function deleteRecord(idx) {
 function getWrongWordsByName(name) {
   if (!name) return [];
   const recs = loadRecords();
-  const map = {};
+  const wrongMap = {};
   recs.forEach(r => {
     if (r.name !== name || !r.wrong) return;
     r.wrong.forEach(w => {
       const key = w.base;
-      if (!map[key]) map[key] = { base: w.base, zh: w.zh, type: w.type, count: 0 };
-      map[key].count++;
+      if (!wrongMap[key]) wrongMap[key] = { base: w.base, zh: w.zh, type: w.type, wrongCount: 0 };
+      wrongMap[key].wrongCount++;
     });
   });
-  return Object.values(map).sort((a, b) => b.count - a.count);
+  // 讀取答對次數
+  const correctKey = `correct_${name}`;
+  const correctCounts = JSON.parse(localStorage.getItem(correctKey)) || {};
+  // 計算有效權重 = max(0, wrongCount - correctCount)
+  // 每答對 3 次抵銷 1 次錯誤權重
+  return Object.entries(wrongMap)
+    .map(([base, w]) => {
+      const correct = correctCounts[base] || 0;
+      const effectiveWrong = Math.max(0, w.wrongCount - Math.floor(correct / 3));
+      return { base: w.base, zh: w.zh, type: w.type, count: effectiveWrong };
+    })
+    .filter(w => w.count > 0)
+    .sort((a, b) => b.count - a.count);
 }
 async function getSyncId(createIfMissing=true) {
   let id = localStorage.getItem(SYNC_KEY);
