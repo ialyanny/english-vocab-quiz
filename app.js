@@ -141,76 +141,87 @@ function updateFooter() {
 }
 setTimeout(updateRangeCounts, 100);
 
-const rangeBtns = document.querySelectorAll(".range-btn");
-const categoryToggles = document.querySelectorAll(".category-toggle");
-const subBtns = document.querySelectorAll(".sub-btn");
+const rangeContainer = document.getElementById("range-options");
 
 function updateRangeUI() {
   // 更新類別按鈕狀態
-  categoryToggles.forEach(btn => {
+  document.querySelectorAll(".category-toggle").forEach(btn => {
     const cat = btn.dataset.category;
     const isSel = selectedUnits.has(cat);
     btn.classList.toggle("selected", isSel);
     btn.classList.toggle("expanded", isSel);
-    const subId = "sub-" + cat;
-    const subEl = document.getElementById(subId);
+    const subEl = document.getElementById("sub-" + cat);
     if (subEl) subEl.style.display = isSel ? "grid" : "none";
   });
   // 更新子單元按鈕狀態
-  subBtns.forEach(btn => {
+  document.querySelectorAll(".sub-btn").forEach(btn => {
     const u = btn.dataset.unit;
     btn.classList.toggle("selected", selectedUnits.has(u));
   });
+  // 更新全部按鈕
+  const allBtn = document.querySelector('.range-btn[data-unit="ALL"]');
+  if (allBtn) allBtn.classList.toggle("selected", selectedUnits.has("ALL"));
   // 停用空單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
+    if (u === "ALL") return;
     if (!WORDS_BY_UNIT[u] || WORDS_BY_UNIT[u].length === 0) {
       b.disabled = true; b.title = "此單元尚未建置";
     } else { b.disabled = false; b.title = ""; }
   });
 }
 
-categoryToggles.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const cat = btn.dataset.category;
-    if (selectedUnits.has(cat)) {
-      selectedUnits.delete(cat);
-    } else {
-      selectedUnits.add(cat);
-      // 選大類時移除其子單元（避免重複）
-      if (cat === "HS0710") HS0710_UNITS.forEach(x => selectedUnits.delete(x));
-      if (cat === "HSEXAM") HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
-    }
-    updateRangeUI();
-    updateFooter();
-    updateRangeCounts();
-  });
+function toggleCategory(cat) {
+  if (selectedUnits.has(cat)) {
+    selectedUnits.delete(cat);
+  } else {
+    selectedUnits.add(cat);
+    if (cat === "HS0710") HS0710_UNITS.forEach(x => selectedUnits.delete(x));
+    if (cat === "HSEXAM") HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
+  }
+}
+
+function toggleSubUnit(u) {
+  if (selectedUnits.has(u)) selectedUnits.delete(u);
+  else selectedUnits.add(u);
+  if (HS0710_UNITS.every(x => selectedUnits.has(x))) {
+    HS0710_UNITS.forEach(x => selectedUnits.delete(x));
+    selectedUnits.add("HS0710");
+  }
+  if (HSEXAM_UNITS.every(x => selectedUnits.has(x))) {
+    HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
+    selectedUnits.add("HSEXAM");
+  }
+  if (!HS0710_UNITS.every(x => selectedUnits.has(x))) selectedUnits.delete("HS0710");
+  if (!HSEXAM_UNITS.every(x => selectedUnits.has(x))) selectedUnits.delete("HSEXAM");
+}
+
+function toggleAll() {
+  if (selectedUnits.has("ALL")) {
+    selectedUnits.clear();
+  } else {
+    selectedUnits.clear();
+    selectedUnits.add("ALL");
+    selectedUnits.add("HS0710");
+    selectedUnits.add("JUL");
+    selectedUnits.add("HSEXAM");
+  }
+}
+
+rangeContainer.addEventListener("click", (e) => {
+  const btn = e.target.closest(".range-btn");
+  if (!btn) return;
+  const cat = btn.dataset.category;
+  const unit = btn.dataset.unit;
+  if (cat) { toggleCategory(cat); }
+  else if (unit === "ALL") { toggleAll(); }
+  else if (unit) { toggleSubUnit(unit); }
+  updateRangeUI();
+  updateFooter();
+  updateRangeCounts();
 });
 
-subBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const u = btn.dataset.unit;
-    if (selectedUnits.has(u)) selectedUnits.delete(u);
-    else selectedUnits.add(u);
-    // 子單元全選時自動切為大類
-    if (HS0710_UNITS.every(x => selectedUnits.has(x))) {
-      HS0710_UNITS.forEach(x => selectedUnits.delete(x));
-      selectedUnits.add("HS0710");
-    }
-    if (HSEXAM_UNITS.every(x => selectedUnits.has(x))) {
-      HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
-      selectedUnits.add("HSEXAM");
-    }
-    // 取消大類時若只剩部分子單元，確保大類未選
-    if (!HS0710_UNITS.every(x => selectedUnits.has(x))) selectedUnits.delete("HS0710");
-    if (!HSEXAM_UNITS.every(x => selectedUnits.has(x))) selectedUnits.delete("HSEXAM");
-    updateRangeUI();
-    updateFooter();
-    updateRangeCounts();
-  });
-});
-
-// 初始預設：展開第一大類並選中
+// 初始預設
 setTimeout(() => {
   if (selectedUnits.size === 0) { selectedUnits.add("HS0710"); }
   updateRangeUI();
