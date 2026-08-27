@@ -113,6 +113,14 @@
   .opt.correct { background: #dcfce7; border-color: #16a34a; color: #166534; }
   .opt.wrong { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
   .opt.disabled { pointer-events: none; opacity: .6; }
+  .opt.chosen { background: #e0edff; border-color: #2563eb; color: #1d4ed8; box-shadow: 0 0 0 3px rgba(37,99,235,.18); }
+
+  /* 科目測驗 */
+  .subj-passage { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; font-size: .98rem; line-height: 1.6; color: #334155; }
+  .subj-image { margin-bottom: 10px; text-align: center; }
+  .subj-image img { max-width: 100%; max-height: 240px; border-radius: 12px; border: 1px solid #e2e8f0; }
+  .review-item .tag { background: #ede9fe; color: #6d28d9; font-weight: 800; font-size: .82rem; padding: 3px 8px; border-radius: 8px; margin-right: 8px; white-space: nowrap; }
+  .review-item .sol { flex-basis: 100%; }
 
   /* 打字輸入 */
   .type-wrap { display: none; margin-bottom: 14px; }
@@ -264,7 +272,7 @@
   <!-- 首頁 -->
   <div class="screen active" id="screen-home">
     <h1>🔤 英文單字小考</h1>
-    <div class="subtitle">高中 Level 4 Unit 07-10 200字＋空英 103字｜高二開學考 龍騰 B1/B2 454字</div>
+    <div class="subtitle">高中 Level 4 Unit 07-10 200字＋空英 103字｜高二開學考：龍騰 B1/B2 454字 + 國文/數學/自然/社會</div>
 
     <div class="range-group">
       <div class="mode-label">📘 高中範圍（可複選，三大類互不干擾）</div>
@@ -285,9 +293,19 @@
           <button class="range-btn" data-unit="JUL">
             空中英語<small id="cnt-JUL">103 題</small>
           </button>
-          <button class="range-btn" data-unit="HSEXAM">
-            高二開學考 B1+B2<small id="cnt-HSEXAM">454 題</small>
+        </div>
+        <div class="range-category">
+          <button class="range-btn category-toggle" data-category="HSEXAM">
+            高二開學考 <span class="arrow">▼</span><small id="cnt-HSEXAM">625 題</small>
           </button>
+          <div class="range-subunits" id="sub-HSEXAM" style="display:none;">
+            <button class="range-btn sub-btn" data-unit="國文">📚 國文<small id="cnt-國文">0 題</small></button>
+            <button class="range-btn sub-btn" data-unit="數學">➗ 數學<small id="cnt-數學">0 題</small></button>
+            <button class="range-btn sub-btn" data-unit="自然">🔬 自然<small id="cnt-自然">0 題</small></button>
+            <button class="range-btn sub-btn" data-unit="社會">🌏 社會<small id="cnt-社會">0 題</small></button>
+            <button class="range-btn sub-btn" data-unit="B1">英文 B1<small id="cnt-B1">294 題</small></button>
+            <button class="range-btn sub-btn" data-unit="B2">英文 B2<small id="cnt-B2">160 題</small></button>
+          </div>
         </div>
       </div>
     </div>
@@ -455,6 +473,7 @@
 </div>
 <script src="data.js"></script>
 <script src="images.js"></script>
+<script src="subjects.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

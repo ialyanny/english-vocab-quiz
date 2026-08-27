@@ -80,10 +80,11 @@ function fmtScore(n) {
 // ===== 範圍選擇 =====
 const HS0710_UNITS = ["07","08","09","10"];
 const JUL_UNITS = ["JUL"];
-const HSEXAM_UNITS = ["B1","B2"];
+const SUBJECT_UNITS = ["國文","數學","自然","社會"];   // 開學考四科
+const HSEXAM_UNITS = ["國文","數學","自然","社會","B1","B2"];
 const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...HSEXAM_UNITS];
 
-let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元 07,08,09,10,JUL,B1,B2
+let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元
 function getActiveUnits() {
   const units = Array.from(selectedUnits);
   let expanded = [];
@@ -95,6 +96,16 @@ function getActiveUnits() {
   });
   return expanded;
 }
+// 某單元題數（英文單字/句子 or 科目題庫）
+function unitQuestionCount(u) {
+  if (SUBJECT_QUESTIONS[u]) return SUBJECT_QUESTIONS[u].length;
+  let n = 0;
+  if (WORDS_BY_UNIT[u]) n += WORDS_BY_UNIT[u].length;
+  if (SENTENCES_BY_UNIT[u]) n += SENTENCES_BY_UNIT[u].length;
+  return n;
+}
+// 是否為科目單元
+function isSubjectUnit(u) { return SUBJECT_UNITS.includes(u); }
 function getFilteredWords() {
   const units = getActiveUnits();
   let out = [];
@@ -109,22 +120,28 @@ function getFilteredSentences() {
 }
 function updateRangeCounts() {
   // 顯示三大類計數
-  const hs0710Count = HS0710_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
-  const julCount = JUL_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
-  const hsexamCount = HSEXAM_UNITS.reduce((a,u)=>a+(WORDS_BY_UNIT[u]?WORDS_BY_UNIT[u].length:0),0);
-  
+  const hs0710Count = HS0710_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  const julCount = JUL_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  const hsexamCount = HSEXAM_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+
   const e0710 = document.getElementById("cnt-HS0710");
   if (e0710) e0710.textContent = hs0710Count + " 題";
   const ejul = document.getElementById("cnt-JUL");
   if (ejul) ejul.textContent = julCount + " 題";
   const ehexam = document.getElementById("cnt-HSEXAM");
   if (ehexam) ehexam.textContent = hsexamCount + " 題";
-  
+
+  // 各科題數
+  SUBJECT_UNITS.forEach(u => {
+    const e = document.getElementById("cnt-" + u);
+    if (e) e.textContent = unitQuestionCount(u) + " 題";
+  });
+
   // 停用空的單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
     if (u === "HS0710" || u === "JUL" || u === "HSEXAM") { b.disabled = false; b.title = ""; return; }
-    if (!WORDS_BY_UNIT[u] || WORDS_BY_UNIT[u].length === 0) {
+    if (unitQuestionCount(u) === 0) {
       b.disabled = true;
       b.title = "此單元尚未建置";
     } else {
@@ -137,8 +154,16 @@ function updateRangeCounts() {
 function updateFooter() {
   const w = getFilteredWords().length;
   const s = getFilteredSentences().length;
+  let subj = 0;
+  const active = getActiveUnits();
+  active.forEach(u => { if (SUBJECT_QUESTIONS[u]) subj += SUBJECT_QUESTIONS[u].length; });
   const el = document.querySelector(".footer");
-  if (el) el.textContent = `已選範圍：單字 ${w} 題・句子 ${s} 題・點喇叭可發音`;
+  if (el) {
+    let txt = `已選範圍：單字 ${w} 題・句子 ${s} 題`;
+    if (subj > 0) txt += `・科目 ${subj} 題`;
+    txt += `・點喇叭可發音`;
+    el.textContent = txt;
+  }
 }
 setTimeout(updateRangeCounts, 100);
 
@@ -154,12 +179,20 @@ function updateRangeUI() {
     const subEl = document.getElementById("sub-HS0710");
     if (subEl) subEl.style.display = hs0710Btn.classList.contains("expanded") ? "grid" : "none";
   }
-  // 簡單單元按鈕狀態 (JUL, HSEXAM, B1, B2)
-  ["JUL","HSEXAM","B1","B2"].forEach(u => {
+  // 簡單單元按鈕狀態 (JUL)
+  ["JUL"].forEach(u => {
     const btn = document.querySelector(`.range-btn[data-unit="${u}"]`);
     if (btn) btn.classList.toggle("selected", selectedUnits.has(u));
   });
-  // 子單元按鈕狀態 (07,08,09,10)
+  // HSEXAM category: selected = has subunits selected (incl. subjects & B1/B2), expanded = UI
+  const hsexamBtn = document.querySelector('.category-toggle[data-category="HSEXAM"]');
+  if (hsexamBtn) {
+    const hasSubunits = HSEXAM_UNITS.some(u => selectedUnits.has(u));
+    hsexamBtn.classList.toggle("selected", hasSubunits);
+    const subEl = document.getElementById("sub-HSEXAM");
+    if (subEl) subEl.style.display = hsexamBtn.classList.contains("expanded") ? "grid" : "none";
+  }
+  // 子單元按鈕狀態 (07,08,09,10, 國文,數學,自然,社會,B1,B2)
   document.querySelectorAll(".sub-btn").forEach(btn => {
     const u = btn.dataset.unit;
     btn.classList.toggle("selected", selectedUnits.has(u));
@@ -171,7 +204,7 @@ function updateRangeUI() {
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
     if (u === "ALL") return;
-    if (!WORDS_BY_UNIT[u] || WORDS_BY_UNIT[u].length === 0) {
+    if (unitQuestionCount(u) === 0) {
       b.disabled = true; b.title = "此單元尚未建置";
     } else { b.disabled = false; b.title = ""; }
   });
@@ -214,8 +247,10 @@ function toggleAll() {
     selectedUnits.add("ALL");
     selectedUnits.add("HS0710");
     selectedUnits.add("JUL");
+    selectedUnits.add("HSEXAM");
     selectedUnits.add("B1");
     selectedUnits.add("B2");
+    SUBJECT_UNITS.forEach(u => selectedUnits.add(u));
   }
 }
 
@@ -224,14 +259,12 @@ rangeContainer.addEventListener("click", (e) => {
   if (!btn) return;
   const cat = btn.dataset.category;
   const unit = btn.dataset.unit;
-  if (cat) { 
-    // Category button (HS0710): toggle expanded state for UI only
-    if (cat === "HS0710") {
-      // Toggle expanded state in UI - we'll track this separately
+  if (cat) {
+    // Category button (HS0710 / HSEXAM): toggle expanded state for UI only
+    if (cat === "HS0710" || cat === "HSEXAM") {
       btn.classList.toggle("expanded");
-      const subEl = document.getElementById("sub-HS0710");
+      const subEl = document.getElementById("sub-" + cat);
       if (subEl) subEl.style.display = btn.classList.contains("expanded") ? "grid" : "none";
-      // Don't change selection, just UI
       updateFooter();
       updateRangeCounts();
       return;
@@ -329,6 +362,11 @@ function startQuiz() {
   const fWords = getFilteredWords();       // [{w:[en,zh],unit}]
   const fSents = getFilteredSentences();   // [{s:{...},unit}]
 
+  // 科目模式：只要選了任一開學考四科，就走科目測驗引擎
+  const active = getActiveUnits();
+  const subjActive = active.filter(u => SUBJECT_QUESTIONS[u]);
+  if (subjActive.length > 0) { startSubjectQuiz(subjActive); return; }
+
   const modes = getSelectedModes();
   if (fWords.length === 0 && fSents.length === 0) { alert("此範圍尚未有題目"); return; }
   if (!modes.includes("sentence") && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
@@ -415,6 +453,7 @@ function buildChoices(en, zh, isZh) {
 
 function renderQuestion() {
   const q = questions[qIndex];
+  if (q.type === "subject") { renderSubjectQuestion(); return; }
   const entry = curEntry();
   const en = entry.base !== undefined ? entry.base : entry[0];
   const zh = entry.zh !== undefined ? entry.zh : entry[1];
@@ -546,24 +585,36 @@ function answer(btn, chosen, correctLabel) {
 
 function finalize(isRight, fbText, rawAnswer) {
   const q = questions[qIndex];
-  const entry = curEntry();
-  const en = entry.base !== undefined ? entry.base : entry[0];
-  const zh = entry.base !== undefined ? entry.zh : entry[1];
   const stuName = ($("name-input")?.value || "").trim();
+  let correctCountKey = null;
+  let wrongSnap = null;
+
+  if (q.type === "subject") {
+    correctCountKey = q.unit + "::" + q.q.q;
+    if (!isRight) wrongSnap = { type: "subject", unit: q.unit, q: q.q };
+  } else {
+    const entry = curEntry();
+    const en = entry.base !== undefined ? entry.base : entry[0];
+    correctCountKey = en;
+    if (!isRight) {
+      const zh = entry.base !== undefined ? entry.zh : entry[1];
+      wrongSnap = q.type === "sentence"
+        ? { type: q.type, base: entry.base, zh: entry.zh, s: entry.s, blank: entry.blank }
+        : { type: q.type, base: en, zh };
+    }
+  }
+
   if (isRight) {
     score += hintUsed ? 0.5 : 1;
     // 記錄答對次數，用於降低錯題權重
-    if (stuName) {
-      const key = `correct_${stuName}`;
+    if (stuName && correctCountKey) {
+      const key = (q.type === "subject" ? `correct_subj_${stuName}` : `correct_${stuName}`);
       const counts = JSON.parse(localStorage.getItem(key)) || {};
-      counts[en] = (counts[en] || 0) + 1;
+      counts[correctCountKey] = (counts[correctCountKey] || 0) + 1;
       localStorage.setItem(key, JSON.stringify(counts));
     }
-  } else {
-    // 記下錯題快照（含題型，供複習）
-    wrong.push(q.type === "sentence"
-      ? { type: q.type, base: entry.base, zh: entry.zh, s: entry.s, blank: entry.blank }
-      : { type: q.type, base: en, zh });
+  } else if (wrongSnap) {
+    wrong.push(wrongSnap);
   }
   const fb = $("feedback");
   fb.className = isRight ? "feedback ok" : "feedback no";
@@ -583,6 +634,162 @@ function finalize(isRight, fbText, rawAnswer) {
     nb.classList.remove("pulse");
     goNext();
   }, 1200);
+}
+
+// ===== 科目測驗引擎（國文/數學/自然/社會）=====
+function startSubjectQuiz(subjActive) {
+  const stuName = ($("name-input")?.value || "").trim();
+  let pool = [];
+  subjActive.forEach(subj => {
+    (SUBJECT_QUESTIONS[subj] || []).forEach(q => pool.push({ type: "subject", q, unit: subj }));
+  });
+  if (pool.length === 0) { alert("此科目尚未有題目"); return; }
+  // 同姓名錯題加權：曾答錯的題目（以「科目+題幹」為 key）重複出現
+  const wrongSubj = getWrongSubjectByName(stuName);
+  const wrongSet = new Set(wrongSubj.map(w => w.key));
+  let weighted = [];
+  pool.forEach((item, i) => {
+    const key = item.unit + "::" + item.q.q;
+    const times = wrongSet.has(key) ? 3 : 1;
+    for (let t = 0; t < times; t++) weighted.push(i);
+  });
+  weighted = shuffle(weighted);
+  const picked = new Set();
+  let chosen = [];
+  for (const idx of weighted) {
+    if (picked.has(idx)) continue;
+    picked.add(idx);
+    chosen.push(pool[idx]);
+    if (chosen.length >= (questionCount === 0 ? Infinity : questionCount)) break;
+  }
+  questions = chosen;
+  show("screen-quiz");
+  renderQuestion();
+}
+
+function renderSubjectQuestion() {
+  const q = questions[qIndex];
+  const item = q.q;
+  clearTimeout(autoTimer);
+  $("next-btn").classList.remove("pulse");
+
+  // 重置提醒狀態（科目題不提供英文式提示）
+  hintLevel = 0; hintUsed = false;
+  const hintBtn = $("hint-btn");
+  hintBtn.classList.remove("used");
+  hintBtn.textContent = "💡 不會";
+  hintBtn.style.display = "none";
+  $("hint-box").textContent = "";
+
+  // 隱藏英文專用元件
+  $("speak-btn").style.display = "none";
+  $("speak-hint").textContent = "";
+  document.querySelector(".word-img-wrap").classList.remove("show");
+  $("type-wrap").style.display = "none";
+  $("options").innerHTML = "";
+  $("feedback").textContent = "";
+  $("feedback").className = "feedback";
+  $("next-btn").style.display = "none";
+  $("zh-hint").textContent = "";
+  $("zh-hint").style.color = "";
+  $("zh-hint").style.fontSize = "";
+  $("zh-hint").style.fontFamily = "";
+
+  const typeName = { single: "☝️ 單選題", multi: "✋ 多選題", fill: "✍️ 填空題", calc: "🧮 計算題" }[item.type] || "題目";
+  $("qtype-tag").textContent = `📘 ${q.unit}｜${typeName}`;
+  // 閱讀文章
+  let html = "";
+  if (item.passage) html += `<div class="subj-passage">${item.passage}</div>`;
+  if (item.image) html += `<div class="subj-image"><img src="${item.image}" alt="示意圖"></div>`;
+  html += `<div class="qword">${item.q}</div>`;
+  $("qword").innerHTML = html;
+
+  const box = $("options");
+  if (item.type === "single" || item.type === "multi") {
+    item.options.forEach((opt, i) => {
+      const b = document.createElement("button");
+      b.className = "opt";
+      b.textContent = String.fromCharCode(65 + i) + ". " + opt;
+      if (item.type === "multi") {
+        b.addEventListener("click", () => {
+          b.classList.toggle("chosen");
+        });
+      } else {
+        b.addEventListener("click", () => checkSubjectSingle(b, i));
+      }
+      box.appendChild(b);
+    });
+    if (item.type === "multi") {
+      const submit = document.createElement("button");
+      submit.className = "check-btn";
+      submit.textContent = "送出 ✓";
+      submit.style.marginTop = "10px";
+      submit.addEventListener("click", () => checkSubjectMulti());
+      box.appendChild(submit);
+    }
+  } else { // fill / calc
+    const wrap = $("type-wrap");
+    wrap.style.display = "block";
+    const input = $("type-input");
+    input.value = "";
+    input.className = "type-input";
+    input.disabled = false;
+    input.focus();
+    input.placeholder = "輸入答案…";
+    $("check-btn").onclick = () => checkSubjectFill(input);
+    input.onkeydown = e => { if (e.key === "Enter") checkSubjectFill(input); };
+  }
+}
+
+function subjectCorrectKey(item) {
+  if (item.type === "single") return [item.answer];
+  if (item.type === "multi") return item.answer.slice().sort();
+  return null;
+}
+
+function checkSubjectSingle(btn, idx) {
+  const optBtns = document.querySelectorAll(".opt");
+  optBtns.forEach(b => b.classList.add("disabled"));
+  const correct = questions[qIndex].q.answer;
+  const isRight = idx === correct;
+  optBtns.forEach((b, i) => { if (i === correct) b.classList.add("correct"); });
+  if (!isRight) btn.classList.add("wrong");
+  if (isRight) finalize(true, "✓ 答對了！", "");
+  else finalize(false, `✗ 正確答案是 ${String.fromCharCode(65 + correct)}`, "");
+}
+
+function checkSubjectMulti() {
+  const optBtns = document.querySelectorAll(".opt");
+  optBtns.forEach(b => b.classList.add("disabled"));
+  const correct = questions[qIndex].q.answer.slice().sort();
+  const chosen = [];
+  optBtns.forEach((b, i) => { if (b.classList.contains("chosen")) chosen.push(i); });
+  chosen.sort();
+  const isRight = chosen.length === correct.length && chosen.every((v, i) => v === correct[i]);
+  optBtns.forEach((b, i) => { if (correct.includes(i)) b.classList.add("correct"); });
+  if (!isRight) optBtns.forEach((b, i) => { if (b.classList.contains("chosen") && !correct.includes(i)) b.classList.add("wrong"); });
+  if (isRight) finalize(true, "✓ 全部選對了！", "");
+  else finalize(false, `✗ 正確答案：${correct.map(i => String.fromCharCode(65 + i)).join("、")}`, "");
+}
+
+function checkSubjectFill(input) {
+  if (input.disabled) return;
+  const item = questions[qIndex].q;
+  const val = norm(input.value);
+  const ans = norm(item.answerText);
+  let isRight = (val === ans);
+  // 數值寬容：都為數字時比較數值
+  const numVal = parseFloat(val.replace(/[^\d.\-]/g, ""));
+  const numAns = parseFloat(ans.replace(/[^\d.\-]/g, ""));
+  if (!isNaN(numVal) && !isNaN(numAns) && val !== ans) isRight = (numVal === numAns);
+  input.disabled = true;
+  if (isRight) {
+    input.className = "type-input ok";
+    finalize(true, "✓ 答對了！", "");
+  } else {
+    input.className = "type-input no";
+    finalize(false, `✗ 正確答案：${item.answerText}`, input.value);
+  }
 }
 
 let autoTimer = null;
@@ -668,7 +875,7 @@ $("next-btn").addEventListener("click", () => goNext());
 // ===== 結果 =====
 function getRangeLabel() {
   const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","B1":"龍騰B1","B2":"龍騰B2",
-    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考"};
+    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會"};
   const active = getActiveUnits();
   if (active.length === ALL_UNITS.length) return "全部";
   // 優先顯示大類標籤
@@ -712,12 +919,27 @@ function showResult() {
       wrong.forEach(w => {
         const li = document.createElement("li");
         li.className = "review-item";
-        li.innerHTML = `<span class="w">${w.base}</span><span class="c">${w.zh}</span>`;
-        const spk = document.createElement("button");
-        spk.className = "spk";
-        spk.textContent = "🔊";
-        spk.addEventListener("click", () => speak(w.base));
-        li.appendChild(spk);
+        if (w.type === "subject") {
+          const ans = w.q.answerText || (Array.isArray(w.q.answer) ? w.q.answer.map(i => String.fromCharCode(65 + i)).join("、") : String.fromCharCode(65 + w.q.answer));
+          li.innerHTML = `<span class="tag">${w.unit}</span><span class="w">${w.q.q}</span>` +
+            `<div class="sol" style="display:none; color:#475569; font-size:.85rem; margin-top:4px;">正解：${ans}<br>${w.q.solution || ""}</div>`;
+          const btn = document.createElement("button");
+          btn.className = "spk";
+          btn.textContent = "🔍";
+          btn.title = "看解析";
+          btn.addEventListener("click", () => {
+            const sol = li.querySelector(".sol");
+            sol.style.display = sol.style.display === "none" ? "block" : "none";
+          });
+          li.appendChild(btn);
+        } else {
+          li.innerHTML = `<span class="w">${w.base}</span><span class="c">${w.zh}</span>`;
+          const spk = document.createElement("button");
+          spk.className = "spk";
+          spk.textContent = "🔊";
+          spk.addEventListener("click", () => speak(w.base));
+          li.appendChild(spk);
+        }
         list.appendChild(li);
       });
     }
@@ -779,6 +1001,31 @@ function getWrongWordsByName(name) {
       const correct = correctCounts[base] || 0;
       const effectiveWrong = Math.max(0, w.wrongCount - Math.floor(correct / 3));
       return { base: w.base, zh: w.zh, type: w.type, count: effectiveWrong };
+    })
+    .filter(w => w.count > 0)
+    .sort((a, b) => b.count - a.count);
+}
+function getWrongSubjectByName(name) {
+  if (!name) return [];
+  const recs = loadRecords();
+  const wrongMap = {};
+  recs.forEach(r => {
+    if (r.name !== name || !r.wrong) return;
+    r.wrong.forEach(w => {
+      if (w.type !== "subject" || !w.q) return;
+      const key = w.unit + "::" + w.q.q;
+      if (!wrongMap[key]) wrongMap[key] = { key, unit: w.unit, q: w.q, wrongCount: 0 };
+      wrongMap[key].wrongCount++;
+    });
+  });
+  // 讀取答對次數（科目用獨立 key），每 3 次答對抵銷 1 次錯誤權重
+  const correctKey = `correct_subj_${name}`;
+  const correctCounts = JSON.parse(localStorage.getItem(correctKey)) || {};
+  return Object.values(wrongMap)
+    .map(w => {
+      const correct = correctCounts[w.key] || 0;
+      const effectiveWrong = Math.max(0, w.wrongCount - Math.floor(correct / 3));
+      return { key: w.key, unit: w.unit, q: w.q, count: effectiveWrong };
     })
     .filter(w => w.count > 0)
     .sort((a, b) => b.count - a.count);
@@ -902,13 +1149,28 @@ function openRecordDetail(i) {
     w.forEach(x => {
       const li = document.createElement("li");
       li.className = "review-item";
-      const tag = { listen: "聽音", en2zh: "英中", zh2en: "中英", sentence: "句子" }[x.type] || "單字";
-      li.innerHTML = `<span class="rt">${tag}</span><span class="w">${x.base}</span><span class="c">${x.zh}</span>`;
-      const spk = document.createElement("button");
-      spk.className = "spk";
-      spk.textContent = "🔊";
-      spk.addEventListener("click", () => speak(x.base));
-      li.appendChild(spk);
+      if (x.type === "subject") {
+        const ans = x.q.answerText || (Array.isArray(x.q.answer) ? x.q.answer.map(i => String.fromCharCode(65 + i)).join("、") : String.fromCharCode(65 + x.q.answer));
+        li.innerHTML = `<span class="rt">${x.unit}</span><span class="w">${x.q.q}</span>` +
+          `<div class="sol" style="display:none; color:#475569; font-size:.85rem; margin-top:4px;">正解：${ans}<br>${x.q.solution || ""}</div>`;
+        const btn = document.createElement("button");
+        btn.className = "spk";
+        btn.textContent = "🔍";
+        btn.title = "看解析";
+        btn.addEventListener("click", () => {
+          const sol = li.querySelector(".sol");
+          sol.style.display = sol.style.display === "none" ? "block" : "none";
+        });
+        li.appendChild(btn);
+      } else {
+        const tag = { listen: "聽音", en2zh: "英中", zh2en: "中英", sentence: "句子" }[x.type] || "單字";
+        li.innerHTML = `<span class="rt">${tag}</span><span class="w">${x.base}</span><span class="c">${x.zh}</span>`;
+        const spk = document.createElement("button");
+        spk.className = "spk";
+        spk.textContent = "🔊";
+        spk.addEventListener("click", () => speak(x.base));
+        li.appendChild(spk);
+      }
       list.appendChild(li);
     });
   }
@@ -925,12 +1187,15 @@ function startReviewFromRecord(i) {
   lastReviewIdx = i;
   qIndex = 0; score = 0; wrong = [];
   reviewMode = true;
-  questions = r.wrong.map(x => ({
-    type: x.type,
-    snap: x.type === "sentence"
-      ? { base: x.base, zh: x.zh, s: x.s, blank: x.blank }
-      : { base: x.base, zh: x.zh }
-  }));
+  questions = r.wrong.map(x => {
+    if (x.type === "subject") return { type: "subject", q: x.q, unit: x.unit };
+    return {
+      type: x.type,
+      snap: x.type === "sentence"
+        ? { base: x.base, zh: x.zh, s: x.s, blank: x.blank }
+        : { base: x.base, zh: x.zh }
+    };
+  });
   show("screen-quiz");
   renderQuestion();
 }
