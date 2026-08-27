@@ -6,16 +6,17 @@
 - 網址：https://ialyanny.github.io/english-vocab-quiz/
 - Repo：ialyanny/english-vocab-quiz (public, main 分支)
 - 單字來源：`G:\我的雲端硬碟\英文單字\Unti07`~`Unti10` (44 張 JPG) + 7月空英 103字（人工清單） + 龍騰高中英文 B1/B2 454字
-- 高中開學考四科**教材版本**（出題內容需以此為準）：
+- 高中開學考各科**教材版本**（出題內容需以此為準）：
   - 國文、數學、歷史：龍騰版
   - 地理、化學、生物、公民與社會：南一版
   - 物理：泰宇版
-  - ※ `subjects.js` 已依南科實中 114 學年度高二開學考範圍表對齊（每科 60+ 題，共 266 題）：
+  - ※ `subjects.js` 已依南科實中 114 學年度高二開學考範圍表對齊（每科 60+ 題，共 308 題）：
     - 國文：龍騰版第一～二冊（65）
     - 數學：龍騰版第一、二冊（70，數A：數與式/指數/對數/多項式/直線與圓/數列/數據分析/排列組合/機率/三角比）
     - 自然：物理(泰宇力學一全冊)、化學(南一物質與能量全冊)、生物(南一細胞與遺傳全冊)、地科(南一全冊)（67）
     - 社會：歷史(龍騰一二冊)、地理(南一一二冊)、公民(南一)（64）
-    - 每題帶 `topic` 標籤（如「物理·運動學」）供整理；歷史已含世界史、公民已含人權/政府
+    - 英文：龍騰版高中英文第一、二冊（42，字彙/文法/閱讀）
+    - 每題帶 `topic` 標籤（如「物理·運動學」「歷史·台灣史」）供整理；歷史已含世界史、公民已含人權/政府
 
 ## 技術栈
 - 前端：純 HTML/CSS/JS (無框架)，Web Speech API 發音
@@ -45,7 +46,7 @@
 - [x] 題數自訂 15/20/25/30/全部（index.html count-options 五選一）
 - [x] 龍騰高中 B1 294字/294句 + B2 160字/160句（data.js WORDS_BY_UNIT/SENTENCES_BY_UNIT，範圍可與國中並選）
 - [x] 高中範圍選擇區（龍騰 B1 / B2 / 高中全部），與國中區互不干擾
-- [x] 高二開學考新增四科（國文/數學/自然/社會）科目測驗引擎：單選/多選/填空/計算四種題型，開學考分類下可展開分科勾選（subjects.js + app.js startSubjectQuiz/renderSubjectQuestion）
+- [x] 高二開學考新增科目（國文/數學/自然/社會/英文）測驗引擎：單選/多選/填空/計算四種題型，開學考分類下可展開分科勾選（subjects.js + app.js startSubjectQuiz/renderSubjectQuestion）；英文為龍騰一、二冊字彙/文法/閱讀題（42）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -54,7 +55,7 @@
 ├── index.html  # 頁面與範圍/題型選擇
 ├── app.js      # 全部邏輯（出題、發音、提醒半分、成績、複習、科目測驗引擎）
 ├── data.js     # WORDS_BY_UNIT / SENTENCES_BY_UNIT + WORDS/SENTENCES 相容
-├── subjects.js # SUBJECT_QUESTIONS：開學考四科題庫（國文/數學/自然/社會）
+├── subjects.js # SUBJECT_QUESTIONS：開學考五科題庫（國文/數學/自然/社會/英文）
 ├── images.js   # WORD_IMAGES
 └── qrcode.png
 ```

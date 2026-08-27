@@ -80,8 +80,8 @@ function fmtScore(n) {
 // ===== 範圍選擇 =====
 const HS0710_UNITS = ["07","08","09","10"];
 const JUL_UNITS = ["JUL"];
-const SUBJECT_UNITS = ["國文","數學","自然","社會"];   // 開學考四科
-const HSEXAM_UNITS = ["國文","數學","自然","社會","B1","B2"];
+const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
+const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...HSEXAM_UNITS];
 
 let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元
@@ -362,7 +362,7 @@ function startQuiz() {
   const fWords = getFilteredWords();       // [{w:[en,zh],unit}]
   const fSents = getFilteredSentences();   // [{s:{...},unit}]
 
-  // 科目模式：只要選了任一開學考四科，就走科目測驗引擎
+  // 科目模式：只要選了任一開學考科目，就走科目測驗引擎
   const active = getActiveUnits();
   const subjActive = active.filter(u => SUBJECT_QUESTIONS[u]);
   if (subjActive.length > 0) { startSubjectQuiz(subjActive); return; }
@@ -875,7 +875,7 @@ $("next-btn").addEventListener("click", () => goNext());
 // ===== 結果 =====
 function getRangeLabel() {
   const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","B1":"龍騰B1","B2":"龍騰B2",
-    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會"};
+    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文"};
   const active = getActiveUnits();
   if (active.length === ALL_UNITS.length) return "全部";
   // 優先顯示大類標籤
