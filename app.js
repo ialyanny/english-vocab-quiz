@@ -68,6 +68,7 @@ let qIndex = 0;
 let score = 0;
 let wrong = [];
 let hintLevel = 0;   // 0=未用 1=首字母 2=完整答案
+let hintUsed = false; // 是否曾使用過提示（用於計分）
 let reviewMode = false;   // 是否為錯題複習模式（結果頁不另存成績）
 
 const $ = id => document.getElementById(id);
@@ -424,6 +425,7 @@ function renderQuestion() {
 
   // 重置提醒狀態
   hintLevel = 0;
+  hintUsed = false;
   const hintBtn = $("hint-btn");
   hintBtn.classList.remove("used");
   hintBtn.textContent = "💡 不會";
@@ -548,7 +550,7 @@ function finalize(isRight, fbText, rawAnswer) {
   const en = entry.base !== undefined ? entry.base : entry[0];
   const zh = entry.base !== undefined ? entry.zh : entry[1];
   if (isRight) {
-    score += hintLevel > 0 ? 0.5 : 1;   // 用過提醒只算半分
+    score += hintUsed ? 0.5 : 1;   // 用過提醒只算半分
   } else {
     // 記下錯題快照（含題型，供複習）
     wrong.push(q.type === "sentence"
@@ -631,6 +633,7 @@ $("hint-btn").addEventListener("click", () => {
     if (input && !input.disabled) { input.value = ""; input.placeholder = "輸入英文單字…"; }
     return;
   }
+  hintUsed = true; // 曾使用過提示
   btn.classList.add("used");
   box.textContent = getHintText(q, hintLevel);
   btn.textContent = hintLevel === 1 ? "💡 再看完整答案" : "✨ 收回提示";
