@@ -35,14 +35,16 @@
 - [x] 題數自訂 15/20/25/30/全部（index.html count-options 五選一）
 - [x] 龍騰高中 B1 294字/294句 + B2 160字/160句（data.js WORDS_BY_UNIT/SENTENCES_BY_UNIT，範圍可與國中並選）
 - [x] 高中範圍選擇區（龍騰 B1 / B2 / 高中全部），與國中區互不干擾
+- [x] 高二開學考新增四科（國文/數學/自然/社會）科目測驗引擎：單選/多選/填空/計算四種題型，開學考分類下可展開分科勾選（subjects.js + app.js startSubjectQuiz/renderSubjectQuestion）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
 ```
 英文單字考試/
 ├── index.html  # 頁面與範圍/題型選擇
-├── app.js      # 全部邏輯（出題、發音、提醒半分、成績、複習）
+├── app.js      # 全部邏輯（出題、發音、提醒半分、成績、複習、科目測驗引擎）
 ├── data.js     # WORDS_BY_UNIT / SENTENCES_BY_UNIT + WORDS/SENTENCES 相容
+├── subjects.js # SUBJECT_QUESTIONS：開學考四科題庫（國文/數學/自然/社會）
 ├── images.js   # WORD_IMAGES
 └── qrcode.png
 ```
