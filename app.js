@@ -144,21 +144,26 @@ setTimeout(updateRangeCounts, 100);
 const rangeContainer = document.getElementById("range-options");
 
 function updateRangeUI() {
-  // 更新類別按鈕狀態
-  document.querySelectorAll(".category-toggle").forEach(btn => {
-    const cat = btn.dataset.category;
-    const isSel = selectedUnits.has(cat);
-    btn.classList.toggle("selected", isSel);
-    btn.classList.toggle("expanded", isSel);
-    const subEl = document.getElementById("sub-" + cat);
-    if (subEl) subEl.style.display = isSel ? "grid" : "none";
+  // HS0710 category: selected = has subunits selected, expanded = UI expanded state
+  const hs0710Btn = document.querySelector('.category-toggle[data-category="HS0710"]');
+  if (hs0710Btn) {
+    const hasSubunits = HS0710_UNITS.some(u => selectedUnits.has(u));
+    hs0710Btn.classList.toggle("selected", hasSubunits);
+    // expanded state is managed by click handler, just sync submenu visibility
+    const subEl = document.getElementById("sub-HS0710");
+    if (subEl) subEl.style.display = hs0710Btn.classList.contains("expanded") ? "grid" : "none";
+  }
+  // 簡單單元按鈕狀態 (JUL, HSEXAM, B1, B2)
+  ["JUL","HSEXAM","B1","B2"].forEach(u => {
+    const btn = document.querySelector(`.range-btn[data-unit="${u}"]`);
+    if (btn) btn.classList.toggle("selected", selectedUnits.has(u));
   });
-  // 更新子單元按鈕狀態
+  // 子單元按鈕狀態 (07,08,09,10)
   document.querySelectorAll(".sub-btn").forEach(btn => {
     const u = btn.dataset.unit;
     btn.classList.toggle("selected", selectedUnits.has(u));
   });
-  // 更新全部按鈕
+  // 全部按鈕
   const allBtn = document.querySelector('.range-btn[data-unit="ALL"]');
   if (allBtn) allBtn.classList.toggle("selected", selectedUnits.has("ALL"));
   // 停用空單元
@@ -172,28 +177,32 @@ function updateRangeUI() {
 }
 
 function toggleCategory(cat) {
-  if (selectedUnits.has(cat)) {
-    selectedUnits.delete(cat);
-  } else {
-    selectedUnits.add(cat);
-    if (cat === "HS0710") HS0710_UNITS.forEach(x => selectedUnits.delete(x));
-    if (cat === "HSEXAM") HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
+  // HS0710 category: toggle expanded state, don't auto-select subunits
+  // JUL is not a category anymore, HSEXAM is now a simple unit
+  if (cat === "HS0710") {
+    const isExpanded = selectedUnits.has(cat);
+    // Just toggle expanded state for UI, but keep subunit selection separate
+    // The "selected" on category means "expanded" for UI purposes
+    // Actual selection is tracked at subunit level
   }
 }
 
 function toggleSubUnit(u) {
-  if (selectedUnits.has(u)) selectedUnits.delete(u);
-  else selectedUnits.add(u);
+  if (selectedUnits.has(u)) {
+    selectedUnits.delete(u);
+  } else {
+    selectedUnits.add(u);
+  }
+  // If all 4 subunits selected, add category for UI (auto-collapse)
   if (HS0710_UNITS.every(x => selectedUnits.has(x))) {
-    HS0710_UNITS.forEach(x => selectedUnits.delete(x));
     selectedUnits.add("HS0710");
+  } else {
+    selectedUnits.delete("HS0710");
   }
+  // HSEXAM is now a simple unit, no auto-category
   if (HSEXAM_UNITS.every(x => selectedUnits.has(x))) {
-    HSEXAM_UNITS.forEach(x => selectedUnits.delete(x));
-    selectedUnits.add("HSEXAM");
+    // keep both B1 and B2 selected, no auto-category
   }
-  if (!HS0710_UNITS.every(x => selectedUnits.has(x))) selectedUnits.delete("HS0710");
-  if (!HSEXAM_UNITS.every(x => selectedUnits.has(x))) selectedUnits.delete("HSEXAM");
 }
 
 function toggleAll() {
@@ -204,7 +213,8 @@ function toggleAll() {
     selectedUnits.add("ALL");
     selectedUnits.add("HS0710");
     selectedUnits.add("JUL");
-    selectedUnits.add("HSEXAM");
+    selectedUnits.add("B1");
+    selectedUnits.add("B2");
   }
 }
 
@@ -213,7 +223,19 @@ rangeContainer.addEventListener("click", (e) => {
   if (!btn) return;
   const cat = btn.dataset.category;
   const unit = btn.dataset.unit;
-  if (cat) { toggleCategory(cat); }
+  if (cat) { 
+    // Category button (HS0710): toggle expanded state for UI only
+    if (cat === "HS0710") {
+      // Toggle expanded state in UI - we'll track this separately
+      btn.classList.toggle("expanded");
+      const subEl = document.getElementById("sub-HS0710");
+      if (subEl) subEl.style.display = btn.classList.contains("expanded") ? "grid" : "none";
+      // Don't change selection, just UI
+      updateFooter();
+      updateRangeCounts();
+      return;
+    }
+  }
   else if (unit === "ALL") { toggleAll(); }
   else if (unit) { toggleSubUnit(unit); }
   updateRangeUI();
@@ -223,7 +245,7 @@ rangeContainer.addEventListener("click", (e) => {
 
 // 初始預設
 setTimeout(() => {
-  if (selectedUnits.size === 0) { selectedUnits.add("HS0710"); }
+  if (selectedUnits.size === 0) { selectedUnits.add("07"); selectedUnits.add("08"); }
   updateRangeUI();
   updateFooter();
   updateRangeCounts();
