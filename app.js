@@ -705,16 +705,19 @@ function renderSubjectQuestion() {
 
   const box = $("options");
   if (item.type === "single" || item.type === "multi") {
-    item.options.forEach((opt, i) => {
+    // 每次出題隨機打亂選項順序，答案位置不固定
+    const order = shuffle(item.options.map((_, i) => i));
+    q._optOrder = order;
+    order.forEach((oi, k) => {
       const b = document.createElement("button");
       b.className = "opt";
-      b.textContent = String.fromCharCode(65 + i) + ". " + opt;
+      b.textContent = String.fromCharCode(65 + k) + ". " + item.options[oi];
       if (item.type === "multi") {
         b.addEventListener("click", () => {
           b.classList.toggle("chosen");
         });
       } else {
-        b.addEventListener("click", () => checkSubjectSingle(b, i));
+        b.addEventListener("click", () => checkSubjectSingle(b, k));
       }
       box.appendChild(b);
     });
@@ -746,29 +749,36 @@ function subjectCorrectKey(item) {
   return null;
 }
 
-function checkSubjectSingle(btn, idx) {
+function checkSubjectSingle(btn, k) {
   const optBtns = document.querySelectorAll(".opt");
   optBtns.forEach(b => b.classList.add("disabled"));
-  const correct = questions[qIndex].q.answer;
-  const isRight = idx === correct;
-  optBtns.forEach((b, i) => { if (i === correct) b.classList.add("correct"); });
+  const qq = questions[qIndex];
+  const order = qq._optOrder;
+  const correct = qq.q.answer;
+  const chosenOrig = order[k];
+  const isRight = chosenOrig === correct;
+  const correctDisplay = order.indexOf(correct);
+  optBtns.forEach((b, i) => { if (i === correctDisplay) b.classList.add("correct"); });
   if (!isRight) btn.classList.add("wrong");
   if (isRight) finalize(true, "✓ 答對了！", "");
-  else finalize(false, `✗ 正確答案是 ${String.fromCharCode(65 + correct)}`, "");
+  else finalize(false, `✗ 正確答案是 ${String.fromCharCode(65 + correctDisplay)}`, "");
 }
 
 function checkSubjectMulti() {
   const optBtns = document.querySelectorAll(".opt");
   optBtns.forEach(b => b.classList.add("disabled"));
-  const correct = questions[qIndex].q.answer.slice().sort();
+  const qq = questions[qIndex];
+  const order = qq._optOrder;
+  const correct = qq.q.answer.slice().sort();
   const chosen = [];
-  optBtns.forEach((b, i) => { if (b.classList.contains("chosen")) chosen.push(i); });
+  optBtns.forEach((b, i) => { if (b.classList.contains("chosen")) chosen.push(order[i]); });
   chosen.sort();
   const isRight = chosen.length === correct.length && chosen.every((v, i) => v === correct[i]);
-  optBtns.forEach((b, i) => { if (correct.includes(i)) b.classList.add("correct"); });
-  if (!isRight) optBtns.forEach((b, i) => { if (b.classList.contains("chosen") && !correct.includes(i)) b.classList.add("wrong"); });
+  const correctDisplays = correct.map(orig => order.indexOf(orig));
+  optBtns.forEach((b, i) => { if (correctDisplays.includes(i)) b.classList.add("correct"); });
+  if (!isRight) optBtns.forEach((b, i) => { if (b.classList.contains("chosen") && !correctDisplays.includes(i)) b.classList.add("wrong"); });
   if (isRight) finalize(true, "✓ 全部選對了！", "");
-  else finalize(false, `✗ 正確答案：${correct.map(i => String.fromCharCode(65 + i)).join("、")}`, "");
+  else finalize(false, `✗ 正確答案：${correctDisplays.sort((a, b) => a - b).map(i => String.fromCharCode(65 + i)).join("、")}`, "");
 }
 
 function checkSubjectFill(input) {
