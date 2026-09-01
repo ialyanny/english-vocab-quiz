@@ -82,7 +82,8 @@ const HS0710_UNITS = ["07","08","09","10"];
 const JUL_UNITS = ["JUL"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
 const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
-const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...HSEXAM_UNITS];
+const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
+const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...HSEXAM_UNITS, ...JH_UNITS];
 
 let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元
 function getActiveUnits() {
@@ -92,6 +93,7 @@ function getActiveUnits() {
     if (u === "HS0710") expanded.push(...HS0710_UNITS);
     else if (u === "JUL") expanded.push(...JUL_UNITS);
     else if (u === "HSEXAM") expanded.push(...HSEXAM_UNITS);
+    else if (u === "JH") expanded.push(...JH_UNITS);
     else expanded.push(u);
   });
   return expanded;
@@ -130,6 +132,15 @@ function updateRangeCounts() {
   if (ejul) ejul.textContent = julCount + " 題";
   const ehexam = document.getElementById("cnt-HSEXAM");
   if (ehexam) ehexam.textContent = hsexamCount + " 題";
+
+  // 國中會考
+  const jhCount = JH_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  const ejh = document.getElementById("cnt-JH");
+  if (ejh) ejh.textContent = jhCount + " 題";
+  JH_UNITS.forEach(u => {
+    const e = document.getElementById("cnt-" + u);
+    if (e) e.textContent = unitQuestionCount(u) + " 題";
+  });
 
   // 各科題數
   SUBJECT_UNITS.forEach(u => {
@@ -192,6 +203,14 @@ function updateRangeUI() {
     const subEl = document.getElementById("sub-HSEXAM");
     if (subEl) subEl.style.display = hsexamBtn.classList.contains("expanded") ? "grid" : "none";
   }
+  // JH category (國中會考)
+  const jhBtn = document.querySelector('.category-toggle[data-category="JH"]');
+  if (jhBtn) {
+    const hasSubunits = JH_UNITS.some(u => selectedUnits.has(u));
+    jhBtn.classList.toggle("selected", hasSubunits);
+    const subEl = document.getElementById("sub-JH");
+    if (subEl) subEl.style.display = jhBtn.classList.contains("expanded") ? "grid" : "none";
+  }
   // 子單元按鈕狀態 (07,08,09,10, 國文,數學,自然,社會,B1,B2)
   document.querySelectorAll(".sub-btn").forEach(btn => {
     const u = btn.dataset.unit;
@@ -251,6 +270,8 @@ function toggleAll() {
     selectedUnits.add("B1");
     selectedUnits.add("B2");
     SUBJECT_UNITS.forEach(u => selectedUnits.add(u));
+    selectedUnits.add("JH");
+    JH_UNITS.forEach(u => selectedUnits.add(u));
   }
 }
 
@@ -261,7 +282,7 @@ rangeContainer.addEventListener("click", (e) => {
   const unit = btn.dataset.unit;
   if (cat) {
     // Category button (HS0710 / HSEXAM): toggle expanded state for UI only
-    if (cat === "HS0710" || cat === "HSEXAM") {
+    if (cat === "HS0710" || cat === "HSEXAM" || cat === "JH") {
       btn.classList.toggle("expanded");
       const subEl = document.getElementById("sub-" + cat);
       if (subEl) subEl.style.display = btn.classList.contains("expanded") ? "grid" : "none";
@@ -884,7 +905,9 @@ $("next-btn").addEventListener("click", () => goNext());
 // ===== 結果 =====
 function getRangeLabel() {
   const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","B1":"龍騰B1","B2":"龍騰B2",
-    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文"};
+    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文",
+    "JH":"國中會考","會考國文":"國中·國文","會考英文":"國中·英文","會考數學":"國中·數學","會考社會":"國中·社會","會考自然":"國中·自然"};
+  if (selectedUnits.has("ALL")) return "全部";
   const active = getActiveUnits();
   if (active.length === ALL_UNITS.length) return "全部";
   // 優先顯示大類標籤
