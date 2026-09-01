@@ -48,6 +48,7 @@
 - [x] 高中範圍選擇區（龍騰 B1 / B2 / 高中全部），與國中區互不干擾
 - [x] 高二開學考新增科目（國文/數學/自然/社會/英文）測驗引擎：單選/多選/填空/計算四種題型，開學考分類下可展開分科勾選（subjects.js + app.js startSubjectQuiz/renderSubjectQuestion）；英文為龍騰一、二冊字彙/文法/閱讀題（42）
 - [x] 國中會考題庫新增：國/英/數/社會/自然 各120題（subjects.js 新增「會考國文」等五組 key；依歷屆 7 年趨勢、國中全冊、全選擇題，選項已隨機化）；首頁新增「國中會考」分類區（app.js JH_UNITS / ALL_UNITS / 標籤 / 題數 + index.html JH 區塊）
+- [x] 國中會考每科擴充至 200 題（依歷屆常考趨勢新增 400 題：bank_*_add.txt 各 80 → 併入 bank_*.txt 與 subjects.js，總題數 2806，六書/文意/閱讀/克漏字/文法/生涯史地/理化生物地科圖表判讀）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -56,7 +57,7 @@
 ├── index.html  # 頁面與範圍/題型選擇
 ├── app.js      # 全部邏輯（出題、發音、提醒半分、成績、複習、科目測驗引擎）
 ├── data.js     # WORDS_BY_UNIT / SENTENCES_BY_UNIT + WORDS/SENTENCES 相容
-├── subjects.js # SUBJECT_QUESTIONS：高二開學考五科題庫 + 國中會考五科題庫（各120題）
+├── subjects.js # SUBJECT_QUESTIONS：高二開學考五科題庫 + 國中會考五科題庫（各200題）
 ├── images.js   # WORD_IMAGES
 └── qrcode.png
 ```
