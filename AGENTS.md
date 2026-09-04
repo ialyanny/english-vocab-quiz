@@ -49,7 +49,7 @@
 - [x] 高二開學考新增科目（國文/數學/自然/社會/英文）測驗引擎：單選/多選/填空/計算四種題型，開學考分類下可展開分科勾選（subjects.js + app.js startSubjectQuiz/renderSubjectQuestion）；英文為龍騰一、二冊字彙/文法/閱讀題（42）
 - [x] 國中會考題庫新增：國/英/數/社會/自然 各120題（subjects.js 新增「會考國文」等五組 key；依歷屆 7 年趨勢、國中全冊、全選擇題，選項已隨機化）；首頁新增「國中會考」分類區（app.js JH_UNITS / ALL_UNITS / 標籤 / 題數 + index.html JH 區塊）
 - [x] 國中會考每科擴充至 200 題（依歷屆常考趨勢新增 400 題：bank_*_add.txt 各 80 → 併入 bank_*.txt 與 subjects.js，總題數 2806，六書/文意/閱讀/克漏字/文法/生涯史地/理化生物地科圖表判讀）
-- [x] 高2英文小考 29字/29句（獨立分類 G5，0710/JUL/G5 三選一，字彙含衍生字 employer/employee/employment 等，data.js + app.js + index.html）
+- [x] 高2英文小考 36字/36句（獨立分類 G5，0710/JUL/G5 三選一，字彙含衍生字 employer/employee/employment 等，後加 7 個慣用語 pass on/cheer up/turn down 等，data.js + app.js + index.html）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -69,6 +69,6 @@
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
 - 聽音寫字顯示喇叭可重播，中→英填空隱藏圖片，題型支援複選（selectedModes）
 - 7月空英為獨立單元 JUL，英翻中題目透過 getKK(unit) 顯示 KK 音標（僅 JUL 有，其餘留空）
-- 高2英文小考為獨立單元「高2」（分類 G5），與 0710/JUL 並列，字彙含衍生字
+- 高2英文小考為獨立單元「高2」（分類 G5），與 0710/JUL 並列，字彙含衍生字與慣用語（片語以「pass on...to...」表示可變部分，例句 blank 用核心片語）
 - 龍騰 B1/B2 為獨立高中單元，範圍與國中可混選（getActiveUnits 自動合併），句子填空完整
 - Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成

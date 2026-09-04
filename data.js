@@ -2165,7 +2165,14 @@ const WORDS_BY_UNIT = {
     ["refuse", "拒絕"],
     ["refusal", "拒絕"],
     ["hesitate", "猶豫"],
-    ["hesitation", "猶豫"]
+    ["hesitation", "猶豫"],
+    ["pass on...to...", "將……傳給、轉交給……"],
+    ["cheer up", "使……振奮、高興"],
+    ["turn down", "拒絕……"],
+    ["be about to", "即將；正要"],
+    ["after all", "畢竟"],
+    ["pass away", "過世"],
+    ["make a difference", "有所影響"]
   ]
 };
 
@@ -5340,7 +5347,14 @@ const SENTENCES_BY_UNIT = {
     { s: "He decided to {blank} the invitation because he was too busy.", blank: "refuse", base: "refuse", zh: "他決定拒絕邀請，因為他太忙了。" },
     { s: "Her {blank} to answer the question made everyone nervous.", blank: "refusal", base: "refusal", zh: "她拒絕回答問題，讓所有人都很緊張。" },
     { s: "Don't {blank} to ask for help if you need it.", blank: "hesitate", base: "hesitate", zh: "如果需要幫忙，不要猶豫。" },
-    { s: "After a moment's {blank}, she finally made her decision.", blank: "hesitation", base: "hesitation", zh: "猶豫片刻後，她終於做出了決定。" }
+    { s: "After a moment's {blank}, she finally made her decision.", blank: "hesitation", base: "hesitation", zh: "猶豫片刻後，她終於做出了決定。" },
+    { s: "Please {blank} this letter to your teacher.", blank: "pass on", base: "pass on", zh: "請把這封信轉交給你的老師。" },
+    { s: "Duncan tried to {blank} his friend Lily.", blank: "cheer up", base: "cheer up", zh: "Duncan 試著讓他的朋友 Lily 振作起來。" },
+    { s: "She decided to {blank} the job offer.", blank: "turn down", base: "turn down", zh: "她決定拒絕那份工作邀約。" },
+    { s: "The movie {blank} start; please take your seat.", blank: "be about to", base: "be about to", zh: "電影即將開始，請盡快入座。" },
+    { s: "Don't give up; {blank}, you've already come this far.", blank: "after all", base: "after all", zh: "不要放棄，畢竟你已經走了這麼遠。" },
+    { s: "My grandfather {blank} peacefully at the age of 90.", blank: "pass away", base: "pass away", zh: "我的祖父在90歲時平靜地過世了。" },
+    { s: "A good teacher can {blank} in a student's life.", blank: "make a difference", base: "make a difference", zh: "一位好老師能對學生的人生有所影響。" }
   ]
 };
 
