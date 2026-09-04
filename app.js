@@ -80,10 +80,11 @@ function fmtScore(n) {
 // ===== 範圍選擇 =====
 const HS0710_UNITS = ["07","08","09","10"];
 const JUL_UNITS = ["JUL"];
+const G5UNITS = ["高2"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
 const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
-const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...HSEXAM_UNITS, ...JH_UNITS];
+const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...G5UNITS, ...HSEXAM_UNITS, ...JH_UNITS];
 
 let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元
 function getActiveUnits() {
@@ -92,6 +93,7 @@ function getActiveUnits() {
   units.forEach(u => {
     if (u === "HS0710") expanded.push(...HS0710_UNITS);
     else if (u === "JUL") expanded.push(...JUL_UNITS);
+    else if (u === "G5") expanded.push(...G5UNITS);
     else if (u === "HSEXAM") expanded.push(...HSEXAM_UNITS);
     else if (u === "JH") expanded.push(...JH_UNITS);
     else expanded.push(u);
@@ -130,6 +132,12 @@ function updateRangeCounts() {
   if (e0710) e0710.textContent = hs0710Count + " 題";
   const ejul = document.getElementById("cnt-JUL");
   if (ejul) ejul.textContent = julCount + " 題";
+
+  // 高2英文小考
+  const g5Count = G5UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  const eg5 = document.getElementById("cnt-G5");
+  if (eg5) eg5.textContent = g5Count + " 題";
+
   const ehexam = document.getElementById("cnt-HSEXAM");
   if (ehexam) ehexam.textContent = hsexamCount + " 題";
 
@@ -151,7 +159,7 @@ function updateRangeCounts() {
   // 停用空的單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
-    if (u === "HS0710" || u === "JUL" || u === "HSEXAM") { b.disabled = false; b.title = ""; return; }
+    if (u === "HS0710" || u === "JUL" || u === "G5" || u === "HSEXAM") { b.disabled = false; b.title = ""; return; }
     if (unitQuestionCount(u) === 0) {
       b.disabled = true;
       b.title = "此單元尚未建置";

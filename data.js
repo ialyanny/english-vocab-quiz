@@ -2135,7 +2135,38 @@ const WORDS_BY_UNIT = {
         "window seat",
         "窗邊座位"
     ]
-]
+  ],
+  "高2": [
+    ["employ", "雇用"],
+    ["employer", "雇主"],
+    ["employee", "員工；受雇者"],
+    ["employment", "工作；受雇"],
+    ["corporation", "（大）公司；集團公司"],
+    ["corporate", "（大）公司的"],
+    ["suffer", "受苦"],
+    ["terminal", "末期的；航廈；總站；起訖站"],
+    ["illness", "疾病；生病"],
+    ["ill", "生病的"],
+    ["tremendously", "相當大地"],
+    ["tremendous", "相當大的"],
+    ["laughter", "笑；笑聲"],
+    ["frighten", "使驚嚇"],
+    ["fright", "驚嚇"],
+    ["contact", "接觸；聯絡"],
+    ["germ", "細菌"],
+    ["warmth", "熱情；溫暖"],
+    ["frail", "虛弱的"],
+    ["prompt", "促使；立即的"],
+    ["confine", "使離不開(床、輪椅等)；侷限；限定"],
+    ["sparkle", "神采；閃耀"],
+    ["hug", "擁抱"],
+    ["drowsy", "昏昏欲睡的"],
+    ["stretch", "伸出(手臂或腿)；伸展；拉長"],
+    ["refuse", "拒絕"],
+    ["refusal", "拒絕"],
+    ["hesitate", "猶豫"],
+    ["hesitation", "猶豫"]
+  ]
 };
 
 // ===== KK 音標（僅 JUL 目前有，其餘為空）=====
@@ -2250,7 +2281,8 @@ const KK_BY_UNIT = {
     "visual": "[ˈvɪʒuəl]",
     "volcano": "[vɒlˈkeɪnəʊ]",
     "witch": "[wɪtʃ]"
-  }
+  },
+  "高2": {},
 };
 
 const SENTENCES_BY_UNIT = {
@@ -5278,7 +5310,38 @@ const SENTENCES_BY_UNIT = {
         "base": "window seat",
         "zh": "從{blank}上，我看見城市的日出。"
     }
-]
+  ],
+  "高2": [
+    { s: "The company plans to {blank} twenty new staff members next month.", blank: "employ", base: "employ", zh: "公司計劃下個月雇用二十名新員工。" },
+    { s: "As the {blank}, she was responsible for hiring new employees.", blank: "employer", base: "employer", zh: "作為雇主，她負責雇用新員工。" },
+    { s: "The new {blank} was nervous on his first day at work.", blank: "employee", base: "employee", zh: "新員工第一天上班很緊張。" },
+    { s: "Full {blank} can give people a sense of purpose.", blank: "employment", base: "employment", zh: "全職工作能賦予人目標感。" },
+    { s: "She works for a large {blank} that operates in many countries.", blank: "corporation", base: "corporation", zh: "她在一家跨國大型集團公司工作。" },
+    { s: "He is experienced in the {blank} world.", blank: "corporate", base: "corporate", zh: "他在企業界經驗豐富。" },
+    { s: "She began to {blank} from a serious illness last year.", blank: "suffer", base: "suffer", zh: "她去年開始因重病而受苦。" },
+    { s: "The patient was taken to the airport {blank} to catch a flight.", blank: "terminal", base: "terminal", zh: "病人被帶到機場航廈搭機。" },
+    { s: "His chronic {blank} kept him from going to school.", blank: "illness", base: "illness", zh: "他長期的疾病讓他無法上學。" },
+    { s: "She was too {blank} to go outside in the cold weather.", blank: "ill", base: "ill", zh: "她生病了，太虛弱無法在寒冷天氣外出。" },
+    { s: "The movie was {blank} long and boring.", blank: "tremendously", base: "tremendously", zh: "那部電影相當冗長且無聊。" },
+    { s: "A {blank} amount of water fell during the typhoon.", blank: "tremendous", base: "tremendous", zh: "颱風期間降下了相當大量的雨水。" },
+    { s: "The children's {blank} filled the room with joy.", blank: "laughter", base: "laughter", zh: "孩子們的笑聲讓房間充滿了歡樂。" },
+    { s: "The loud noise began to {blank} the little baby.", blank: "frighten", base: "frighten", zh: "巨大的聲響開始使小寶寶受驚。" },
+    { s: "The child was taken to the emergency room in a state of {blank}.", blank: "fright", base: "fright", zh: "那個孩子在驚嚇狀態下被送到急診室。" },
+    { s: "If you have any questions, please don't hesitate to {blank} me.", blank: "contact", base: "contact", zh: "如果有任何問題，請不吝與我聯絡。" },
+    { s: "Wash your hands often to avoid spreading {blank}.", blank: "germ", base: "germ", zh: "勤洗手以避免細菌散播。" },
+    { s: "She greeted us with great {blank} and kindness.", blank: "warmth", base: "warmth", zh: "她以極大的熱情和善意迎接我們。" },
+    { s: "The {blank} old woman needed help to cross the street.", blank: "frail", base: "frail", zh: "那位虛弱的老婦人需要協助才能過馬路。" },
+    { s: "The speaker's words began to {blank} the audience to take action.", blank: "prompt", base: "prompt", zh: "演講者的話促使聽眾採取行動。" },
+    { s: "She was {blank} to her room by illness for three months.", blank: "confine", base: "confine", zh: "她因病被侷限在房間裡三個月。" },
+    { s: "Her eyes began to {blank} with tears of happiness.", blank: "sparkle", base: "sparkle", zh: "她的眼睛開始因喜悅的淚水而閃耀。" },
+    { s: "He gave his mother a warm {blank} before leaving.", blank: "hug", base: "hug", zh: "他在離開前給了媽媽一個溫暖的擁抱。" },
+    { s: "After the long meeting, she felt very {blank}.", blank: "drowsy", base: "drowsy", zh: "冗長的會議後，她感到昏昏欲睡。" },
+    { s: "She began to {blank} her arms to greet her friend.", blank: "stretch", base: "stretch", zh: "她開始伸展雙臂來迎接朋友。" },
+    { s: "He decided to {blank} the invitation because he was too busy.", blank: "refuse", base: "refuse", zh: "他決定拒絕邀請，因為他太忙了。" },
+    { s: "Her {blank} to answer the question made everyone nervous.", blank: "refusal", base: "refusal", zh: "她拒絕回答問題，讓所有人都很緊張。" },
+    { s: "Don't {blank} to ask for help if you need it.", blank: "hesitate", base: "hesitate", zh: "如果需要幫忙，不要猶豫。" },
+    { s: "After a moment's {blank}, she finally made her decision.", blank: "hesitation", base: "hesitation", zh: "猶豫片刻後，她終於做出了決定。" }
+  ]
 };
 
 // 相容舊版：全部合併（供未選範圍時使用）
