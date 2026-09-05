@@ -198,8 +198,8 @@ function updateRangeUI() {
     const subEl = document.getElementById("sub-HS0710");
     if (subEl) subEl.style.display = hs0710Btn.classList.contains("expanded") ? "grid" : "none";
   }
-  // 簡單單元按鈕狀態 (JUL)
-  ["JUL"].forEach(u => {
+  // 簡單單元按鈕狀態 (JUL, G5)
+  ["JUL", "G5"].forEach(u => {
     const btn = document.querySelector(`.range-btn[data-unit="${u}"]`);
     if (btn) btn.classList.toggle("selected", selectedUnits.has(u));
   });
@@ -230,7 +230,7 @@ function updateRangeUI() {
   // 停用空單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
-    if (u === "ALL") return;
+    if (u === "ALL" || u === "JUL" || u === "G5") { b.disabled = false; b.title = ""; return; }
     if (unitQuestionCount(u) === 0) {
       b.disabled = true; b.title = "此單元尚未建置";
     } else { b.disabled = false; b.title = ""; }
@@ -274,6 +274,7 @@ function toggleAll() {
     selectedUnits.add("ALL");
     selectedUnits.add("HS0710");
     selectedUnits.add("JUL");
+    selectedUnits.add("G5");
     selectedUnits.add("HSEXAM");
     selectedUnits.add("B1");
     selectedUnits.add("B2");
@@ -912,7 +913,7 @@ $("next-btn").addEventListener("click", () => goNext());
 
 // ===== 結果 =====
 function getRangeLabel() {
-  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","B1":"龍騰B1","B2":"龍騰B2",
+  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","高2":"高2英文小考","B1":"龍騰B1","B2":"龍騰B2",
     "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文",
     "JH":"國中會考","會考國文":"國中·國文","會考英文":"國中·英文","會考數學":"國中·數學","會考社會":"國中·社會","會考自然":"國中·自然"};
   if (selectedUnits.has("ALL")) return "全部";
