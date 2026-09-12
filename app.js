@@ -84,17 +84,14 @@ const G5UNITS = ["高2"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
 const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
-const ALL_UNITS = [...HS0710_UNITS, ...JUL_UNITS, ...G5UNITS, ...HSEXAM_UNITS, ...JH_UNITS];
+const ALL_UNITS = [...HS0710_UNITS, ...JH_UNITS];
 
-let selectedUnits = new Set(); // 可複選：HS0710, JUL, HSEXAM, 或各單獨單元
+let selectedUnits = new Set(); // 可複選：HS0710、JH，或各單獨單元
 function getActiveUnits() {
   const units = Array.from(selectedUnits);
   let expanded = [];
   units.forEach(u => {
     if (u === "HS0710") expanded.push(...HS0710_UNITS);
-    else if (u === "JUL") expanded.push(...JUL_UNITS);
-    else if (u === "G5") expanded.push(...G5UNITS);
-    else if (u === "HSEXAM") expanded.push(...HSEXAM_UNITS);
     else if (u === "JH") expanded.push(...JH_UNITS);
     else expanded.push(u);
   });
@@ -123,23 +120,11 @@ function getFilteredSentences() {
   return out;
 }
 function updateRangeCounts() {
-  // 顯示三大類計數
+  // 顯示兩大類計數
   const hs0710Count = HS0710_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
-  const julCount = JUL_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
-  const hsexamCount = HSEXAM_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
 
   const e0710 = document.getElementById("cnt-HS0710");
   if (e0710) e0710.textContent = hs0710Count + " 題";
-  const ejul = document.getElementById("cnt-JUL");
-  if (ejul) ejul.textContent = julCount + " 題";
-
-  // 高2英文小考
-  const g5Count = G5UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
-  const eg5 = document.getElementById("cnt-G5");
-  if (eg5) eg5.textContent = g5Count + " 題";
-
-  const ehexam = document.getElementById("cnt-HSEXAM");
-  if (ehexam) ehexam.textContent = hsexamCount + " 題";
 
   // 國中會考
   const jhCount = JH_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
@@ -150,16 +135,10 @@ function updateRangeCounts() {
     if (e) e.textContent = unitQuestionCount(u) + " 題";
   });
 
-  // 各科題數
-  SUBJECT_UNITS.forEach(u => {
-    const e = document.getElementById("cnt-" + u);
-    if (e) e.textContent = unitQuestionCount(u) + " 題";
-  });
-
   // 停用空的單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
-    if (u === "HS0710" || u === "JUL" || u === "G5" || u === "HSEXAM") { b.disabled = false; b.title = ""; return; }
+    if (u === "ALL") return;
     if (unitQuestionCount(u) === 0) {
       b.disabled = true;
       b.title = "此單元尚未建置";
@@ -198,19 +177,6 @@ function updateRangeUI() {
     const subEl = document.getElementById("sub-HS0710");
     if (subEl) subEl.style.display = hs0710Btn.classList.contains("expanded") ? "grid" : "none";
   }
-  // 簡單單元按鈕狀態 (JUL, G5)
-  ["JUL", "G5"].forEach(u => {
-    const btn = document.querySelector(`.range-btn[data-unit="${u}"]`);
-    if (btn) btn.classList.toggle("selected", selectedUnits.has(u));
-  });
-  // HSEXAM category: selected = has subunits selected (incl. subjects & B1/B2), expanded = UI
-  const hsexamBtn = document.querySelector('.category-toggle[data-category="HSEXAM"]');
-  if (hsexamBtn) {
-    const hasSubunits = HSEXAM_UNITS.some(u => selectedUnits.has(u));
-    hsexamBtn.classList.toggle("selected", hasSubunits);
-    const subEl = document.getElementById("sub-HSEXAM");
-    if (subEl) subEl.style.display = hsexamBtn.classList.contains("expanded") ? "grid" : "none";
-  }
   // JH category (國中會考)
   const jhBtn = document.querySelector('.category-toggle[data-category="JH"]');
   if (jhBtn) {
@@ -219,7 +185,7 @@ function updateRangeUI() {
     const subEl = document.getElementById("sub-JH");
     if (subEl) subEl.style.display = jhBtn.classList.contains("expanded") ? "grid" : "none";
   }
-  // 子單元按鈕狀態 (07,08,09,10, 國文,數學,自然,社會,B1,B2)
+  // 子單元按鈕狀態 (07,08,09,10, 會考五科)
   document.querySelectorAll(".sub-btn").forEach(btn => {
     const u = btn.dataset.unit;
     btn.classList.toggle("selected", selectedUnits.has(u));
@@ -230,7 +196,7 @@ function updateRangeUI() {
   // 停用空單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
     const u = b.dataset.unit;
-    if (u === "ALL" || u === "JUL" || u === "G5") { b.disabled = false; b.title = ""; return; }
+    if (u === "ALL") return;
     if (unitQuestionCount(u) === 0) {
       b.disabled = true; b.title = "此單元尚未建置";
     } else { b.disabled = false; b.title = ""; }
@@ -239,7 +205,6 @@ function updateRangeUI() {
 
 function toggleCategory(cat) {
   // HS0710 category: toggle expanded state, don't auto-select subunits
-  // JUL is not a category anymore, HSEXAM is now a simple unit
   if (cat === "HS0710") {
     const isExpanded = selectedUnits.has(cat);
     // Just toggle expanded state for UI, but keep subunit selection separate
@@ -260,10 +225,6 @@ function toggleSubUnit(u) {
   } else {
     selectedUnits.delete("HS0710");
   }
-  // HSEXAM is now a simple unit, no auto-category
-  if (HSEXAM_UNITS.every(x => selectedUnits.has(x))) {
-    // keep both B1 and B2 selected, no auto-category
-  }
 }
 
 function toggleAll() {
@@ -273,12 +234,6 @@ function toggleAll() {
     selectedUnits.clear();
     selectedUnits.add("ALL");
     selectedUnits.add("HS0710");
-    selectedUnits.add("JUL");
-    selectedUnits.add("G5");
-    selectedUnits.add("HSEXAM");
-    selectedUnits.add("B1");
-    selectedUnits.add("B2");
-    SUBJECT_UNITS.forEach(u => selectedUnits.add(u));
     selectedUnits.add("JH");
     JH_UNITS.forEach(u => selectedUnits.add(u));
   }
@@ -290,8 +245,8 @@ rangeContainer.addEventListener("click", (e) => {
   const cat = btn.dataset.category;
   const unit = btn.dataset.unit;
   if (cat) {
-    // Category button (HS0710 / HSEXAM): toggle expanded state for UI only
-    if (cat === "HS0710" || cat === "HSEXAM" || cat === "JH") {
+    // Category button (HS0710 / JH): toggle expanded state for UI only
+    if (cat === "HS0710" || cat === "JH") {
       btn.classList.toggle("expanded");
       const subEl = document.getElementById("sub-" + cat);
       if (subEl) subEl.style.display = btn.classList.contains("expanded") ? "grid" : "none";
@@ -391,7 +346,7 @@ function startQuiz() {
   const fWords = getFilteredWords();       // [{w:[en,zh],unit}]
   const fSents = getFilteredSentences();   // [{s:{...},unit}]
 
-  // 科目模式：只要選了任一開學考科目，就走科目測驗引擎
+  // 科目模式：只要選了任一科目題庫單元，就走科目測驗引擎
   const active = getActiveUnits();
   const subjActive = active.filter(u => SUBJECT_QUESTIONS[u]);
   if (subjActive.length > 0) { startSubjectQuiz(subjActive); return; }
