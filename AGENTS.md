@@ -51,6 +51,7 @@
 - [x] 國中會考每科擴充至 200 題（依歷屆常考趨勢新增 400 題：bank_*_add.txt 各 80 → 併入 bank_*.txt 與 subjects.js，總題數 2806，六書/文意/閱讀/克漏字/文法/生涯史地/理化生物地科圖表判讀）
 - [x] 高2英文小考 36字/36句（獨立分類 G5，0710/JUL/G5 三選一，字彙含衍生字 employer/employee/employment 等，後加 7 個慣用語 pass on/cheer up/turn down 等，data.js + app.js + index.html）
 - [x] 首頁範圍精簡：移除空英(JUL)、高二開學考(HSEXAM)、高2小考(G5)按鈕，僅留 Unit 07-10 + 國中會考，總題數 1384（資料保留在 data.js/subjects.js 未刪，恢復只需加回按鈕）
+- [x] 首頁兩大分區：「📘 高中英文單字小考」（藍底）與「📝 國中會考」（綠底）卡片式區隔，#range-options 容器不變故 JS 免改
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構

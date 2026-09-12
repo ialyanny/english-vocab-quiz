@@ -241,6 +241,13 @@
   .range-group { margin-bottom: 20px; }
   .range-options { display: flex; flex-direction: column; gap: 8px; }
   .range-category { display: flex; flex-direction: column; gap: 4px; }
+  .range-section { border: 2px solid #e2e8f0; border-radius: 16px; padding: 12px;
+    display: flex; flex-direction: column; gap: 8px; }
+  .hs-section { background: #eff6ff; border-color: #bfdbfe; }
+  .jh-section { background: #f0fdf4; border-color: #bbf7d0; }
+  .range-section-title { font-weight: 800; font-size: 1.02rem; }
+  .hs-section .range-section-title { color: #1d4ed8; }
+  .jh-section .range-section-title { color: #15803d; }
   .range-btn {
     padding: 12px 4px; border: 2px solid #e2e8f0; border-radius: 12px;
     background: #f8fafc; font-size: .92rem; font-weight: 800; cursor: pointer; color: #334155;
@@ -278,9 +285,11 @@
       <div class="mode-label">📚 考試範圍（可複選）</div>
       <div class="range-options" id="range-options">
         <button class="range-btn all" data-unit="ALL">全部<small id="cnt-ALL">1384 題</small></button>
+        <div class="range-section hs-section">
+          <div class="range-section-title">📘 高中英文單字小考</div>
         <div class="range-category">
           <button class="range-btn category-toggle" data-category="HS0710">
-            高中 Level 4 Unit 07-10 <span class="arrow">▼</span><small id="cnt-HS0710">200 題</small>
+            Level 4 Unit 07-10 <span class="arrow">▼</span><small id="cnt-HS0710">200 題</small>
           </button>
           <div class="range-subunits" id="sub-HS0710" style="display:none;">
             <button class="range-btn sub-btn" data-unit="07">第七回<small id="cnt-07">64 題</small></button>
@@ -289,9 +298,12 @@
             <button class="range-btn sub-btn" data-unit="10">第十回<small id="cnt-10">45 題</small></button>
           </div>
         </div>
+        </div>
+        <div class="range-section jh-section">
+          <div class="range-section-title">📝 國中會考</div>
         <div class="range-category">
           <button class="range-btn category-toggle" data-category="JH">
-            國中會考 <span class="arrow">▼</span><small id="cnt-JH">0 題</small>
+            會考五科 <span class="arrow">▼</span><small id="cnt-JH">0 題</small>
           </button>
           <div class="range-subunits" id="sub-JH" style="display:none;">
             <button class="range-btn sub-btn" data-unit="會考國文">📚 國文<small id="cnt-會考國文">0 題</small></button>
@@ -300,6 +312,7 @@
             <button class="range-btn sub-btn" data-unit="會考社會">🌏 社會<small id="cnt-會考社會">0 題</small></button>
             <button class="range-btn sub-btn" data-unit="會考自然">🔬 自然<small id="cnt-會考自然">0 題</small></button>
           </div>
+        </div>
         </div>
       </div>
     </div>
