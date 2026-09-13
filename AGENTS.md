@@ -52,6 +52,7 @@
 - [x] 高2英文小考 36字/36句（獨立分類 G5，0710/JUL/G5 三選一，字彙含衍生字 employer/employee/employment 等，後加 7 個慣用語 pass on/cheer up/turn down 等，data.js + app.js + index.html）
 - [x] 首頁範圍精簡：移除空英(JUL)、高二開學考(HSEXAM)、高2小考(G5)按鈕，僅留 Unit 07-10 + 國中會考，總題數 1384（資料保留在 data.js/subjects.js 未刪，恢復只需加回按鈕）
 - [x] 首頁兩大分區：「📘 高中英文單字小考」（藍底）與「📝 國中會考」（綠底）卡片式區隔，#range-options 容器不變故 JS 免改
+- [x] LV4 Unit 05 32字/32句 + 延伸57字（主詞 32 為主，延伸以 20-30% 穿插，`05`/`05-ext` 雙單元，Groq 生成例句，data.js/app.js/index.html）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -70,5 +71,6 @@
 - 考題物件為 {type, entry}（entry 為 [en,zh] 或 {s,blank,base,zh}），複習用 {type, snap}
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
 - 聽音寫字顯示喇叭可重播，中→英填空隱藏圖片，題型支援複選（selectedModes）
-- 首頁僅顯示 Unit 07-10 + 國中會考；JUL/高2/B1/B2/開學考資料仍在 data.js/subjects.js（未刪），恢復只需加回按鈕＋ getActiveUnits/ALL_UNITS/toggleAll 對應分支
+- 首頁顯示 Unit 05・07-10 + 國中會考（JUL/高2/B1/B2/開學考資料仍在 data.js/subjects.js 未刪，恢復只需加回按鈕＋ getActiveUnits/ALL_UNITS/toggleAll 對應分支）
+- Unit 05 採雙單元：`05` 主詞 32 + `05-ext` 延伸 57，考試以 4:1 加權穿插延伸（`app.js:EXT05_UNIT` + `weightedPick`）
 - Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成

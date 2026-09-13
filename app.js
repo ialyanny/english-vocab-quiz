@@ -78,13 +78,15 @@ function fmtScore(n) {
 }
 
 // ===== 範圍選擇 =====
-const HS0710_UNITS = ["07","08","09","10"];
+const HS0710_UNITS = ["05","07","08","09","10"];
 const JUL_UNITS = ["JUL"];
 const G5UNITS = ["高2"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
 const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
 const ALL_UNITS = [...HS0710_UNITS, ...JH_UNITS];
+// Unit 05 延伸單字：主詞 32 為主，延伸 56 以較低權重穿插（約 20-30%）
+const EXT05_UNIT = "05-ext";
 
 let selectedUnits = new Set(); // 可複選：HS0710、JH，或各單獨單元
 function getActiveUnits() {
@@ -343,13 +345,20 @@ function poolSize() {
 function startQuiz() {
   qIndex = 0; score = 0; wrong = [];
   reviewMode = false;
-  const fWords = getFilteredWords();       // [{w:[en,zh],unit}]
+  let fWords = getFilteredWords();       // [{w:[en,zh],unit}]
   const fSents = getFilteredSentences();   // [{s:{...},unit}]
 
   // 科目模式：只要選了任一科目題庫單元，就走科目測驗引擎
   const active = getActiveUnits();
   const subjActive = active.filter(u => SUBJECT_QUESTIONS[u]);
   if (subjActive.length > 0) { startSubjectQuiz(subjActive); return; }
+
+  // Unit 05 延伸穿插：有選到 05 就把 05-ext 以低權重混入（主詞 32 為主，延伸約 20-30% 穿插）
+  const has05 = active.includes("05");
+  if (has05 && WORDS_BY_UNIT[EXT05_UNIT]) {
+    const extWords = WORDS_BY_UNIT[EXT05_UNIT].map(w => ({ w, unit: EXT05_UNIT }));
+    fWords = fWords.concat(extWords);
+  }
 
   const modes = getSelectedModes();
   if (fWords.length === 0 && fSents.length === 0) { alert(selectedUnits.size === 0 ? "請先在上方選擇要考的範圍" : "此範圍尚未有題目"); return; }
@@ -364,12 +373,14 @@ function startQuiz() {
 
   function weightedPick(pool, n, isSent) {
     if (n >= pool.length) return pool.slice();
-    // 建立加權索引：錯題重複 3 次，其餘 1 次
+    // 建立加權索引：錯題重複 3 次，其餘 1 次；05-ext 延伸單字權重僅 1/4（降低出現率）
     let weighted = [];
     pool.forEach((item, i) => {
       const base = isSent ? item.s.blank : item.w[0];
-      const times = wrongSet.has(base) ? 3 : 1;
-      for (let t = 0; t < times; t++) weighted.push(i);
+      const baseTimes = wrongSet.has(base) ? 3 : 1;
+      const isExt = !isSent && item.unit === EXT05_UNIT;
+      const mult = isExt ? 1 : 4;
+      for (let t = 0; t < baseTimes * mult; t++) weighted.push(i);
     });
     weighted = shuffle(weighted);
     const picked = new Set();
