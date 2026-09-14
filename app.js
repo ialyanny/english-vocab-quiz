@@ -78,7 +78,7 @@ function fmtScore(n) {
 }
 
 // ===== 範圍選擇 =====
-const HS0710_UNITS = ["05","06","07","08","09","10"];
+const HS0710_UNITS = ["05","06","07","08","09","10","11"];
 const JUL_UNITS = ["JUL"];
 const G5UNITS = ["高2"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
@@ -86,7 +86,7 @@ const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
 const ALL_UNITS = [...HS0710_UNITS, ...JH_UNITS];
 // 延伸單字：主詞為主，延伸以較低權重穿插（約 20-30%）
-const EXT_UNITS = ["05-ext", "06-ext"];
+const EXT_UNITS = ["05-ext", "06-ext", "11-ext"];
 
 let selectedUnits = new Set(); // 可複選：HS0710、JH，或各單獨單元
 function getActiveUnits() {
