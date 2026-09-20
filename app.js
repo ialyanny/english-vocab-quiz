@@ -84,7 +84,8 @@ const G5UNITS = ["高2"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
 const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
-const ALL_UNITS = [...HS0710_UNITS, ...JH_UNITS];
+const SEP_UNITS = ["SEP"];   // 9月空中英語
+const ALL_UNITS = [...HS0710_UNITS, ...JH_UNITS, ...SEP_UNITS];
 // 延伸單字：主詞為主，延伸以較低權重穿插（約 20-30%）
 const EXT_UNITS = ["05-ext", "06-ext", "11-ext"];
 
@@ -136,6 +137,11 @@ function updateRangeCounts() {
     const e = document.getElementById("cnt-" + u);
     if (e) e.textContent = unitQuestionCount(u) + " 題";
   });
+
+  // 9月空中英語
+  const sepCount = SEP_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  const esep = document.getElementById("cnt-SEP");
+  if (esep) esep.textContent = sepCount + " 題";
 
   // 停用空的單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
@@ -192,6 +198,9 @@ function updateRangeUI() {
     const u = btn.dataset.unit;
     btn.classList.toggle("selected", selectedUnits.has(u));
   });
+  // 9月空中英語（獨立按鈕）
+  const sepBtn = document.querySelector('.range-btn[data-unit="SEP"]');
+  if (sepBtn) sepBtn.classList.toggle("selected", selectedUnits.has("SEP"));
   // 全部按鈕
   const allBtn = document.querySelector('.range-btn[data-unit="ALL"]');
   if (allBtn) allBtn.classList.toggle("selected", selectedUnits.has("ALL"));
@@ -238,6 +247,7 @@ function toggleAll() {
     selectedUnits.add("HS0710");
     selectedUnits.add("JH");
     JH_UNITS.forEach(u => selectedUnits.add(u));
+    SEP_UNITS.forEach(u => selectedUnits.add(u));
   }
 }
 
@@ -883,7 +893,8 @@ $("next-btn").addEventListener("click", () => goNext());
 function getRangeLabel() {
   const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","高2":"高2英文小考","B1":"龍騰B1","B2":"龍騰B2",
     "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文",
-    "JH":"國中會考","會考國文":"國中·國文","會考英文":"國中·英文","會考數學":"國中·數學","會考社會":"國中·社會","會考自然":"國中·自然"};
+    "JH":"國中會考","會考國文":"國中·國文","會考英文":"國中·英文","會考數學":"國中·數學","會考社會":"國中·社會","會考自然":"國中·自然",
+    "SEP":"9月空中英語"};
   if (selectedUnits.has("ALL")) return "全部";
   const active = getActiveUnits();
   if (active.length === ALL_UNITS.length) return "全部";
