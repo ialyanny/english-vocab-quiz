@@ -56,6 +56,7 @@
 - [x] LV4 Unit 06 46字/46句 + 延伸74字（主詞 46 為主，延伸以 20-30% 穿插，`06`/`06-ext` 雙單元，Groq 生成例句，data.js/app.js/index.html）
 - [x] LV4 Unit 11 46字/46句 + 延伸53字（主詞 46 為主，延伸以 20-30% 穿插，`11`/`11-ext` 雙單元，Groq 生成例句，data.js/app.js/index.html）
 - [x] 9月空中英語 SEP 100字/100句 + KK 音標（人工提供 50+50 字含 KK/詞性，Groq 生成例句，data.js/app.js/index.html）
+- [x] 健檢修復：`getActiveUnits` 去重（「全部」曾使會考題重複）、英文＋科目混合出題（`buildEnglishPicks`/`buildSubjectPicks`，`全部`真為 1832 題）、按鈕計數全動態計算、刪死碼（toggleCategory/poolSize/isSubjectUnit）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構

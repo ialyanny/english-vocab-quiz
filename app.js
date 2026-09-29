@@ -94,11 +94,12 @@ function getActiveUnits() {
   const units = Array.from(selectedUnits);
   let expanded = [];
   units.forEach(u => {
+    if (u === "ALL") return; // 「全部」只是 UI 標記，不是真實單元
     if (u === "HS0710") expanded.push(...HS0710_UNITS);
     else if (u === "JH") expanded.push(...JH_UNITS);
     else expanded.push(u);
   });
-  return expanded;
+  return [...new Set(expanded)]; // 去重：「全部」會同時選入 JH 分類與各科，避免題庫重複
 }
 // 某單元題數（英文單字/句子 or 科目題庫）
 function unitQuestionCount(u) {
@@ -108,8 +109,6 @@ function unitQuestionCount(u) {
   if (SENTENCES_BY_UNIT[u]) n += SENTENCES_BY_UNIT[u].length;
   return n;
 }
-// 是否為科目單元
-function isSubjectUnit(u) { return SUBJECT_UNITS.includes(u); }
 function getFilteredWords() {
   const units = getActiveUnits();
   let out = [];
@@ -123,25 +122,27 @@ function getFilteredSentences() {
   return out;
 }
 function updateRangeCounts() {
-  // 顯示兩大類計數
-  const hs0710Count = HS0710_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  // 各按鈕計數全部由資料動態計算（子按鈕顯示該單元完整題數：單字＋句子）
+  const perUnit = u => unitQuestionCount(u);
+  [...HS0710_UNITS, ...SEP_UNITS, ...JH_UNITS].forEach(u => {
+    const e = document.getElementById("cnt-" + u);
+    if (e) e.textContent = perUnit(u) + " 題";
+  });
 
+  // 高中英文單字小考分類
+  const hs0710Count = HS0710_UNITS.reduce((a,u)=>a+perUnit(u),0);
   const e0710 = document.getElementById("cnt-HS0710");
   if (e0710) e0710.textContent = hs0710Count + " 題";
 
-  // 國中會考
-  const jhCount = JH_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
+  // 國中會考分類
+  const jhCount = JH_UNITS.reduce((a,u)=>a+perUnit(u),0);
   const ejh = document.getElementById("cnt-JH");
   if (ejh) ejh.textContent = jhCount + " 題";
-  JH_UNITS.forEach(u => {
-    const e = document.getElementById("cnt-" + u);
-    if (e) e.textContent = unitQuestionCount(u) + " 題";
-  });
 
-  // 9月空中英語
-  const sepCount = SEP_UNITS.reduce((a,u)=>a+unitQuestionCount(u),0);
-  const esep = document.getElementById("cnt-SEP");
-  if (esep) esep.textContent = sepCount + " 題";
+  // 全部
+  const allCount = ALL_UNITS.reduce((a,u)=>a+perUnit(u),0);
+  const eall = document.getElementById("cnt-ALL");
+  if (eall) eall.textContent = allCount + " 題";
 
   // 停用空的單元
   document.querySelectorAll(".range-btn[data-unit]").forEach(b => {
@@ -214,23 +215,13 @@ function updateRangeUI() {
   });
 }
 
-function toggleCategory(cat) {
-  // HS0710 category: toggle expanded state, don't auto-select subunits
-  if (cat === "HS0710") {
-    const isExpanded = selectedUnits.has(cat);
-    // Just toggle expanded state for UI, but keep subunit selection separate
-    // The "selected" on category means "expanded" for UI purposes
-    // Actual selection is tracked at subunit level
-  }
-}
-
 function toggleSubUnit(u) {
   if (selectedUnits.has(u)) {
     selectedUnits.delete(u);
   } else {
     selectedUnits.add(u);
   }
-  // If all 4 subunits selected, add category for UI (auto-collapse)
+  // If all HS subunits selected, add category for UI (auto-collapse)
   if (HS0710_UNITS.every(x => selectedUnits.has(x))) {
     selectedUnits.add("HS0710");
   } else {
@@ -342,28 +333,17 @@ function shuffle(arr) {
   return a;
 }
 
-function poolSize() {
-  const w = getFilteredWords().length;
-  const s = getFilteredSentences().length;
-  const ms = getSelectedModes();
-  if (ms.length === 1 && ms[0] === "sentence") return s;
-  if (ms.length > 1) return w + s;
-  if (ms[0] === "sentence") return s;
-  return w;
-}
-
 function startQuiz() {
   qIndex = 0; score = 0; wrong = [];
   reviewMode = false;
   let fWords = getFilteredWords();       // [{w:[en,zh],unit}]
   const fSents = getFilteredSentences();   // [{s:{...},unit}]
 
-  // 科目模式：只要選了任一科目題庫單元，就走科目測驗引擎
   const active = getActiveUnits();
   const subjActive = active.filter(u => SUBJECT_QUESTIONS[u]);
-  if (subjActive.length > 0) { startSubjectQuiz(subjActive); return; }
+  const hasEnglish = fWords.length > 0 || fSents.length > 0;
 
-  // 延伸穿插：有選到 05/06 就把對應 -ext 以低權重混入（主詞為主，延伸約 20-30% 穿插）
+  // 延伸穿插：有選到主單元就把對應 -ext 以低權重混入（主詞為主，延伸約 20-30% 穿插）
   EXT_UNITS.forEach(ext => {
     const base = ext.split("-")[0];
     if (active.includes(base) && WORDS_BY_UNIT[ext]) {
@@ -372,20 +352,46 @@ function startQuiz() {
     }
   });
 
-  const modes = getSelectedModes();
-  if (fWords.length === 0 && fSents.length === 0) { alert(selectedUnits.size === 0 ? "請先在上方選擇要考的範圍" : "此範圍尚未有題目"); return; }
-  if (!modes.includes("sentence") && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
-  if (modes.length === 1 && modes[0] === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
-  if (modes.some(m => m==="sentence") && fSents.length===0 && modes.every(m=>m==="sentence")) { alert("此範圍沒有句子題"); return; }
-
   // 取得同姓名錯題加權清單
   const stuName = ($("name-input")?.value || "").trim();
   const wrongPool = getWrongWordsByName(stuName);
+
+  const modes = getSelectedModes();
+  if (!hasEnglish && subjActive.length === 0) { alert(selectedUnits.size === 0 ? "請先在上方選擇要考的範圍" : "此範圍尚未有題目"); return; }
+  if (subjActive.length > 0 && hasEnglish) {
+    // 混合範圍（英文單字＋科目）：兩邊各約一半合併出題；題數選「全部」則全收
+    const N = questionCount === 0 ? 0 : questionCount;
+    const nSubj = N === 0 ? 0 : Math.ceil(N / 2);
+    const nEng = N === 0 ? 0 : N - nSubj;
+    const picks = shuffle([...buildSubjectPicks(subjActive, stuName, nSubj), ...buildEnglishPicks(fWords, fSents, modes, wrongPool, nEng)]);
+    questions = N === 0 ? picks : picks.slice(0, N);
+    if (questions.length === 0) { alert("此範圍尚未有題目"); return; }
+    show("screen-quiz");
+    renderQuestion();
+    return;
+  }
+  if (subjActive.length > 0) {
+    questions = buildSubjectPicks(subjActive, stuName, questionCount);
+    if (questions.length === 0) { alert("此科目尚未有題目"); return; }
+    show("screen-quiz");
+    renderQuestion();
+    return;
+  }
+  if (!modes.includes("sentence") && fWords.length === 0) { alert("此範圍沒有單字題"); return; }
+  if (modes.length === 1 && modes[0] === "sentence" && fSents.length === 0) { alert("此範圍沒有句子題"); return; }
+
+  questions = buildEnglishPicks(fWords, fSents, modes, wrongPool, questionCount);
+  show("screen-quiz");
+  renderQuestion();
+}
+
+// 英文出題（不碰 DOM，回傳題目陣列；budget 0 = 全部）
+function buildEnglishPicks(fWords, fSents, modes, wrongPool, budget) {
   const wrongSet = new Set(wrongPool.map(w => w.base));
 
   function weightedPick(pool, n, isSent) {
     if (n >= pool.length) return pool.slice();
-    // 建立加權索引：錯題重複 3 次，其餘 1 次；延伸單字（05-ext/06-ext）權重僅 1/4
+    // 建立加權索引：錯題重複 3 次，其餘 1 次；延伸單字（EXT_UNITS）權重僅主詞 1/4
     let weighted = [];
     pool.forEach((item, i) => {
       const base = isSent ? item.s.blank : item.w[0];
@@ -407,7 +413,7 @@ function startQuiz() {
   }
 
   if (modes.length > 1) {
-    const per = questionCount === 0 ? Infinity : Math.ceil(questionCount / modes.length);
+    const per = budget === 0 ? Infinity : Math.ceil(budget / modes.length);
     let all = [];
     modes.forEach(t => {
       const isSent = t === "sentence";
@@ -419,20 +425,17 @@ function startQuiz() {
         all.push({ type: t, entry, unit: item.unit });
       });
     });
-    const n = questionCount === 0 ? all.length : Math.min(questionCount, all.length);
-    questions = shuffle(all).slice(0, n);
+    const n = budget === 0 ? all.length : Math.min(budget, all.length);
+    return shuffle(all).slice(0, n);
   } else if (modes[0] === "sentence") {
-    const n = (questionCount === 0) ? fSents.length : Math.min(questionCount, fSents.length);
+    const n = (budget === 0) ? fSents.length : Math.min(budget, fSents.length);
     const picked = weightedPick(fSents, n, true);
-    questions = picked.map(item => ({ type: modes[0], entry: item.s, unit: item.unit }));
+    return picked.map(item => ({ type: modes[0], entry: item.s, unit: item.unit }));
   } else {
-    const n = (questionCount === 0) ? fWords.length : Math.min(questionCount, fWords.length);
+    const n = (budget === 0) ? fWords.length : Math.min(budget, fWords.length);
     const picked = weightedPick(fWords, n, false);
-    questions = picked.map(item => ({ type: modes[0], entry: item.w, unit: item.unit }));
+    return picked.map(item => ({ type: modes[0], entry: item.w, unit: item.unit }));
   }
-
-  show("screen-quiz");
-  renderQuestion();
 }
 
 // 目前題目的單字資料（支援三種：{type, idx} 舊、{type, snap} 複習、{type, entry} 範圍過濾）
@@ -644,13 +647,13 @@ function finalize(isRight, fbText, rawAnswer) {
 }
 
 // ===== 科目測驗引擎（國文/數學/自然/社會）=====
-function startSubjectQuiz(subjActive) {
-  const stuName = ($("name-input")?.value || "").trim();
+// 科目出題（不碰 DOM，回傳題目陣列；budget 0 = 全部）
+function buildSubjectPicks(subjActive, stuName, budget) {
   let pool = [];
   subjActive.forEach(subj => {
     (SUBJECT_QUESTIONS[subj] || []).forEach(q => pool.push({ type: "subject", q, unit: subj }));
   });
-  if (pool.length === 0) { alert("此科目尚未有題目"); return; }
+  if (pool.length === 0) return [];
   // 同姓名錯題加權：曾答錯的題目（以「科目+題幹」為 key）重複出現
   const wrongSubj = getWrongSubjectByName(stuName);
   const wrongSet = new Set(wrongSubj.map(w => w.key));
@@ -663,12 +666,20 @@ function startSubjectQuiz(subjActive) {
   weighted = shuffle(weighted);
   const picked = new Set();
   let chosen = [];
+  const limit = budget === 0 ? Infinity : budget;
   for (const idx of weighted) {
     if (picked.has(idx)) continue;
     picked.add(idx);
     chosen.push(pool[idx]);
-    if (chosen.length >= (questionCount === 0 ? Infinity : questionCount)) break;
+    if (chosen.length >= limit) break;
   }
+  return chosen;
+}
+
+function startSubjectQuiz(subjActive) {
+  const stuName = ($("name-input")?.value || "").trim();
+  const chosen = buildSubjectPicks(subjActive, stuName, questionCount);
+  if (chosen.length === 0) { alert("此科目尚未有題目"); return; }
   questions = chosen;
   show("screen-quiz");
   renderQuestion();
@@ -891,8 +902,9 @@ $("next-btn").addEventListener("click", () => goNext());
 
 // ===== 結果 =====
 function getRangeLabel() {
-  const m = {"07":"第七回","08":"第八回","09":"第九回","10":"第十回","JUL":"空中英語","高2":"高2英文小考","B1":"龍騰B1","B2":"龍騰B2",
-    "HS0710":"高中Level 4 Unit 07-10","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文",
+  const m = {"05":"第五回","06":"第六回","07":"第七回","08":"第八回","09":"第九回","10":"第十回","11":"第十一回",
+    "JUL":"空中英語","高2":"高2英文小考","B1":"龍騰B1","B2":"龍騰B2",
+    "HS0710":"高中Level 4 Unit 05-11","HSEXAM":"高二開學考","國文":"國文","數學":"數學","自然":"自然","社會":"社會","英文":"英文",
     "JH":"國中會考","會考國文":"國中·國文","會考英文":"國中·英文","會考數學":"國中·數學","會考社會":"國中·社會","會考自然":"國中·自然",
     "SEP":"9月空中英語"};
   if (selectedUnits.has("ALL")) return "全部";

@@ -261,7 +261,7 @@
   .category-toggle { display: flex; justify-content: space-between; align-items: center; }
   .category-toggle .arrow { transition: transform .2s; font-size: .7rem; }
   .category-toggle.expanded .arrow { transform: rotate(180deg); }
-  .range-subunits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding-top: 4px; }
+  .range-subunits { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 6px; padding-top: 4px; }
   .sub-btn { font-size: .82rem; padding: 10px 4px; background: #f1f5f9; }
   .sub-btn.selected { background: #e0e7ff; border-color: #6366f1; color: #3730a3; }
 
@@ -292,13 +292,13 @@
             Level 4 Unit 05・06・07-11 <span class="arrow">▼</span><small id="cnt-HS0710">632 題</small>
           </button>
           <div class="range-subunits" id="sub-HS0710" style="display:none;">
-            <button class="range-btn sub-btn" data-unit="05">第五回<small id="cnt-05">32 題</small></button>
-            <button class="range-btn sub-btn" data-unit="06">第六回<small id="cnt-06">46 題</small></button>
-            <button class="range-btn sub-btn" data-unit="07">第七回<small id="cnt-07">64 題</small></button>
-            <button class="range-btn sub-btn" data-unit="08">第八回<small id="cnt-08">45 題</small></button>
-            <button class="range-btn sub-btn" data-unit="09">第九回<small id="cnt-09">46 題</small></button>
-            <button class="range-btn sub-btn" data-unit="10">第十回<small id="cnt-10">45 題</small></button>
-            <button class="range-btn sub-btn" data-unit="11">第十一回<small id="cnt-11">46 題</small></button>
+            <button class="range-btn sub-btn" data-unit="05">第五回<small id="cnt-05">64 題</small></button>
+            <button class="range-btn sub-btn" data-unit="06">第六回<small id="cnt-06">92 題</small></button>
+            <button class="range-btn sub-btn" data-unit="07">第七回<small id="cnt-07">112 題</small></button>
+            <button class="range-btn sub-btn" data-unit="08">第八回<small id="cnt-08">90 題</small></button>
+            <button class="range-btn sub-btn" data-unit="09">第九回<small id="cnt-09">92 題</small></button>
+            <button class="range-btn sub-btn" data-unit="10">第十回<small id="cnt-10">90 題</small></button>
+            <button class="range-btn sub-btn" data-unit="11">第十一回<small id="cnt-11">92 題</small></button>
           </div>
         </div>
         <button class="range-btn" data-unit="SEP" style="margin-top:8px;">🎙️ 9月空中英語<small id="cnt-SEP">200 題</small></button>
