@@ -84,7 +84,7 @@ const G5UNITS = ["高2"];
 const SUBJECT_UNITS = ["國文","數學","自然","社會","英文"];   // 開學考五科
 const HSEXAM_UNITS = ["國文","數學","自然","社會","英文","B1","B2"];
 const JH_UNITS = ["會考國文","會考英文","會考數學","會考社會","會考自然"];   // 國中會考五科
-const SEP_UNITS = ["SEP"];   // 9月空中英語
+const SEP_UNITS = [];   // 9月空中英語：已從首頁移除（資料保留於 data.js，恢復只需改回 ["SEP"] 並加回按鈕）
 const NOV_UNITS = ["NOV1","NOV2"];   // 11月空中英語（兩階段）
 const ALL_UNITS = [...HS0710_UNITS, ...JH_UNITS, ...SEP_UNITS, ...NOV_UNITS];
 // 延伸單字：主詞為主，延伸以較低權重穿插（約 20-30%）
