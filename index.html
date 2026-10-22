@@ -264,6 +264,7 @@
   .range-subunits { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 6px; padding-top: 4px; }
   .sub-btn { font-size: .82rem; padding: 10px 4px; background: #f1f5f9; }
   .sub-btn.selected { background: #e0e7ff; border-color: #6366f1; color: #3730a3; }
+  .solo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 
   /* QR 分享 */
   .qr-box { text-align: center; padding: 12px 0 4px; }
@@ -279,12 +280,12 @@
   <!-- 首頁 -->
   <div class="screen active" id="screen-home">
     <h1>🔤 英文單字小考</h1>
-    <div class="subtitle">高中 Level 4 Unit 05・06・07-11 324字 ＋ 9月空中英語 100字｜國中會考：國/英/數/社會/自然 各200題</div>
+    <div class="subtitle">高中 Level 4 Unit 05・06・07-11 324字 ＋ 9月空英 100字 ＋ 11月空英 94字｜國中會考：國/英/數/社會/自然 各200題</div>
 
     <div class="range-group">
       <div class="mode-label">📚 考試範圍（可複選）</div>
       <div class="range-options" id="range-options">
-        <button class="range-btn all" data-unit="ALL">全部<small id="cnt-ALL">1832 題</small></button>
+        <button class="range-btn all" data-unit="ALL">全部<small id="cnt-ALL">2020 題</small></button>
         <div class="range-section hs-section">
           <div class="range-section-title">📘 高中英文單字小考</div>
         <div class="range-category">
@@ -301,7 +302,11 @@
             <button class="range-btn sub-btn" data-unit="11">第十一回<small id="cnt-11">92 題</small></button>
           </div>
         </div>
-        <button class="range-btn" data-unit="SEP" style="margin-top:8px;">🎙️ 9月空中英語<small id="cnt-SEP">200 題</small></button>
+        <button class="range-btn solo-unit" data-unit="SEP" style="margin-top:8px;">🎙️ 9月空中英語<small id="cnt-SEP">200 題</small></button>
+        <div class="solo-row">
+          <button class="range-btn solo-unit" data-unit="NOV1">🎙️ 11月空英①<small id="cnt-NOV1">94 題</small></button>
+          <button class="range-btn solo-unit" data-unit="NOV2">🎙️ 11月空英②<small id="cnt-NOV2">94 題</small></button>
+        </div>
         </div>
         <div class="range-section jh-section">
           <div class="range-section-title">📝 國中會考</div>
