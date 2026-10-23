@@ -60,6 +60,7 @@
 - [x] 11月空中英語 NOV1/NOV2 各47字/47句 + KK 音標（兩階段，人工提供含 KK/詞性，Groq 生成例句）
 - [x] LV4 Unit 12 38字/38句 + 延伸66字（主詞 38 為主，延伸以 20-30% 穿插，`12`/`12-ext` 雙單元，Groq 生成例句，data.js/app.js/index.html）
 - [x] LV4 Unit 13 32字/32句 + 延伸81字（主詞 32 為主，延伸以 20-30% 穿插，`13`/`13-ext` 雙單元，Groq 生成例句，data.js/app.js/index.html）
+- [x] LV4 Unit 14 30字/30句 + 延伸62字（主詞 30 為主，延伸以 20-30% 穿插，`14`/`14-ext` 雙單元，Groq 生成例句，data.js/app.js/index.html）
 - [ ] 重建 WORD_IMAGES 配圖（目前仍對應舊清單）
 
 ## 資料夾結構
@@ -78,7 +79,7 @@
 - 考題物件為 {type, entry}（entry 為 [en,zh] 或 {s,blank,base,zh}），複習用 {type, snap}
 - 提醒用過答對得 0.5 分，en2zh 不顯示提醒
 - 聽音寫字顯示喇叭可重播，中→英填空隱藏圖片，題型支援複選（selectedModes）
-- 首頁顯示 Unit 05・06・07-13 + 11月空英 + 國中會考（JUL/SEP/高2/B1/B2/開學考資料仍在 data.js/subjects.js 未刪，恢復只需改回 `SEP_UNITS`／加回按鈕＋ getActiveUnits/ALL_UNITS/toggleAll 對應分支）
-- Unit 05/06/11/12/13 採雙單元：`05`/`06`/`11`/`12`/`13` 主詞 32/46/46/38/32 + `05-ext`/`06-ext`/`11-ext`/`12-ext`/`13-ext` 延伸 57/74/53/66/81，考試以 4:1 加權穿插延伸（`app.js:EXT_UNITS` + `weightedPick`）
+- 首頁顯示 Unit 05・06・07-14 + 11月空英 + 國中會考（JUL/SEP/高2/B1/B2/開學考資料仍在 data.js/subjects.js 未刪，恢復只需改回 `SEP_UNITS`／加回按鈕＋ getActiveUnits/ALL_UNITS/toggleAll 對應分支）
+- Unit 05/06/11/12/13/14 採雙單元：`05`/`06`/`11`/`12`/`13`/`14` 主詞 32/46/46/38/32/30 + `05-ext`/`06-ext`/`11-ext`/`12-ext`/`13-ext`/`14-ext` 延伸 57/74/53/66/81/62，考試以 4:1 加權穿插延伸（`app.js:EXT_UNITS` + `weightedPick`）
 - 空中英語單元：`JUL`（7月）、`SEP`（9月 100字/100句 + KK 音標）—兩者資料保留但首頁無按鈕；`NOV1`/`NOV2`（11月兩階段各47字/47句 + KK 音標）首頁獨立按鈕
 - Groq Vision 免費版 200K TPD，每張圖 ~1.9K tokens（600px壓縮），Unit 09/10 已改人工輸入繞過額度；Groq 文字模型（openai/gpt-oss-20b/120b）用於翻譯與例句生成
