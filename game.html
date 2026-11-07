@@ -147,6 +147,80 @@
   .muted { color: var(--muted); font-size: .9rem; }
   .row { display: flex; gap: 10px; }
   .row > * { flex: 1; }
+  /* 關卡種類圖示 */
+  .stage { height: 72px; }
+  .stage .sk { font-size: .95rem; line-height: 1; }
+  .stage.locked .sk { filter: grayscale(1) opacity(.6); }
+
+  /* 技能 */
+  .b-skills { position: absolute; left: 12px; bottom: 6px; font-size: 1.2rem; letter-spacing: 2px; }
+  .modal { position: fixed; inset: 0; background: #0009; display: none; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
+  .modal.show { display: flex; animation: fadein .2s; }
+  .modal-box { background: #fff; border-radius: 24px; padding: 20px; width: 100%; max-width: 560px; text-align: center; }
+  .skill-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .skill-card { background: linear-gradient(160deg, #eef2ff, #fdf4ff); border: 3px solid #a5b4fc; border-radius: 18px; padding: 14px 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--ink); font-size: 1rem; animation: pop .35s backwards; }
+  .skill-card:nth-child(2) { animation-delay: .08s; } .skill-card:nth-child(3) { animation-delay: .16s; }
+  .skill-card .sk-e { font-size: 2.6rem; }
+  .skill-card .sk-d { font-size: .82rem; color: var(--muted); }
+  @media (max-width: 480px) { .skill-cards { grid-template-columns: 1fr; } .skill-card { flex-direction: row; text-align: left; } .skill-card .sk-e { font-size: 2rem; } }
+
+  /* 字母拼圖 */
+  .speaker.small { width: 56px; height: 56px; font-size: 1.6rem; margin: 2px auto 10px; }
+  .sc-slots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 14px; }
+  .sc-slot { width: 40px; height: 48px; border-radius: 10px; border: 3px dashed #a5b4fc; background: #f8fafc; font-size: 1.4rem; font-weight: 900; color: var(--ink); }
+  .sc-slot.filled { border-style: solid; background: #eef2ff; }
+  .sc-slot.locked { border-style: solid; border-color: #f59e0b; background: #fef3c7; }
+  .sc-slot.fixed { display: grid; place-items: center; border: none; background: none; width: 16px; }
+  .sc-slot.right { border-color: var(--good); background: #dcfce7; }
+  .sc-slot.wrong { border-color: var(--bad); background: #fee2e2; }
+  .sc-gap { width: 18px; }
+  .sc-tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .sc-tile { width: 48px; height: 52px; border-radius: 12px; background: linear-gradient(#fde68a, #fbbf24); box-shadow: 0 4px 0 #b45309;
+    font-size: 1.5rem; font-weight: 900; color: #451a03; }
+  .sc-tile.used { visibility: hidden; }
+
+  /* 小遊戲共用 */
+  .mini-head { display: flex; justify-content: space-between; align-items: center; color: #fff; font-weight: 800; margin-bottom: 10px; gap: 8px; }
+  .mini-info { text-align: center; color: var(--muted); margin-bottom: 12px; }
+
+  /* 翻牌 */
+  .match-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mcard { height: 92px; border-radius: 14px; position: relative; background: linear-gradient(135deg, #818cf8, #c084fc); box-shadow: 0 4px 0 #6d28d9;
+    color: var(--ink); padding: 4px; transition: transform .2s; }
+  .mcard .back { font-size: 2.2rem; }
+  .mcard .face { display: none; font-weight: 800; font-size: .95rem; line-height: 1.25; word-break: break-word; }
+  .mcard .face.en { font-size: 1.05rem; color: #1e3a8a; }
+  .mcard.open, .mcard.done { background: #fff; border: 3px solid #c7d2fe; box-shadow: none; transform: rotateY(180deg) scaleX(-1); }
+  .mcard.open .back, .mcard.done .back { display: none; }
+  .mcard.open .face, .mcard.done .face { display: block; }
+  .mcard.done { background: #dcfce7; border-color: var(--good); opacity: .75; }
+  .mcard.bad { background: #fee2e2; border-color: var(--bad); animation: shake .35s; }
+
+  /* 打地鼠 / 泡泡 */
+  .tap-prompt { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 64px; margin-bottom: 10px; font-weight: 800; color: var(--muted); }
+  .tap-prompt .speaker.small { margin: 0; }
+  .tp-zh { font-size: 1.5rem; color: var(--ink); background: #eef2ff; padding: 10px 18px; border-radius: 14px; }
+  .mole-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: linear-gradient(#86efac, #4ade80); padding: 14px; border-radius: 20px; }
+  .hole { height: 110px; border-radius: 50% / 40%; background: radial-gradient(ellipse at 50% 80%, #713f12 55%, #a16207 56%, transparent 70%); position: relative; overflow: hidden; }
+  .mole { position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%); background: none; display: flex; flex-direction: column; align-items: center; animation: moleup .25s ease-out; }
+  .mole .me { font-size: 2.6rem; line-height: 1; }
+  .mole .mw { background: #fff; border-radius: 10px; padding: 3px 8px; font-weight: 900; font-size: .95rem; color: var(--ink); box-shadow: 0 2px 0 #0003; white-space: nowrap; }
+  @keyframes moleup { from { transform: translate(-50%, 90px); } }
+  .mole.hit .me { animation: bonk .3s forwards; }
+  .mole.hit .mw { background: #dcfce7; }
+  @keyframes bonk { 40% { transform: scaleY(.5); } 100% { transform: translateY(80px); } }
+  .mole.miss { opacity: .35; }
+  .mole.reveal .mw, .bubble.reveal { background: #fde68a; outline: 3px solid #f59e0b; }
+  .bubble-field { position: relative; height: 440px; border-radius: 20px; overflow: hidden; background: linear-gradient(#0ea5e9, #1e3a8a); }
+  .bubble { position: absolute; bottom: -130px; width: 23%; min-width: 74px; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #bae6fd 30%, #38bdf8cc 70%); border: 2px solid #e0f2fe;
+    font-weight: 900; font-size: .95rem; color: #0c4a6e; padding: 4px; word-break: break-word; animation: rise linear forwards; }
+  @keyframes rise { to { transform: translateY(-600px); } }
+  .bubble.hit { animation: popb .3s forwards !important; }
+  @keyframes popb { to { transform: scale(1.6); opacity: 0; } }
+  .bubble.miss { opacity: .3; }
+
   .toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); background: #111827; color: #fff; padding: 12px 18px; border-radius: 14px; font-weight: 800; z-index: 10; display: none; }
   .toast.show { display: block; animation: fadein .2s; }
 </style>
@@ -189,6 +263,7 @@
         <button class="btn ghost" style="padding:6px 10px;font-size:.85rem" onclick="quitBattle()">撤退</button>
       </div>
       <div class="combo" id="b-combo"></div>
+      <div class="b-skills" id="b-skills"></div>
       <div class="fighters">
         <div class="hero" id="b-hero"></div>
         <div class="monster-wrap">
@@ -199,6 +274,19 @@
       </div>
     </div>
     <div class="card qcard" id="b-q"></div>
+  </div>
+
+  <!-- 小遊戲（翻牌 / 打地鼠 / 泡泡） -->
+  <div class="screen" id="s-mini">
+    <div class="mini-head">
+      <span class="hearts" id="m-hearts"></span>
+      <span id="m-title"></span>
+      <button class="btn ghost" style="padding:6px 10px;font-size:.85rem" onclick="quitBattle()">撤退</button>
+    </div>
+    <div class="card">
+      <p class="mini-info" id="m-info"></p>
+      <div id="m-area"></div>
+    </div>
   </div>
 
   <!-- 結算 -->
@@ -240,8 +328,17 @@
 
 </div>
 <div class="toast" id="toast"></div>
+<div class="modal" id="skill-modal">
+  <div class="modal-box">
+    <h2>✨ 升級！選一個技能</h2>
+    <p class="muted" style="margin-bottom:12px">技能只在這一關有效，可以疊加喔！</p>
+    <div class="skill-cards" id="skill-cards"></div>
+  </div>
+</div>
 
 <script src="data.js"></script>
-<script src="game.js"></script>
+<!-- 改版時把 ?v= 加一，避免 iPad 用到舊的快取檔 -->
+<script src="game-modes.js?v=2"></script>
+<script src="game.js?v=2"></script>
 </body>
 </html>

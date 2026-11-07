@@ -845,13 +845,24 @@ $("speak-btn").addEventListener("click", () => {
 });
 
 // ===== 提醒（分階：先首字母，再完整答案；不影響計分） =====
+// 有發音的題目用：遮住首字母，隨機露出約 1/3 的其他字母，例如 occupation → _ c _ _ p _ _ i _ n
+function maskHint(word) {
+  const chars = String(word).split("");
+  const pos = chars.map((c, i) => i).filter(i => i > 0 && /[a-zA-Z]/.test(chars[i]));
+  const n = Math.max(1, Math.floor(pos.length / 3));
+  const show = new Set(pos.sort(() => Math.random() - .5).slice(0, n));
+  return chars.map((c, i) => c === " " ? "　" : /[a-zA-Z]/.test(c) && !show.has(i) ? "_" : c).join(" ");
+}
+
 function getHintText(q, level) {
   const entry = q.snap ? q.snap : (q.entry ? q.entry : (q.type === "sentence" ? SENTENCES[q.idx] : WORDS[q.idx]));
   const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
   const zh = entry.zh !== undefined ? entry.zh : entry[1];
   if (q.type === "listen") {
-    // 聽音選字：顯示英文首字母或完整英文
-    return level === 1 ? `英文開頭是「${en[0].toUpperCase()}」` : `答案是「${en}」`;
+    // 聽音寫字：已經聽得到發音，首字母等於白給 → 改提示字母數 + 中間幾個字母（同一題固定不變）
+    if (level !== 1) return `答案是「${en}」`;
+    if (!q._mask) q._mask = maskHint(en);
+    return `共 ${en.replace(/[^a-zA-Z]/g, "").length} 個字母：${q._mask}`;
   }
   if (q.type === "en2zh") {
     // 英→中：顯示中文提示或完整中文
@@ -890,7 +901,9 @@ $("hint-btn").addEventListener("click", () => {
     const en = q.type === "sentence" ? entry.blank : (entry.base !== undefined ? entry.base : entry[0]);
     const input = $("type-input");
     if (input && !input.disabled) {
-      if (hintLevel === 1) {
+      if (hintLevel === 1 && q.type === "listen") {
+        input.placeholder = "照著提示拼拼看…";   // 聽音題不預填首字母
+      } else if (hintLevel === 1) {
         input.value = en[0];
         input.placeholder = "繼續輸入剩下的字母…";
       } else {

@@ -210,8 +210,9 @@ function showMap() {
       const open = isUnlocked(sec.id, i);
       const next = open && !s && !sec.extra && !firstNextMarked;
       if (next) firstNextMarked = true;
-      html += `<button class="stage ${open ? "" : "locked"} ${next ? "next" : ""}" ${open ? `onclick="startStage('${sec.id}',${i})"` : "disabled"}>
-        <span>${open ? i + 1 : "🔒"}</span><span class="st">${"★".repeat(s)}</span></button>`;
+      const kd = KIND_INFO[stageKind(i)];
+      html += `<button class="stage ${open ? "" : "locked"} ${next ? "next" : ""}" title="${kd.n}" ${open ? `onclick="startStage('${sec.id}',${i})"` : "disabled"}>
+        <span class="sk">${kd.e}</span><span>${open ? i + 1 : "🔒"}</span><span class="st">${"★".repeat(s)}</span></button>`;
     }
     const bs = P.stars[sKey(sec.id, "B")] || 0; earned += bs;
     const bOpen = isUnlocked(sec.id, "B");
@@ -247,7 +248,12 @@ function startStage(unit, idx) {
     combo: 0, maxCombo: 0, mistakes: 0, dmg: 0, missed: [],
     monster: boss ? isl.boss : isl.mons[(typeof idx === "number" ? idx : 0) % isl.mons.length],
     locked: false,
+    kind: boss ? "boss" : stageKind(idx),
+    // 技能效果（game-modes.js 的三選一技能會改這些值）
+    skills: [], dmgMul: 1, goldMul: 1, guard: 0, eye: 0, critEvery: 3, chestSure: false,
+    token: (B && B.token || 0) + 1,   // 換關時讓舊的計時器失效
   };
+  if (MINI_KINDS.includes(B.kind)) { startMini(); return; }
   $("b-title").textContent = `${sec.label}・` + (boss ? (sec.final ? "😈 總魔王" : "👑 魔王") : `第 ${idx + 1} 關`);
   const m = $("b-monster"); m.textContent = B.monster; m.className = "monster" + (boss ? " boss" : "");
   renderHero();
@@ -265,6 +271,7 @@ function renderArena() {
   $("b-mhp").style.width = ((B.total - B.defeated) / B.total * 100) + "%";
   $("b-mleft").textContent = `剩 ${B.total - B.defeated} 隻`;
   $("b-combo").textContent = B.combo >= 2 ? `🔥 ${B.combo} 連擊！` : "";
+  $("b-skills").innerHTML = B.skills.map(id => `<span title="${SKILL[id].n}">${SKILL[id].e}</span>`).join("");
 }
 
 function distractors(field, correct, n) {
@@ -292,11 +299,14 @@ function nextQuestion() {
   let type;
   if (B.boss) {
     type = findSentence(en) && Math.random() < .4 ? "sent" : "spell";
+  } else if (B.kind === "scramble") {
+    type = "scramble";
   } else {
-    // 一般關：以選擇題為主；答錯重來的字換一種題型
-    const types = ["en2zh", "zh2en", "listen"];
-    type = types[(rand(3) + item.tries) % 3];
+    // 一般關：選擇題為主，穿插字母拼圖；答錯重來的字換一種題型
+    const types = ["en2zh", "zh2en", "listen", "scramble"].filter(t => t !== item.lastType);
+    type = types[rand(types.length)];
   }
+  item.lastType = type;
   B.q = { type, en, zh, item };
   const box = $("b-q");
   const tools = `<div class="tools">
@@ -316,6 +326,13 @@ function nextQuestion() {
     box.innerHTML = head + `<div class="choices">${opts.map(o =>
       `<button class="choice" data-v="${esc(o)}" onclick="pick(this)">${esc(o)}</button>`).join("")}</div>` + tools;
     if (type !== "zh2en") speak(en);
+    if (B.eye > 0) {   // 技能「透視之眼」：自動刪掉一個錯誤選項
+      B.eye--;
+      const wrongs = [...box.querySelectorAll(".choice")].filter(c => c.dataset.v !== answer);
+      wrongs[rand(wrongs.length)].classList.add("gone");
+    }
+  } else if (type === "scramble") {
+    renderScramble(box, tools);
   } else {
     let head;
     if (type === "sent") {
@@ -367,11 +384,21 @@ function useScroll() {
   B.scrolls--;
   $("b-scroll").textContent = `📜 提示 ×${B.scrolls}`;
   $("b-scroll").disabled = true;
+  if (B.q.type === "scramble") { scrambleHint(); return; }
   const choices = [...document.querySelectorAll(".choice")].filter(c => c.dataset.v !== B.q.answer);
   if (choices.length) { shuffle(choices).slice(0, 2).forEach(c => c.classList.add("gone")); }
   else {
     const a = String(B.q.answer).split("/")[0];
-    $("b-hint").textContent = "提示：" + a.split("").map((ch, i) => i === 0 || ch === " " ? ch : "_").join(" ") + `（${a.replace(/ /g, "").length} 個字母）`;
+    // 拼字題聽得到發音，首字母等於白給 → 改露出中間幾個字母；句子填空沒有發音，才給首字母
+    let pattern;
+    if (B.q.type === "spell") {
+      const pos = a.split("").map((c, i) => i).filter(i => i > 0 && /[a-zA-Z]/.test(a[i]));
+      const keep = new Set(shuffle(pos).slice(0, Math.max(1, Math.floor(pos.length / 3))));
+      pattern = a.split("").map((ch, i) => ch === " " ? "　" : keep.has(i) ? ch : "_").join(" ");
+    } else {
+      pattern = a.split("").map((ch, i) => i === 0 || ch === " " ? ch : "_").join(" ");
+    }
+    $("b-hint").textContent = `提示：${pattern}（${a.replace(/[^a-zA-Z]/g, "").length} 個字母）`;
   }
 }
 
@@ -390,8 +417,8 @@ function resolve(ok) {
   const item = B.queue.shift();
   if (ok) {
     B.combo++; B.maxCombo = Math.max(B.maxCombo, B.combo);
-    const crit = B.combo % 3 === 0;
-    const dmg = B.atk * (crit ? 2 : 1) + rand(4);
+    const crit = B.combo % B.critEvery === 0;
+    const dmg = Math.round((B.atk * (crit ? 2 : 1) + rand(4)) * B.dmgMul);
     B.dmg += dmg; B.defeated++;
     hero.classList.add("lunge"); setTimeout(() => hero.classList.remove("lunge"), 180);
     mon.classList.remove("shake"); void mon.offsetWidth; mon.classList.add("shake");
@@ -399,11 +426,18 @@ function resolve(ok) {
     crit ? SFX.crit() : SFX.hit();
     fb.className = "feedback show ok";
     fb.innerHTML = `✅ 答對了！ ${esc(B.q.en)} = ${esc(B.q.zh)}`;
-    if (B.q.type === "zh2en") speak(B.q.en);
+    if (B.q.type === "zh2en" || B.q.type === "scramble") speak(B.q.en);
     renderArena();
-    setTimeout(() => B.defeated >= B.total ? endBattle(true) : nextQuestion(), 1100);
+    const tk = B.token;
+    setTimeout(() => {
+      if (B.token !== tk) return;
+      if (B.defeated >= B.total) endBattle(true);
+      else if (B.defeated % SKILL_EVERY === 0) showSkillPick();   // 每打倒幾隻就三選一技能
+      else nextQuestion();
+    }, 1100);
   } else {
-    B.combo = 0; B.mistakes++;
+    if (B.guard > 0) { B.guard--; toast("🔗 連擊護符生效，連擊沒有中斷！"); } else B.combo = 0;
+    B.mistakes++;
     item.tries++;
     if (!B.missed.some(w => w[0] === item.w[0])) B.missed.push(item.w);
     // 答錯的怪物逃回隊伍後面，等一下還要再打一次
@@ -422,7 +456,7 @@ function resolve(ok) {
 }
 
 function quitBattle() {
-  if (confirm("確定要撤退嗎？這關的進度不會保存。")) showMap();
+  if (confirm("確定要撤退嗎？這關的進度不會保存。")) { B.token++; showMap(); }
 }
 
 // ---------- 結算 & 掉寶 ----------
@@ -475,14 +509,14 @@ function endBattle(win) {
   const prev = P.stars[key] || 0;
   const first = !prev;
   P.stars[key] = Math.max(prev, stars);
-  const gold = Math.round(B.dmg / 5) + stars * 10 + (B.boss ? 50 : 0) + (first ? 20 : 0);
+  const gold = Math.round((Math.round(B.dmg / 5) + stars * 10 + (B.boss ? 50 : 0) + (first ? 20 : 0)) * B.goldMul);
   P.gold += gold;
   const ups = addXp(B.total * 10 + stars * 10);
   // 連續天數
   if (P.streak.last !== today()) { P.streak.n = isYesterday(P.streak.last) ? P.streak.n + 1 : 1; P.streak.last = today(); }
 
   // 寶箱：首次過關、魔王、或三星必掉；其他情況 50%
-  const dropChest = first || B.boss || stars === 3 || Math.random() < .5;
+  const dropChest = first || B.boss || B.chestSure || stars === 3 || Math.random() < .5;
   let chest = null;
   if (dropChest) {
     chest = rollItem(B.luck + (stars === 3 ? 1 : 0), B.boss ? "rare" : "common");
